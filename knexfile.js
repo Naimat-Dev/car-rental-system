@@ -2,6 +2,8 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+console.log(process.env.DB_HOST);
+
 const connection = {
 	host: process.env.DB_HOST,
 	user: process.env.DB_USER,

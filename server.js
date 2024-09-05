@@ -1,13 +1,9 @@
 import config from "./config/index.js";
-import knex from "knex";
-import knexConfig from "./knex.js";
+import db from "./config/db.js";
 
 import app from "./app.js";
 
 const port = config.port || 4000;
-
-const environment = process.env.NODE_ENV || "development";
-const db = knex(knexConfig[environment]);
 
 // Test the connection with a simple query
 db.raw(
