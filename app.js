@@ -27,9 +27,19 @@ if (process.env.NODE_ENV === "development") {
 
 app.get("/", (req, res, next) => {
 	res.send("Car rental API is Running...");
+	// next();
 });
 
 // API ROUTES
+app.post("/blog", async (req, res) => {
+	const { title, content, author } = req.body;
+	try {
+		const blog = await db("blog").insert({ title, content, author });
+		res.status(201).send(blog);
+	} catch (error) {
+		res.status(500).json({ error: error.message });
+	}
+});
 
 // Unhandled Routes Handling Middleware
 app.all("*", (req, res, next) => {
