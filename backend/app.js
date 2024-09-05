@@ -27,7 +27,6 @@ if (process.env.NODE_ENV === "development") {
 
 app.get("/", (req, res, next) => {
 	res.send("Car rental API is Running...");
-	next();
 });
 
 // API ROUTES
