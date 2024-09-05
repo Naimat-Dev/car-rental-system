@@ -15,6 +15,7 @@ db.raw(
 	"SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'"
 )
 	.then((result) => {
+		console.log("Database connected successfully...");
 		console.log("Tables in the database:", result.rows);
 		process.exit(0); // Exit the process once successful
 	})
