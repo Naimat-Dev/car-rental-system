@@ -51,7 +51,7 @@ export const getCar =async (req,res) =>{
 }
 export const deleteCar = async (req,res)=>{
     try {
-        const { id } = req.body; 
+      const {id} = req.params;
 
         const response = await db('car').where({ id }).del();
     

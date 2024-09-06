@@ -1,14 +1,9 @@
 import express from "express";
-import { addCar, deleteCar, getAllCar, getCar, updateCar } from "../controllers/Carhandler.js"; // Updated with .js extension
-const Router = express.Router();
-
-Router.post("/addcar", addCar);
-
-Router.get("/allcars", getAllCar);
-Router.get("/getcar/:id" , getCar)
+import { addCar, deleteCar, getAllCar, getCar, updateCar } from "../controllers/carHandler.js"; 
+const router = express.Router();
 
 
-Router.post("/deletecar" ,deleteCar)
-Router.post("/updatecar",updateCar)
+router.route("/").post(addCar).get(getAllCar).put(updateCar)
+router.route("/:id").get(getCar).delete(deleteCar)
 
-export default Router;
+export default router;
