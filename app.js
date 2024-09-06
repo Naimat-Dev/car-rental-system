@@ -3,7 +3,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import AppError from "./utils/appError.js";
-import router  from "./routes/car.js"
+import carRoutes  from "./routes/carRoutes.js"
 const app = express();
 
 
@@ -22,7 +22,7 @@ app.use(cookieParser());
 
 
 
-app.use("/car",router);
+app.use("/cars",carRoutes);
 // Developing logging
 if (process.env.NODE_ENV === "development") {
 	app.use(morgan("dev"));

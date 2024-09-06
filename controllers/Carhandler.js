@@ -1,5 +1,5 @@
 import db from "../config/db.js";
-export const addCar = async (req, res) => {
+export const createCar = async (req, res) => {
     try {
       const { name, brandId, modelYear, registrationNumber, registrationCity, description, carDocument, carTypeId } = req.body;
       const response = await db("car").insert({
@@ -19,7 +19,7 @@ export const addCar = async (req, res) => {
     }
   };
   
-export const getAllCar = async (req, res) => {
+export const getCars = async (req, res) => {
     try {
       const response = await db("car").select("*");
       if(response.length !== 0){
@@ -34,7 +34,7 @@ export const getAllCar = async (req, res) => {
     }
   };
 
-export const getCar =async (req,res) =>{
+export const getCarbyId =async (req,res) =>{
     try {
         const {id} = req.params;
         const response = await db("car").select("name", "modelYear").where({id})
@@ -49,7 +49,7 @@ export const getCar =async (req,res) =>{
         
     }
 }
-export const deleteCar = async (req,res)=>{
+export const deleteCarById = async (req,res)=>{
     try {
       const {id} = req.params;
 
@@ -65,9 +65,10 @@ export const deleteCar = async (req,res)=>{
         res.status(500).json({ message: "Error deleting car" });
       }
 }
-export const updateCar = async (req,res) =>{
+export const updateCarById = async (req,res) =>{
     try {
-        const {id,  name, brandId, modelYear, registrationNumber, registrationCity, description, carDocument, carTypeId } = req.body; 
+        const {id} = req.params;
+        const {name, brandId, modelYear, registrationNumber, registrationCity, description, carDocument, carTypeId } = req.body; 
         const response = await db('car')
           .where({ id })
           .update({
