@@ -2,20 +2,17 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
+import brandRoutes from './routes/brandRoutes.js';
 import AppError from "./utils/appError.js";
-<<<<<<< HEAD
-import carRoutes  from "./routes/carRoutes.js"
-=======
 import globalErrorHandler from "./controllers/errorController.js";
-
 import db from "./config/db.js";
-
 // Routes
 import blogRoutes from "./routes/blogRoutes.js";
-
->>>>>>> 4b77325af198f7869020f2a68a210fd86499ea87
+import carVideoRoutes from './routes/carVideoRoutes.js';
+import carTypeRoutes from './routes/carTypeRoutes.js';
+import carRoutes from "./routes/carRoutes.js"
+import carSpecificationRoutes from './routes/carSpecificationRoutes.js';
 const app = express();
-
 
 app.use(
 	cors({
@@ -30,9 +27,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cookieParser());
 
-
-
-app.use("/cars",carRoutes);
 // Developing logging
 if (process.env.NODE_ENV === "development") {
 	app.use(morgan("dev"));
@@ -40,14 +34,14 @@ if (process.env.NODE_ENV === "development") {
 
 app.get("/", (req, res, next) => {
 	res.send("Car rental API is Running...");
-<<<<<<< HEAD
-	next()
-=======
 	next();
->>>>>>> 4b77325af198f7869020f2a68a210fd86499ea87
 });
 
-
+app.use("/api/cars" , carRoutes);
+app.use('/api/brands', brandRoutes);
+app.use("/api/cartypes",carTypeRoutes)
+app.use('/api/carVideos', carVideoRoutes);
+app.use('/api/carSpecifications', carSpecificationRoutes);
 // API ROUTES
 app.use("/api/blogs", blogRoutes);
 // app.post("/blog", async (req, res) => {
@@ -73,8 +67,6 @@ app.use("/api/blogs", blogRoutes);
 app.all("*", (req, res, next) => {
 	next(new AppError(`Can't find this ${req.originalUrl} on this server.`, 404));
 });
-
-
 
 // GLOBAL ERROR HANDLING MIDDLEWARE
 app.use(globalErrorHandler);

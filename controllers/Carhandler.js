@@ -1,94 +1,13 @@
-import db from "../config/db.js";
-export const createCar = async (req, res) => {
-    try {
-      const { name, brandId, modelYear, registrationNumber, registrationCity, description, carDocument, carTypeId } = req.body;
-      const response = await db("car").insert({
-        name,
-        brandId,
-        modelYear,
-        registrationNumber,
-        registrationCity,
-        description,
-        carDocument,
-        carTypeId,
-      })
-      res.status(201).json({ message: "Car added successfully", carId: response });
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ message: "Error adding car" });
-    }
-  };
-  
-export const getCars = async (req, res) => {
-    try {
-      const response = await db("car").select("*");
-      if(response.length !== 0){
-        res.status(200).json(response);
-      }
-      else{
-        res.statue(301).json ({message :"No data Found"})
-      }
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: "Error fetching cars" });
-    }
-  };
+import {
+	createOne,
+	getAll,
+	getOne,
+	deleteOne,
+	updateOne,
+} from "./handleFactory.js";
 
-export const getCarbyId =async (req,res) =>{
-    try {
-        const {id} = req.params;
-        const response = await db("car").select("name", "modelYear").where({id})
-        if(response.length !==0){
-            res.status(200).json ({response})
-        }
-        else{
-            res.status(301).json ({message : "No "})
-        }
-    } catch (error) {
-        console.log(error)
-        
-    }
-}
-export const deleteCarById = async (req,res)=>{
-    try {
-      const {id} = req.params;
-
-        const response = await db('car').where({ id }).del();
-    
-        if (response === 0) {
-          return res.status(404).json({ message: "Car not found" });
-        }
-    
-        res.status(200).json({ message: "Car deleted successfully" });
-      } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Error deleting car" });
-      }
-}
-export const updateCarById = async (req,res) =>{
-    try {
-        const {id} = req.params;
-        const {name, brandId, modelYear, registrationNumber, registrationCity, description, carDocument, carTypeId } = req.body; 
-        const response = await db('car')
-          .where({ id })
-          .update({
-            name,
-            brandId,
-            modelYear,
-            registrationNumber,
-            registrationCity,
-            description,
-            carDocument,
-            carTypeId,
-          });
-    
-        if (response === 0) {
-          return res.status(404).json({ message: "Car not found" });
-        }
-    
-        res.status(200).json({ message: "Car updated successfully" });
-      } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Error updating car" });
-      }
-}
+export const createCar = createOne ('cars')
+export const getCars = getAll ('cars')
+export const getCarbyId =getOne ('cars')
+export const deleteCarById = updateOne ('cars')
+export const updateCarById = deleteOne ('cars')
