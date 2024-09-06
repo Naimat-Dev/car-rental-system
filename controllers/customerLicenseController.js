@@ -26,7 +26,9 @@ export const createCustomerLicense = async (req, res) => {
     });
   } catch (error) {
     console.error("Error creating customer license:", error);
-    res.status(500).json({ error: "Internal Server Error", details: error.message });
+    res
+      .status(500)
+      .json({ error: "Internal Server Error", details: error.message });
   }
 };
 
@@ -41,7 +43,9 @@ export const getCustomerLicenses = async (req, res) => {
     });
   } catch (error) {
     console.error("Error fetching customer licenses:", error);
-    res.status(500).json({ error: "Internal Server Error", details: error.message });
+    res
+      .status(500)
+      .json({ error: "Internal Server Error", details: error.message });
   }
 };
 
@@ -66,7 +70,9 @@ export const getCustomerLicenseById = async (req, res) => {
     });
   } catch (error) {
     console.error("Error fetching customer license by ID:", error);
-    res.status(500).json({ error: "Internal Server Error", details: error.message });
+    res
+      .status(500)
+      .json({ error: "Internal Server Error", details: error.message });
   }
 };
 
@@ -81,7 +87,9 @@ export const updateCustomerLicenseById = async (req, res) => {
     }
 
     if (!customerId && !drivingLicenseNumber && !licenseExpiryDate) {
-      return res.status(400).json({ error: "At least one field is required for update" });
+      return res
+        .status(400)
+        .json({ error: "At least one field is required for update" });
     }
 
     const updatedRows = await db("customerLicense")
@@ -103,7 +111,9 @@ export const updateCustomerLicenseById = async (req, res) => {
     });
   } catch (error) {
     console.error("Error updating customer license:", error);
-    res.status(500).json({ error: "Internal Server Error", details: error.message });
+    res
+      .status(500)
+      .json({ error: "Internal Server Error", details: error.message });
   }
 };
 
@@ -122,9 +132,13 @@ export const deleteCustomerLicenseById = async (req, res) => {
       return res.status(404).json({ error: "Customer license not found" });
     }
 
-    res.status(200).json({ message: "Customer license deleted successfully" });
+    res
+      .status(200)
+      .json({ message: "Customer license deleted successfully", id });
   } catch (error) {
     console.error("Error deleting customer license:", error);
-    res.status(500).json({ error: "Internal Server Error", details: error.message });
+    res
+      .status(500)
+      .json({ error: "Internal Server Error", details: error.message });
   }
 };

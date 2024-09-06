@@ -130,28 +130,34 @@ export const updateCustomerById = async (req, res) => {
       return res.status(404).json({ error: "Customer not found" });
     }
 
-    const customerConflict = await db("customers")
-      .whereNot({ id })
-      .andWhere((builder) => builder.where({ cnic }).orWhere({ phoneNumber }))
-      .first();
+    const updateData = {};
+    if (firstName) updateData.firstName = firstName;
+    if (lastName) updateData.lastName = lastName;
+    if (password) updateData.password = password;
+    if (cnic) updateData.cnic = cnic;
+    if (phoneNumber) updateData.phoneNumber = phoneNumber;
+    if (dateOfBirth) updateData.dateOfBirth = dateOfBirth;
+    if (imageUrl) updateData.imageUrl = imageUrl;
+    if (status) updateData.status = status;
 
-    if (customerConflict) {
-      return res.status(409).json({
-        error:
-          "CNIC or phone number already exists. Please provide unique details.",
-      });
+    if (cnic || phoneNumber) {
+      const customerConflict = await db("customers")
+        .whereNot({ id })
+        .andWhere((builder) => {
+          if (cnic) builder.where("cnic", cnic);
+          if (phoneNumber) builder.orWhere("phoneNumber", phoneNumber);
+        })
+        .first();
+
+      if (customerConflict) {
+        return res.status(409).json({
+          error:
+            "CNIC or phone number already exists. Please provide unique details.",
+        });
+      }
     }
 
-    await db("customers").where({ id }).update({
-      firstName,
-      lastName,
-      password,
-      cnic,
-      phoneNumber,
-      dateOfBirth,
-      imageUrl,
-      status,
-    });
+    await db("customers").where({ id }).update(updateData);
 
     const updatedCustomer = await db("customers").where({ id }).first();
 
@@ -182,6 +188,7 @@ export const deleteCustomerById = async (req, res) => {
     res.status(200).json({
       message: "Customer deleted successfully",
       data: existingCustomer,
+      id,
     });
   } catch (error) {
     console.error("Error deleting customer:", error);
@@ -189,4 +196,4 @@ export const deleteCustomerById = async (req, res) => {
       .status(500)
       .json({ error: "Internal Server Error", details: error.message });
   }
-}; 
+};

@@ -33,17 +33,17 @@ router
   .delete(deleteCustomerById)
   .put(updateCustomerById);
 
-router.route("/").post(createCustomerLicense).get(getCustomerLicenses);
+router.route("/license").post(createCustomerLicense).get(getCustomerLicenses);
 
 router
-  .route("/:id")
+  .route("/license/:id")
   .get(getCustomerLicenseById)
   .delete(deleteCustomerLicenseById)
   .put(updateCustomerLicenseById);
 
-router.route("/").post(createCustomerAddress).get(getCustomerAddress);
+router.route("/address").post(createCustomerAddress).get(getCustomerAddress);
 router
-  .route("/:id")
+  .route("/address/:id")
   .get(getCustomerAddressById)
   .delete(deleteCustomerAddressById)
   .put(updateCustomerAddressById);
