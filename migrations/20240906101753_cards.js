@@ -12,6 +12,7 @@ export const up = function(knex) {
 
     });
 };
+//changes successfully updated
 
 export const down = function(knex) {
     return knex.schema.dropTableIfExists("cards");
