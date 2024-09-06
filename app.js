@@ -2,10 +2,10 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
-
 import AppError from "./utils/appError.js";
-
+import Router  from "./routes/car.js"
 const app = express();
+
 
 app.use(
 	cors({
@@ -20,6 +20,9 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cookieParser());
 
+
+
+app.use("/car",Router);
 // Developing logging
 if (process.env.NODE_ENV === "development") {
 	app.use(morgan("dev"));
@@ -27,7 +30,9 @@ if (process.env.NODE_ENV === "development") {
 
 app.get("/", (req, res, next) => {
 	res.send("Car rental API is Running...");
+	next()
 });
+
 
 // API ROUTES
 
@@ -35,6 +40,8 @@ app.get("/", (req, res, next) => {
 app.all("*", (req, res, next) => {
 	next(new AppError(`Can't find this ${req.originalUrl} on this server.`, 404));
 });
+
+
 
 // GLOBAL ERROR HANDLING MIDDLEWARE
 // app.use(globalErrorHandler);
