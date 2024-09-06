@@ -8,10 +8,19 @@ export const up = function(knex) {
         table.string("state", 50).notNullable(); // State field with max length of 50
 
         // Foreign key constraint
-        table.foreign("userId").references("id").inTable("user").onDelete("CASCADE");
+        table.foreign("userId").references("id").inTable("users").onDelete("CASCADE");
     });
 };
 //changes successfully updated
 export const down = function(knex) {
     return knex.schema.dropTableIfExists("userAddress");
 };
+
+
+
+
+
+
+
+
+

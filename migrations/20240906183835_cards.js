@@ -1,3 +1,6 @@
+
+
+
 export const up = function(knex) {
     return knex.schema.createTable("cards", (table) => {
         table.increments("id").primary(); // Primary key
@@ -7,7 +10,7 @@ export const up = function(knex) {
         table.date('expiryDate').notNullable(); // Card expiry date
         table.string('cvv', 6).notNullable(); // CVV with max length of 4
 
-        table.foreign("userId").references("id").inTable("user").onDelete("CASCADE");
+        table.foreign("userId").references("id").inTable("users").onDelete("CASCADE");
         // table.foreign("userId").references("id").inTable("customer").onDelete("CASCADE");
 
     });

@@ -1,4 +1,4 @@
-import db from "../config/db.js";
+import db from '../config/db.js';
 
 // Create a new user address
 export const createUserAddress = async (req, res) => {
@@ -10,13 +10,7 @@ export const createUserAddress = async (req, res) => {
         }
 
         const [insertedAddress] = await db("userAddress")
-            .insert({
-                userId,
-                address,
-                city,
-                zipCode,
-                state
-            })
+            .insert({ userId, address, city, zipCode, state })
             .returning('*'); // Retrieve the newly inserted address
 
         if (!insertedAddress) {
@@ -31,7 +25,7 @@ export const createUserAddress = async (req, res) => {
 };
 
 // Get all user addresses
-export const getAllUserAddresses = async (req, res) => {
+export const getUserAddress = async (req, res) => {
     try {
         const addresses = await db.select("*").from("userAddress");
         res.status(200).json(addresses);
@@ -42,7 +36,7 @@ export const getAllUserAddresses = async (req, res) => {
 };
 
 // Get a specific user address by ID
-export const getUserAddress = async (req, res) => {
+export const getUserAddressById = async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -60,20 +54,14 @@ export const getUserAddress = async (req, res) => {
 };
 
 // Update a specific user address by ID
-export const updateUserAddress = async (req, res) => {
+export const updateUserAddressById = async (req, res) => {
     const { id } = req.params;
     const { userId, address, city, zipCode, state } = req.body;
 
     try {
         const [updatedAddress] = await db("userAddress")
             .where({ id })
-            .update({
-                userId,
-                address,
-                city,
-                zipCode,
-                state
-            }, ["id", "userId", "address", "city", "zipCode", "state"]); // Retrieve updated fields
+            .update({ userId, address, city, zipCode, state }, ["id", "userId", "address", "city", "zipCode", "state"]); // Retrieve updated fields
 
         if (updatedAddress) {
             res.status(200).json({ message: "User address successfully updated", data: updatedAddress });
@@ -87,7 +75,7 @@ export const updateUserAddress = async (req, res) => {
 };
 
 // Delete a specific user address by ID
-export const deleteUserAddress = async (req, res) => {
+export const deleteUserAddressById = async (req, res) => {
     const { id } = req.params;
 
     try {

@@ -9,7 +9,7 @@ export const createCard = async (req, res) => {
             return res.status(400).json({ error: "All fields are required" });
         }
 
-        const [insertedCard] = await db("card")
+        const [insertedCard] = await db("cards")
             .insert({
                 userId,
                 cardNumber,
@@ -31,9 +31,9 @@ export const createCard = async (req, res) => {
 };
 
 // Get all cards
-export const getAllCards = async (req, res) => {
+export const getCards = async (req, res) => {
     try {
-        const cards = await db.select("*").from("card");
+        const cards = await db.select("*").from("cards");
         res.status(200).json(cards);
     } catch (error) {
         console.error("Error fetching cards:", error.message);
@@ -42,11 +42,11 @@ export const getAllCards = async (req, res) => {
 };
 
 // Get a specific card by ID
-export const getCard = async (req, res) => {
+export const getCardById = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const card = await db("card").where({ id }).first(); // Use `.first()` to get a single record
+        const card = await db("cards").where({ id }).first(); // Use `.first()` to get a single record
 
         if (card) {
             res.status(200).json(card);
@@ -60,12 +60,12 @@ export const getCard = async (req, res) => {
 };
 
 // Update a specific card by ID
-export const updateCard = async (req, res) => {
+export const updateCardById = async (req, res) => {
     const { id } = req.params;
     const { userId, cardHolderName, cardNumber, expiryDate, cvv } = req.body;
 
     try {
-        const [updatedCard] = await db("card").where({ id }).update({
+        const [updatedCard] = await db("cards").where({ id }).update({
             userId,
             cardHolderName,
             cardNumber,
@@ -85,11 +85,11 @@ export const updateCard = async (req, res) => {
 };
 
 // Delete a specific card by ID
-export const deleteCard = async (req, res) => {
+export const deleteCardById = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const deletedCount = await db("card").where({ id }).del();
+        const deletedCount = await db("cards").where({ id }).del();
 
         if (deletedCount) {
             res.status(204).send(); 
