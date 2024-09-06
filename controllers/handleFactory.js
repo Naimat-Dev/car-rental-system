@@ -2,6 +2,7 @@ import db from "../config/db.js";
 
 import AppError from "../utils/appError.js";
 import catchAsync from "../utils/catchAsync.js";
+import APIFeatures from "./../utils/apiFeatures.js";
 
 // CREATE One Document
 export const createOne = (Table) =>
@@ -21,7 +22,18 @@ export const createOne = (Table) =>
 // Get all records
 export const getAll = (Table) =>
 	catchAsync(async (req, res, next) => {
-		const doc = await db.select("*").from(Table);
+		// const doc = await db.select("*").from(Table);
+
+		// Start with your table query
+		const query = db(Table);
+
+		const features = new APIFeatures(query, req.query)
+			.filter()
+			.sort()
+			.fieldsLimit()
+			.paginate();
+
+		const doc = await features.query;
 
 		res.status(200).json({
 			status: "success",

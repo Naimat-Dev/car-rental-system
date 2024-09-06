@@ -57,7 +57,7 @@ export const login = catchAsync(async (req, res, next) => {
 });
 
 export const signup = catchAsync(async (req, res, next) => {
-	const { name, email, password } = filteredData;
+	const { name, email, password } = req.body;
 
 	const newUser = await User.create({
 		name,
