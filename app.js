@@ -4,6 +4,12 @@ import cookieParser from "cookie-parser";
 import morgan from "morgan";
 
 import AppError from "./utils/appError.js";
+import globalErrorHandler from "./controllers/errorController.js";
+
+import db from "./config/db.js";
+
+// Routes
+import blogRoutes from "./routes/blogRoutes.js";
 
 const app = express();
 
@@ -27,19 +33,29 @@ if (process.env.NODE_ENV === "development") {
 
 app.get("/", (req, res, next) => {
 	res.send("Car rental API is Running...");
-	// next();
+	next();
 });
 
 // API ROUTES
-app.post("/blog", async (req, res) => {
-	const { title, content, author } = req.body;
-	try {
-		const blog = await db("blog").insert({ title, content, author });
-		res.status(201).send(blog);
-	} catch (error) {
-		res.status(500).json({ error: error.message });
-	}
-});
+app.use("/api/blogs", blogRoutes);
+// app.post("/blog", async (req, res) => {
+// 	const { title, content, author } = req.body;
+// 	try {
+// 		const blog = await db("blog").insert({ title, content, author });
+// 		res.status(201).send(blog);
+// 	} catch (error) {
+// 		res.status(500).json({ error: error.message });
+// 	}
+// });
+
+// app.get("/blog", async (req, res) => {
+// 	try {
+// 		const blogs = await db.select("*").from("blog");
+// 		res.status(201).send(blogs);
+// 	} catch (error) {
+// 		res.status(500).json({ error: error.message });
+// 	}
+// });
 
 // Unhandled Routes Handling Middleware
 app.all("*", (req, res, next) => {
@@ -47,6 +63,6 @@ app.all("*", (req, res, next) => {
 });
 
 // GLOBAL ERROR HANDLING MIDDLEWARE
-// app.use(globalErrorHandler);
+app.use(globalErrorHandler);
 
 export default app;
