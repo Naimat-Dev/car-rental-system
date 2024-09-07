@@ -5,14 +5,15 @@ import {
     getCarStatusById,
     deleteCarStatusById,
     updateCarStatusById
-} from '../controllers/carStatusController.js';
-
+} from '../controllers/cars/carStatusController.js';
+import { validateSchema } from '../middlewares/validationMiddleware.js';
+import carStatusValidationSchema from '../validations/car/carStatusValidation.js';
 const router = express.Router();
 
 
 // Define routes for the /carStatuses endpoint
 router.route('/')
-    .post(createCarStatus)  // Handle POST requests to create a new car status
+    .post(validateSchema(carStatusValidationSchema),createCarStatus)  // Handle POST requests to create a new car status
     .get(getCarStatus);     // Handle GET requests to retrieve all car statuses
 
 // Define routes for the /carStatuses/:id endpoint

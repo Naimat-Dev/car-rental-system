@@ -5,13 +5,14 @@ import {
   getCarSpecificationById,
   updateCarSpecificationById,
   deleteCarSpecificationById
-} from '../controllers/carSpecificationController.js';
-
+} from '../controllers/cars/carSpecificationController.js';
+import { validateSchema } from '../middlewares/validationMiddleware.js';
+import carSpecificationValidationSchema from '../validations/car/carSpecificationValidation.js';
 const router = express.Router();
 
-// Define routes for the /carSpecifications endpoint
+// Define routes for the /cars/specifications endpoint
 router.route('/')
-    .post(createCarSpecification)  // Handle POST requests to create a new car specification
+    .post(validateSchema(carSpecificationValidationSchema),createCarSpecification)  // Handle POST requests to create a new car specification
     .get(getCarSpecifications);    // Handle GET requests to retrieve all car specifications
 
 // Define routes for the /carSpecifications/:id endpoint

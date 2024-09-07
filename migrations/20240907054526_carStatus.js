@@ -17,7 +17,7 @@ export const up = function(knex) {
         
         table.enu('fuelPolicy', ['full-to-full', 'same-to-same']).notNullable().defaultTo('full-to-full'); // Create a 'fuelPolicy' column with enum values 'full-to-full' or 'same-to-same'; default value is 'full-to-full'
         
-        table.string('lastServicedDate', 50).notNullable(); // Create a 'lastServicedDate' column to store the date of the last service; cannot be null, with a maximum length of 50 characters
+        table.string('lastServicedDate', 50); // Create a 'lastServicedDate' column to store the date of the last service; cannot be null, with a maximum length of 50 characters
         
         // Define a foreign key constraint linking 'carId' to the 'id' column in the 'cars' table
         table.foreign('carId').references('id').inTable('cars').onDelete('CASCADE'); // If a record in the 'cars' table is deleted, the associated records in 'carStatus' will also be deleted (CASCADE)

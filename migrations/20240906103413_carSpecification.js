@@ -3,13 +3,13 @@
  * @returns { Promise<void> }
  */
 export const up = function(knex) {
-    return knex.schema.createTable("carSpecification", (table) => {
+    return knex.schema.createTable("carSpecifications", (table) => {
         table.increments('id').primary(); // Create an auto-incrementing 'id' column and set it as the primary key
 
         table.integer('carId').unsigned().notNullable(); // Create a 'carId' column for storing integer values, which cannot be null, and is unsigned (i.e., only positive values)
         
         // Define the columns with their respective constraints and default values:
-        table.integer('pricePerDay').notNullable(); // Create a 'pricePerDay' column to store the price per day of renting the car; cannot be null
+        table.decimal('pricePerDay').notNullable(); // Create a 'pricePerDay' column to store the price per day of renting the car; cannot be null
         
         table.enu('transmission', ['manual', 'automatic']).notNullable().defaultTo("manual"); // Create an 'transmission' column with enum values 'manual' or 'automatic'; default value is 'manual'
         

@@ -6,7 +6,7 @@ const carStatusValidationSchema = Joi.object({
     .positive()
     .required()
     .messages({
-      'any.required': 'Car ID is required.',
+      'any.required': 'Please provide Car ID.',
       'number.base': 'Car ID must be a number.',
       'number.integer': 'Car ID must be an integer.',
       'number.positive': 'Car ID must be a positive number.',
@@ -15,7 +15,7 @@ const carStatusValidationSchema = Joi.object({
     .max(255)
     .required()
     .messages({
-      'any.required': 'Location is required.',
+      'any.required': 'Please provide Location.',
       'string.empty': 'Location cannot be empty.',
       'string.max': 'Location must be at most 255 characters long.',
     }),
@@ -39,16 +39,14 @@ const carStatusValidationSchema = Joi.object({
     .required()
     .default('full-to-full')
     .messages({
-      'any.required': 'Fuel policy is required.',
+      'any.required': 'Please provide Fuel policy.',
       'string.empty': 'Fuel policy cannot be empty.',
       'string.valid': 'Fuel policy must be one of "full-to-full" or "same-to-same".',
     }),
   lastServicedDate: Joi.string()
     .max(50)
-    .required()
+    .optional()
     .messages({
-      'any.required': 'Last serviced date is required.',
-      'string.empty': 'Last serviced date cannot be empty.',
       'string.max': 'Last serviced date must be at most 50 characters long.',
     }),
 });

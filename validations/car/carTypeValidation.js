@@ -5,7 +5,7 @@ const carTypeValidationSchema = Joi.object({
     .max(30)
     .required()
     .messages({
-      'any.required': 'Car type is required.',
+      'any.required': 'Please provide Car type is required.',
       'string.max': 'Car type cannot exceed 30 characters.',
       'string.empty': 'Car type cannot be empty.',
     })

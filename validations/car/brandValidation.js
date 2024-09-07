@@ -5,7 +5,7 @@ const brandValidationSchema = Joi.object({
     .max(30)
     .required()
     .messages({
-      'any.required': 'Brand name is required.',
+      'any.required': 'Please provide Brand name.',
       'string.max': 'Brand name cannot exceed 30 characters.',
       'string.empty': 'Brand name cannot be empty.',
     })

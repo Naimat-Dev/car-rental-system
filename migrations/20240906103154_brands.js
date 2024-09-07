@@ -9,7 +9,6 @@ export const up = function(knex) {
         table.string('name', 30).notNullable().unique(); // Create a 'name' column with a maximum length of 30 characters, which cannot be null and must be unique
         
         table.timestamps(true, true); // Add 'created_at' and 'updated_at' timestamp columns, with automatic handling of their values
-        table.timestamps(true, true);
       });
 };
 

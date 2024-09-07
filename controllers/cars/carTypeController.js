@@ -4,7 +4,7 @@ import {
 	getOne,
 	deleteOne,
 	updateOne,
-} from "./handleFactory.js";
+} from "../handleFactory.js";
 
 // Create a new Car Type
 export const createCarType = createOne('carTypes'); 

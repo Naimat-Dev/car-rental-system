@@ -5,13 +5,14 @@ import {
   getCarTypeById,
   updateCarTypeById,
   deleteCarTypeById
-} from '../controllers/carTypeController.js';
-
+} from '../controllers/cars/carTypeController.js';
+import { validateSchema } from '../middlewares/validationMiddleware.js';
+import carTypeValidationSchema from '../validations/car/carTypeValidation.js';
 const router = express.Router();
 
 // Define routes for the /carTypes endpoint
 router.route('/')
-    .post(createCarType)  // Handle POST requests to create a new car type
+    .post(validateSchema(carTypeValidationSchema),createCarType)  // Handle POST requests to create a new car type
     .get(getCarTypes);    // Handle GET requests to retrieve all car types
 
 // Define routes for the /carTypes/:id endpoint

@@ -2,53 +2,44 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
-import brandRoutes from './routes/brandRoutes.js';
+
 import AppError from "./utils/appError.js";
 import globalErrorHandler from "./controllers/errorController.js";
 
+
 // Routes
 import blogRoutes from "./routes/blogRoutes.js";
-import carVideoRoutes from './routes/carVideoRoutes.js';
-import carTypeRoutes from './routes/carTypeRoutes.js';
-import carRoutes from "./routes/carRoutes.js"
-import carSpecificationRoutes from './routes/carSpecificationRoutes.js';
-import carImageRoutes from  "./routes/carImagesRoutes.js"
-import carStatusRoutes from "./routes/carStatusRoutes.js"
+import carRoutes from "./routes/carRoutes.js";
 
-const app = express();
+const app = express()
 
 app.use(
-	cors({
-		origin: "*",
-		credentials: true,
-	})
-);
+   cors({
+      origin: '*',
+      credentials: true,
+   })
+)
 
 // Global input sanitization middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
-app.use(cookieParser());
+app.use(cookieParser())
 
 // Developing logging
-if (process.env.NODE_ENV === "development") {
-	app.use(morgan("dev"));
+if (process.env.NODE_ENV === 'development') {
+   app.use(morgan('dev'))
 }
 
-app.get("/", (req, res, next) => {
-	res.send("Car rental API is Running...");
-	next();
-});
+app.get('/', (req, res, next) => {
+   res.send('Car rental API is Running...')
+   next()
+})
 
 app.use("/api/cars" , carRoutes);
-app.use('/api/brands', brandRoutes);
-app.use("/api/cartypes",carTypeRoutes)
-app.use('/api/carVideos', carVideoRoutes);
-app.use('/api/carSpecifications', carSpecificationRoutes);
-app.use('/api/carImage', carImageRoutes);
-app.use('/api/carStatus', carStatusRoutes);
+
 // API ROUTES
-app.use("/api/blogs", blogRoutes);
+app.use('/api/blogs', blogRoutes)
 // app.post("/blog", async (req, res) => {
 // 	const { title, content, author } = req.body;
 // 	try {
@@ -69,11 +60,11 @@ app.use("/api/blogs", blogRoutes);
 // });
 
 // Unhandled Routes Handling Middleware
-app.all("*", (req, res, next) => {
-	next(new AppError(`Can't find this ${req.originalUrl} on this server.`, 404));
-});
+app.all('*', (req, res, next) => {
+   next(new AppError(`Can't find this ${req.originalUrl} on this server.`, 404))
+})
 
 // GLOBAL ERROR HANDLING MIDDLEWARE
-app.use(globalErrorHandler);
+app.use(globalErrorHandler)
 
 export default app;

@@ -5,13 +5,14 @@ import {
     getBrandById,
     deleteBrandById,
     updateBrandById
-} from '../controllers/brandController.js';
-
+} from '../controllers/cars/brandController.js';
+import { validateSchema } from '../middlewares/validationMiddleware.js';
+import brandValidationSchema from '../validations/car/brandValidation.js';
 const router = express.Router();
 
 // Define routes for the /brands endpoint
 router.route('/')
-    .post(createBrand)  // Handle POST requests to create a new brand
+    .post(validateSchema(brandValidationSchema),createBrand)  // Handle POST requests to create a new brand
     .get(getBrands);    // Handle GET requests to retrieve all brands
 
 // Define routes for the /brands/:id endpoint
