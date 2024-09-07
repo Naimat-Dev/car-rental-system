@@ -9,13 +9,16 @@ import {
 
 const router = express.Router();
 
+// Define routes for the /carTypes endpoint
 router.route('/')
-  .post(createCarType)
-  .get(getCarTypes);
+    .post(createCarType)  // Handle POST requests to create a new car type
+    .get(getCarTypes);    // Handle GET requests to retrieve all car types
 
+// Define routes for the /carTypes/:id endpoint
 router.route('/:id')
-  .get(getCarTypeById)
-  .put(updateCarTypeById)
-  .delete(deleteCarTypeById);
+    .get(getCarTypeById)  // Handle GET requests to retrieve a specific car type by its ID
+    .put(updateCarTypeById) // Handle PUT requests to update a car type by its ID
+    .delete(deleteCarTypeById); // Handle DELETE requests to remove a car type by its ID
+
 
 export default router;
