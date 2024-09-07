@@ -11,6 +11,8 @@ import db from "./config/db.js";
 // Routes
 import blogRoutes from "./routes/blogRoutes.js";
 import customRoutes from "./routes/customerRoutes.js";
+import customerAddressRoutes from "./routes/customerAddressRoutes.js";
+import customerLicenseRoutes from "./routes/customerLicenseRoutes.js";
 
 const app = express();
 
@@ -40,25 +42,8 @@ app.get("/", (req, res, next) => {
 // API ROUTES
 app.use("/api/blogs", blogRoutes);
 app.use("/api/customers", customRoutes);
-
-// app.post("/blog", async (req, res) => {
-// 	const { title, content, author } = req.body;
-// 	try {
-// 		const blog = await db("blog").insert({ title, content, author });
-// 		res.status(201).send(blog);
-// 	} catch (error) {
-// 		res.status(500).json({ error: error.message });
-// 	}
-// });
-
-// app.get("/blog", async (req, res) => {
-// 	try {
-// 		const blogs = await db.select("*").from("blog");
-// 		res.status(201).send(blogs);
-// 	} catch (error) {
-// 		res.status(500).json({ error: error.message });
-// 	}
-// });
+app.use("/api/customer/address", customerAddressRoutes);
+app.use("/api/customer/license", customerLicenseRoutes);
 
 // Unhandled Routes Handling Middleware
 app.all("*", (req, res, next) => {

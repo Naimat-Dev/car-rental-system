@@ -1,4 +1,5 @@
 import db from "../config/db.js";
+import { getAll } from "./handleFactory.js";
 
 // Function to create a new customer address
 export const createCustomerAddress = async (req, res) => {
@@ -48,22 +49,25 @@ export const createCustomerAddress = async (req, res) => {
   }
 };
 
-// Function to get all customer addresses
-export const getCustomerAddress = async (req, res) => {
-  try {
-    const addresses = await db("customerAddress").select("*");
+// // Function to get all customer addresses
+export const getCustomerAddress = getAll("customerAddress");
 
-    res.status(200).json({
-      message: "Customer addresses fetched successfully",
-      data: addresses,
-    });
-  } catch (error) {
-    console.error("Error fetching customer addresses:", error);
-    res
-      .status(500)
-      .json({ error: "Internal Server Error", details: error.message });
-  }
-};
+// // Function to get all customer addresses
+// export const getCustomerAddress = async (req, res) => {
+//   try {
+//     const addresses = await db("customerAddress").select("*");
+
+//     res.status(200).json({
+//       message: "Customer addresses fetched successfully",
+//       data: addresses,
+//     });
+//   } catch (error) {
+//     console.error("Error fetching customer addresses:", error);
+//     res
+//       .status(500)
+//       .json({ error: "Internal Server Error", details: error.message });
+//   }
+// };
 
 // Function to get a customer address by ID
 export const getCustomerAddressById = async (req, res) => {
