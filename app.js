@@ -10,6 +10,8 @@ import db from './config/db.js'
 
 // Routes
 import blogRoutes from './routes/blogRoutes.js'
+import customerRoutes from './routes/customerRoutes.js'
+
 
 const app = express()
 
@@ -38,6 +40,8 @@ app.get('/', (req, res, next) => {
 
 // API ROUTES
 app.use('/api/blogs', blogRoutes)
+app.use('/api/customers', customerRoutes)
+
 // app.post("/blog", async (req, res) => {
 // 	const { title, content, author } = req.body;
 // 	try {

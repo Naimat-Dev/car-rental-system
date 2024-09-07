@@ -1,20 +1,28 @@
-import express from "express";
+import express from 'express'
 import {
-  createCustomer,
-  deleteCustomerById,
-  getCustomerById,
-  getCustomers,
-  updateCustomerById,
-} from "../controllers/customersController.js";
+   createCustomer,
+   deleteCustomerById,
+   getCustomerById,
+   getCustomers,
+   getCustomersWithJoin,
+   updateCustomerById,
+} from '../controllers/customersController.js'
+import customerAddressRoutes from './customerAddressRoutes.js'
+import customerLicenseRoutes from './customerLicenseRoutes.js'
 
-const router = express.Router();
+const router = express.Router()
 
-router.route("/").post(createCustomer).get(getCustomers);
+router.use('/address', customerAddressRoutes)
+router.use('/license', customerLicenseRoutes)
+
+router.route('/').post(createCustomer).get(getCustomers)
+
+router.get('/join', getCustomersWithJoin)
 
 router
-  .route("/:id")
-  .get(getCustomerById)
-  .delete(deleteCustomerById)
-  .put(updateCustomerById);
+   .route('/:id')
+   .get(getCustomerById)
+   .delete(deleteCustomerById)
+   .put(updateCustomerById)
 
-export default router;
+export default router
