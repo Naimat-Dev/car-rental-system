@@ -5,7 +5,7 @@ import {
 	deleteOne,
 	updateOne,
 } from "./handleFactory.js";
-
+// Create a new Car 
 export const createCar = createOne ('cars')
 export const getCars = getAll ('cars')
 export const getCarbyId =getOne ('cars')

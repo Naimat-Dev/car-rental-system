@@ -5,13 +5,16 @@ import morgan from "morgan";
 import brandRoutes from './routes/brandRoutes.js';
 import AppError from "./utils/appError.js";
 import globalErrorHandler from "./controllers/errorController.js";
-import db from "./config/db.js";
+
 // Routes
 import blogRoutes from "./routes/blogRoutes.js";
 import carVideoRoutes from './routes/carVideoRoutes.js';
 import carTypeRoutes from './routes/carTypeRoutes.js';
 import carRoutes from "./routes/carRoutes.js"
 import carSpecificationRoutes from './routes/carSpecificationRoutes.js';
+import carImageRoutes from  "./routes/carImagesRoutes.js"
+import carStatusRoutes from "./routes/carStatusRoutes.js"
+
 const app = express();
 
 app.use(
@@ -42,6 +45,8 @@ app.use('/api/brands', brandRoutes);
 app.use("/api/cartypes",carTypeRoutes)
 app.use('/api/carVideos', carVideoRoutes);
 app.use('/api/carSpecifications', carSpecificationRoutes);
+app.use('/api/carImage', carImageRoutes);
+app.use('/api/carStatus', carStatusRoutes);
 // API ROUTES
 app.use("/api/blogs", blogRoutes);
 // app.post("/blog", async (req, res) => {
