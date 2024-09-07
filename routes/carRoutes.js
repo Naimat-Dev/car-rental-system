@@ -1,5 +1,5 @@
 import express from "express";
-import {createCar,deleteCarById,getCarbyId,updateCarById,getCars} from "../controllers/carHandler.js"; 
+import {createCar,deleteCarById,getCarById,updateCarById,getCars} from "../controllers/carHandler.js"; 
 const router = express.Router();
 
 
@@ -10,7 +10,7 @@ router.route('/')
 
 // Define routes for the /cars/:id endpoint
 router.route('/:id')
-    .get(getCarbyId)      // Handle GET requests to retrieve a specific car by its ID
+    .get(getCarById)      // Handle GET requests to retrieve a specific car by its ID
     .put(updateCarById)   // Handle PUT requests to update a car by its ID
     .delete(deleteCarById); // Handle DELETE requests to remove a car by its ID
 
