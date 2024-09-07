@@ -9,6 +9,8 @@ export const up = function(knex) {
 
         // Foreign key constraint
         table.foreign("userId").references("id").inTable("users").onDelete("CASCADE");
+        table.timestamps(true,true);
+
     });
 };
 //changes successfully updated

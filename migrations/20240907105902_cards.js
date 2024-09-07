@@ -12,6 +12,8 @@ export const up = function(knex) {
 
         table.foreign("userId").references("id").inTable("users").onDelete("CASCADE");
         // table.foreign("userId").references("id").inTable("customer").onDelete("CASCADE");
+        table.timestamps(true,true);
+
 
     });
 };

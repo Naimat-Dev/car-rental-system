@@ -1,93 +1,136 @@
-import db from '../config/db.js';
 
-// Create a new user address
-export const createUserAddress = async (req, res) => {
-    try {
-        const { userId, address, city, zipCode, state } = req.body;
+import { createOne, getAll, getOne, updateOne, deleteOne } from "./handleFactory.js";
+import db from "../config/db.js";
+import catchAsync from "../utils/catchAsync.js";
 
-        if (!userId || !address || !city || !zipCode || !state) {
-            return res.status(400).json({ error: "All fields are required" });
-        }
 
-        const [insertedAddress] = await db("userAddress")
-            .insert({ userId, address, city, zipCode, state })
-            .returning('*'); // Retrieve the newly inserted address
+// POST create new User Address
+// Route  /userAddress
+export const createUserAddress = createOne("userAddress");
 
-        if (!insertedAddress) {
-            throw new Error("Failed to retrieve the newly created address");
-        }
+// GET all users
+// Route /api/users
+export const getUserAddress = getAll("userAddress");
 
-        res.status(201).json({ message: "User address successfully created", data: insertedAddress });
-    } catch (error) {
-        console.error("Error creating user address:", error.message);
-        res.status(500).json({ error: "Internal Server Error" });
+// GET user by id
+// Route /api/user/:id
+export const getUserAddressById = getOne("userAddress");
+
+// DELETE user by id
+// Route /api/user/:id
+export const deleteUserAddressById = deleteOne("userAddress");
+
+// UPDATE user by id
+// Route /api/user/:id
+export const updateUserAddressById = updateOne("userAddress");
+
+
+// GET all user addresses with related user data
+// Route /api/userAddress
+export const getUserAddressJoin = catchAsync(async (req, res, next) => {
+  const userAddresses = await db('userAddress')
+    .leftJoin('users', 'userAddress.userId', 'users.id') // Join with users
+    .select(
+      'userAddress.id',
+      'userAddress.address',
+      'userAddress.city',
+      'userAddress.zipCode',
+      'userAddress.state',
+      'users.id as userId',
+      'users.email',
+      'users.name',
+      'users.phoneNumber'
+    );
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      userAddresses
     }
-};
+  });
+});
 
-// Get all user addresses
-export const getUserAddress = async (req, res) => {
-    try {
-        const addresses = await db.select("*").from("userAddress");
-        res.status(200).json(addresses);
-    } catch (error) {
-        console.error("Error fetching user addresses:", error.message);
-        res.status(500).json({ error: "Internal Server Error" });
+
+// GET user address by id with related user data
+// Route /api/userAddress/:id
+export const getUserAddressByIdJoin = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+
+  const userAddress = await db('userAddress')
+    .leftJoin('users', 'userAddress.userId', 'users.id') // Join with users
+    .select(
+      'userAddress.id',
+      'userAddress.address',
+      'userAddress.city',
+      'userAddress.zipCode',
+      'userAddress.state',
+      'users.id as userId',
+      'users.email',
+      'users.name',
+      'users.phoneNumber'
+    )
+    .where('userAddress.id', id)
+    .first();
+
+  if (!userAddress) {
+    return next(new AppError('No user address found with that ID', 404));
+  }
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      userAddress
     }
-};
+  });
+});
 
-// Get a specific user address by ID
-export const getUserAddressById = async (req, res) => {
-    const { id } = req.params;
+// GET all user addresses with related user data and cards
+// Route /api/userAddress
+export const getUserAddressWithCards = catchAsync(async (req, res, next) => {
+  const userAddresses = await db('userAddress')
+    .leftJoin('users', 'userAddress.userId', 'users.id') // Join with users
+    .leftJoin('cards', 'users.id', 'cards.userId') // Join with cards
+    .select(
+      'userAddress.id',
+      'userAddress.address',
+      'userAddress.city',
+      'userAddress.zipCode',
+      'userAddress.state',
+      'users.id as userId',
+      'users.email',
+      'users.name',
+      'users.phoneNumber',
+      'cards.cardNumber',
+      'cards.cardHolderName',
+      'cards.expiryDate'
+    );
 
-    try {
-        const address = await db("userAddress").where({ id }).first(); // Use `.first()` to get a single object
-
-        if (address) {
-            res.status(200).json(address);
-        } else {
-            res.status(404).json({ error: "User address not found" });
-        }
-    } catch (error) {
-        console.error("Error fetching user address:", error.message);
-        res.status(500).json({ error: "Internal Server Error" });
+  res.status(200).json({
+    status: 'success',
+    data: {
+      userAddresses
     }
-};
+  });
+});
 
-// Update a specific user address by ID
-export const updateUserAddressById = async (req, res) => {
-    const { id } = req.params;
-    const { userId, address, city, zipCode, state } = req.body;
 
-    try {
-        const [updatedAddress] = await db("userAddress")
-            .where({ id })
-            .update({ userId, address, city, zipCode, state }, ["id", "userId", "address", "city", "zipCode", "state"]); // Retrieve updated fields
 
-        if (updatedAddress) {
-            res.status(200).json({ message: "User address successfully updated", data: updatedAddress });
-        } else {
-            res.status(404).json({ error: "User address not found" });
-        }
-    } catch (error) {
-        console.error("Error updating user address:", error.message);
-        res.status(500).json({ error: "Internal Server Error" });
-    }
-};
 
-// Delete a specific user address by ID
-export const deleteUserAddressById = async (req, res) => {
-    const { id } = req.params;
 
-    try {
-        const deletedCount = await db("userAddress").where({ id }).del();
 
-        if (deletedCount) {
-            res.status(204).send(); // No content to return after deletion
-        } else {
-            res.status(404).json({ error: "User address not found" });
-        }
-    } catch (error) {
-        console.error("Error deleting user address:", error.message);
-        res.status(500).json({ error: "Internal Server Error" });
-    }
-};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

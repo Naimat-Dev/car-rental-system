@@ -1,20 +1,21 @@
-import express from "express";
+import express from 'express'
 import {
-	createBlog,
-	getBlogs,
-	getBlogById,
-	deleteBlogById,
-	updateBlogById,
-} from "../controllers/blogController.js";
+   createBlog,
+   getBlogs,
+   getBlogById,
+   deleteBlogById,
+   updateBlogById,
+} from '../controllers/blogController.js'
+import carValidationSchema from '../validations/car/carValidation.js'
+import { validateSchema } from '../middlewares/validationMiddleware.js'
 
-const router = express.Router();
-
-router.route("/").post(createBlog).get(getBlogs);
+const router = express.Router()
 
 router
-	.route("/:id")
-	.get(getBlogById)
-	.delete(deleteBlogById)
-	.put(updateBlogById);
+   .route('/')
+   .post(validateSchema(carValidationSchema), createBlog)
+   .get(getBlogs)
 
-export default router;
+router.route('/:id').get(getBlogById).delete(deleteBlogById).put(updateBlogById)
+
+export default router

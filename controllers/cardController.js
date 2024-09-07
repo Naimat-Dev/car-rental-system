@@ -1,104 +1,93 @@
+import { createOne, getAll, getOne, updateOne, deleteOne } from "./handleFactory.js";
 import db from "../config/db.js";
+import catchAsync from "../utils/catchAsync.js";
 
-// Create a new card
-export const createCard = async (req, res) => {
-    try {
-        const { userId, cardNumber, cardHolderName, expiryDate, cvv } = req.body;
+// POST create new card     
+// Route  /cards
+export const createCard = createOne("cards");
 
-        if (!userId || !cardNumber || !cardHolderName || !expiryDate || !cvv) {
-            return res.status(400).json({ error: "All fields are required" });
-        }
+// GET all cards
+// Route /api/cards
+export const getCards = getAll("cards");
 
-        const [insertedCard] = await db("cards")
-            .insert({
-                userId,
-                cardNumber,
-                cardHolderName,
-                expiryDate,
-                cvv
-            })
-            .returning('*');
+// GET card by id
+// Route /api/card/:id
+export const getCardById = getOne("cards");
 
-        if (!insertedCard) {
-            throw new Error("Failed to retrieve the newly created card");
-        }
+// DELETE card by id
+// Route /api/card/:id
+export const deleteCardById = deleteOne("cards");
 
-        res.status(201).json({ message: "Card successfully added", data: insertedCard });
-    } catch (error) {
-        console.error("Error inserting card details:", error.message);
-        res.status(500).json({ error: "Internal Server Error" });
+// UPDATE card by id
+// Route /api/card/:id
+export const updateCardById = updateOne("cards");
+
+// GET all cards with related user data
+// Route /api/cards
+export const getCardsJoin = catchAsync(async (req, res, next) => {
+  const cards = await db('cards')
+    .leftJoin('users', 'cards.userId', 'users.id') // Join with users
+    .select(
+      'cards.id',
+      'cards.cardNumber',
+      'cards.cardHolderName',
+      'cards.expiryDate',
+      'cards.cvv',
+      'users.id as userId',
+      'users.email',
+      'users.name'
+    );
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      cards
     }
-};
+  });
+});
+// GET card by id with related user data
+// Route /api/card/:id
+export const getCardByIdJoin = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
 
-// Get all cards
-export const getCards = async (req, res) => {
-    try {
-        const cards = await db.select("*").from("cards");
-        res.status(200).json(cards);
-    } catch (error) {
-        console.error("Error fetching cards:", error.message);
-        res.status(500).json({ error: "Internal Server Error" });
+  const card = await db('cards')
+    .leftJoin('users', 'cards.userId', 'users.id') // Join with users
+    .select(
+      'cards.id',
+      'cards.cardNumber',
+      'cards.cardHolderName',
+      'cards.expiryDate',
+      'cards.cvv',
+      'users.id as userId',
+      'users.email',
+      'users.name'
+    )
+    .where('cards.id', id)
+    .first();
+
+  if (!card) {
+    return next(new AppError('No card found with that ID', 404));
+  }
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      card
     }
-};
-
-// Get a specific card by ID
-export const getCardById = async (req, res) => {
-    const { id } = req.params;
-
-    try {
-        const card = await db("cards").where({ id }).first(); // Use `.first()` to get a single record
-
-        if (card) {
-            res.status(200).json(card);
-        } else {
-            res.status(404).json({ error: "Card not found" });
-        }
-    } catch (error) {
-        console.error("Error fetching card:", error.message);
-        res.status(500).json({ error: "Internal Server Error" });
-    }
-};
-
-// Update a specific card by ID
-export const updateCardById = async (req, res) => {
-    const { id } = req.params;
-    const { userId, cardHolderName, cardNumber, expiryDate, cvv } = req.body;
-
-    try {
-        const [updatedCard] = await db("cards").where({ id }).update({
-            userId,
-            cardHolderName,
-            cardNumber,
-            expiryDate,
-            cvv
-        }, ["id", "userId", "cardHolderName", "cardNumber", "expiryDate", "cvv"]);
-
-        if (updatedCard) {
-            res.status(200).json({ message: "Card successfully updated", data: updatedCard });
-        } else {
-            res.status(404).json({ error: "Card not found" });
-        }
-    } catch (error) {
-        console.error("Error updating card:", error.message);
-        res.status(500).json({ error: "Internal Server Error" });
-    }
-};
+  });
+});
 
 
-// Delete a specific card by ID
-export const deleteCardById = async (req, res) => {
-    const { id } = req.params;
 
-    try {
-        const deletedCount = await db("cards").where({ id }).del();
 
-        if (deletedCount) {
-            res.status(204).send(); 
-        } else {
-            res.status(404).json({ error: "Card not found" });
-        }
-    } catch (error) {
-        console.error("Error deleting card:", error.message);
-        res.status(500).json({ error: "Internal Server Error" });
-    }
-};
+
+
+
+
+
+
+
+
+
+
+

@@ -8,10 +8,12 @@ export const up = function(knex) {
         table.date("registrationDate").notNullable();
         table.string("image").nullable();
         table.string("cnic", 20).nullable().unique();
-        table.enu("role", ["admin", "user"]).defaultTo("user").notNullable(); 
+        table.enu("role", ["admin", "user"]).defaultTo("user")
+        table.string("password", 70).notNullable
         table.date("passwordChangedAt").nullable(); 
         table.string("passwordResetToken").nullable(); 
         table.date("passwordResetExpires").nullable(); 
+        table.timestamps(true,true);
     });
 };
 //changes successfully updated
