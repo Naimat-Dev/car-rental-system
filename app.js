@@ -10,17 +10,15 @@ import db from "./config/db.js";
 
 // Routes
 import blogRoutes from "./routes/blogRoutes.js";
-import customRoutes from "./routes/customerRoutes.js";
-import customerAddressRoutes from "./routes/customerAddressRoutes.js";
-import customerLicenseRoutes from "./routes/customerLicenseRoutes.js";
+import customerRoutes from "./routes/customerRoutes.js";
 
 const app = express();
 
 app.use(
-	cors({
-		origin: "*",
-		credentials: true,
-	})
+  cors({
+    origin: "*",
+    credentials: true,
+  })
 );
 
 // Global input sanitization middleware
@@ -31,19 +29,22 @@ app.use(cookieParser());
 
 // Developing logging
 if (process.env.NODE_ENV === "development") {
-	app.use(morgan("dev"));
+  app.use(morgan("dev"));
 }
 
 app.get("/", (req, res, next) => {
-	res.send("Car rental API is Running...");
-	next();
+  res.send("Car rental API is Running...");
+  next();
 });
 
 // API ROUTES
 app.use("/api/blogs", blogRoutes);
-app.use("/api/customers", customRoutes);
-app.use("/api/customer/address", customerAddressRoutes);
-app.use("/api/customer/license", customerLicenseRoutes);
+
+app.use("/api/customers", customerRoutes);
+
+// app.use("/api/address", customerAddressRoutes);
+// app.use("/api/license", customerLicenseRoutes);
+
 // app.post("/blog", async (req, res) => {
 // 	const { title, content, author } = req.body;
 // 	try {
@@ -65,7 +66,7 @@ app.use("/api/customer/license", customerLicenseRoutes);
 
 // Unhandled Routes Handling Middleware
 app.all("*", (req, res, next) => {
-	next(new AppError(`Can't find this ${req.originalUrl} on this server.`, 404));
+  next(new AppError(`Can't find this ${req.originalUrl} on this server.`, 404));
 });
 
 // GLOBAL ERROR HANDLING MIDDLEWARE
