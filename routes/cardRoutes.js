@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.route('/').post(createCard).get(getCards);
 
-router.route("/:id").get(getCardById).delete(updateCardById).put(deleteCardById);
+router.route("/:id").get(getCardById).delete(deleteCardById).put(updateCardById);
 
 
 export default router;

@@ -18,11 +18,7 @@ export const createUser = catchAsync(async (req, res, next) => {
             status,
             registrationDate,
             image,
-            cnic,
-            role,
-            passwordChangedAt,
-            passwordResetToken,
-            passwordResetExpires
+            cnic
         })
         .returning('*');
 

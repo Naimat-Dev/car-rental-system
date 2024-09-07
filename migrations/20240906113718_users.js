@@ -8,7 +8,7 @@ export const up = function(knex) {
         table.date("registrationDate").notNullable();
         table.string("image").nullable();
         table.string("cnic", 20).nullable().unique();
-        table.enu("role", ["admin", "user"]).notNullable(); 
+        table.enu("role", ["admin", "user"]).defaultTo("user").notNullable(); 
         table.date("passwordChangedAt").nullable(); 
         table.string("passwordResetToken").nullable(); 
         table.date("passwordResetExpires").nullable(); 
