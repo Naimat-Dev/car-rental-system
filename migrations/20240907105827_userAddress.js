@@ -1,4 +1,4 @@
-export const up = function(knex) {
+export const up = function (knex) {
     return knex.schema.createTable("userAddress", (table) => {
         table.increments("id").primary(); // Primary key
         table.integer("userId").unique().unsigned().notNullable(); // Foreign key to `user` table
@@ -9,12 +9,12 @@ export const up = function(knex) {
 
         // Foreign key constraint
         table.foreign("userId").references("id").inTable("users").onDelete("CASCADE");
-        table.timestamps(true,true);
+        table.timestamps(true, true);
 
     });
 };
 //changes successfully updated
-export const down = function(knex) {
+export const down = function (knex) {
     return knex.schema.dropTableIfExists("userAddress");
 };
 

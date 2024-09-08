@@ -1,7 +1,7 @@
 
 
 
-export const up = function(knex) {
+export const up = function (knex) {
     return knex.schema.createTable("cards", (table) => {
         table.increments("id").primary(); // Primary key
         table.integer("userId").unique().unsigned().notNullable(); // Foreign key to `user` table
@@ -11,14 +11,14 @@ export const up = function(knex) {
         table.string('cvv', 6).notNullable(); // CVV with max length of 4
 
         table.foreign("userId").references("id").inTable("users").onDelete("CASCADE");
-        // table.foreign("userId").references("id").inTable("customer").onDelete("CASCADE");
-        table.timestamps(true,true);
+        // table.foreign("userId").references("id").inTable("customers").onDelete("CASCADE");
+        table.timestamps(true, true);
 
 
     });
 };
 //changes successfully updated
 
-export const down = function(knex) {
+export const down = function (knex) {
     return knex.schema.dropTableIfExists("cards");
 };

@@ -28,109 +28,89 @@ export const updateUserAddressById = updateOne("userAddress");
 // GET all user addresses with related user data
 // Route /api/userAddress
 export const getUserAddressJoin = catchAsync(async (req, res, next) => {
-  const userAddresses = await db('userAddress')
-    .leftJoin('users', 'userAddress.userId', 'users.id') // Join with users
-    .select(
-      'userAddress.id',
-      'userAddress.address',
-      'userAddress.city',
-      'userAddress.zipCode',
-      'userAddress.state',
-      'users.id as userId',
-      'users.email',
-      'users.name',
-      'users.phoneNumber'
-    );
+    const userAddresses = await db('userAddress')
+        .leftJoin('users', 'userAddress.userId', 'users.id') // Join with users
+        .select(
+            'userAddress.id',
+            'userAddress.address',
+            'userAddress.city',
+            'userAddress.zipCode',
+            'userAddress.state',
+            'users.id as userId',
+            'users.email',
+            'users.name',
+            'users.phoneNumber'
+        );
 
-  res.status(200).json({
-    status: 'success',
-    data: {
-      userAddresses
-    }
-  });
+    res.status(200).json({
+        status: 'success',
+        data: {
+            userAddresses
+        }
+    });
 });
 
 
-// GET user address by id with related user data
+
+// GET user address by ID with related user data
 // Route /api/userAddress/:id
 export const getUserAddressByIdJoin = catchAsync(async (req, res, next) => {
-  const { id } = req.params;
+    const { id } = req.params;
 
-  const userAddress = await db('userAddress')
-    .leftJoin('users', 'userAddress.userId', 'users.id') // Join with users
-    .select(
-      'userAddress.id',
-      'userAddress.address',
-      'userAddress.city',
-      'userAddress.zipCode',
-      'userAddress.state',
-      'users.id as userId',
-      'users.email',
-      'users.name',
-      'users.phoneNumber'
-    )
-    .where('userAddress.id', id)
-    .first();
+    const userAddress = await db('userAddress')
+        .leftJoin('users', 'userAddress.userId', 'users.id') // Join with users
+        .select(
+            'userAddress.id',
+            'userAddress.address',
+            'userAddress.city',
+            'userAddress.zipCode',
+            'userAddress.state',
+            'users.id as userId',
+            'users.email',
+            'users.name',
+            'users.phoneNumber'
+        )
+        .where('userAddress.id', id)
+        .first();
 
-  if (!userAddress) {
-    return next(new AppError('No user address found with that ID', 404));
-  }
-
-  res.status(200).json({
-    status: 'success',
-    data: {
-      userAddress
+    if (!userAddress) {
+        return next(new AppError('No user address found with that ID', 404));
     }
-  });
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+            userAddress
+        }
+    });
 });
+
 
 // GET all user addresses with related user data and cards
-// Route /api/userAddress
+// Route /api/userAddress/with-cards
 export const getUserAddressWithCards = catchAsync(async (req, res, next) => {
-  const userAddresses = await db('userAddress')
-    .leftJoin('users', 'userAddress.userId', 'users.id') // Join with users
-    .leftJoin('cards', 'users.id', 'cards.userId') // Join with cards
-    .select(
-      'userAddress.id',
-      'userAddress.address',
-      'userAddress.city',
-      'userAddress.zipCode',
-      'userAddress.state',
-      'users.id as userId',
-      'users.email',
-      'users.name',
-      'users.phoneNumber',
-      'cards.cardNumber',
-      'cards.cardHolderName',
-      'cards.expiryDate'
-    );
+    const userAddresses = await db('userAddress')
+        .leftJoin('users', 'userAddress.userId', 'users.id') // Join with users
+        .leftJoin('cards', 'users.id', 'cards.userId') // Join with cards
+        .select(
+            'userAddress.id',
+            'userAddress.address',
+            'userAddress.city',
+            'userAddress.zipCode',
+            'userAddress.state',
+            'users.id as userId',
+            'users.email',
+            'users.name',
+            'users.phoneNumber',
+            'cards.cardNumber',
+            'cards.cardHolderName',
+            'cards.expiryDate'
+        );
 
-  res.status(200).json({
-    status: 'success',
-    data: {
-      userAddresses
-    }
-  });
+    res.status(200).json({
+        status: 'success',
+        data: {
+            userAddresses
+        }
+    });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
