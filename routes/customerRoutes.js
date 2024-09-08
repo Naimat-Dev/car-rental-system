@@ -15,8 +15,8 @@ import customerAddressRoutes from "./customerAddressRoutes.js";
 import customerLicenseRoutes from "./customerLicenseRoutes.js";
 const router = express.Router();
 
-router.get("/api/:id", getCustomersJoinById);
-router.get("/api", getAllCustomersJoin);
+router.get("/all/:id", getCustomersJoinById);
+router.get("/all", getAllCustomersJoin);
 
 router.use("/address", customerAddressRoutes);
 router.use("/license", customerLicenseRoutes);
