@@ -26,7 +26,7 @@ export const createOne = (Table) =>
       })
    })
 
-// Get all records
+// // Get all records
 export const getAll = (Table) =>
    catchAsync(async (req, res, next) => {
       // const doc = await db.select("*").from(Table);

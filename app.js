@@ -8,8 +8,12 @@ import globalErrorHandler from "./controllers/errorController.js";
 
 
 // Routes
+
 import blogRoutes from "./routes/blogRoutes.js";
 import carRoutes from "./routes/carRoutes.js";
+import blogRoutes from './routes/blogRoutes.js'
+import customerRoutes from './routes/customerRoutes.js'
+
 
 const app = express()
 
@@ -40,24 +44,7 @@ app.use("/api/cars" , carRoutes);
 
 // API ROUTES
 app.use('/api/blogs', blogRoutes)
-// app.post("/blog", async (req, res) => {
-// 	const { title, content, author } = req.body;
-// 	try {
-// 		const blog = await db("blog").insert({ title, content, author });
-// 		res.status(201).send(blog);
-// 	} catch (error) {
-// 		res.status(500).json({ error: error.message });
-// 	}
-// });
-
-// app.get("/blog", async (req, res) => {
-// 	try {
-// 		const blogs = await db.select("*").from("blog");
-// 		res.status(201).send(blogs);
-// 	} catch (error) {
-// 		res.status(500).json({ error: error.message });
-// 	}
-// });
+app.use('/api/customers', customerRoutes)
 
 // Unhandled Routes Handling Middleware
 app.all('*', (req, res, next) => {

@@ -1,19 +1,25 @@
-import express from "express";
+import express from 'express'
 import {
-  createCustomerAddress,
-  deleteCustomerAddressById,
-  getCustomerAddress,
-  getCustomerAddressById,
-  updateCustomerAddressById,
-} from "../controllers/customerAddressCcontroller.js";
-const router = express.Router();
+   createCustomerAddress,
+   deleteCustomerAddressById,
+   getCustomerAddress,
+   getCustomerAddressById,
+   updateCustomerAddressById,
+} from '../controllers/customerAddressCcontroller.js'
+import { validateSchema } from '../middlewares/validationMiddleware.js'
+import customerAddressValidationSchema from './../validations/customer/customerAddressValidation.js'
 
-router.route("/").post(createCustomerAddress).get(getCustomerAddress);
+const router = express.Router()
 
 router
-  .route("/:id")
-  .get(getCustomerAddressById)
-  .delete(deleteCustomerAddressById)
-  .put(updateCustomerAddressById);
+   .route('/')
+   .post(validateSchema(customerAddressValidationSchema), createCustomerAddress)
+   .get(getCustomerAddress)
 
-export default router;
+router
+   .route('/:id')
+   .get(getCustomerAddressById)
+   .delete(deleteCustomerAddressById)
+   .put(updateCustomerAddressById)
+
+export default router
