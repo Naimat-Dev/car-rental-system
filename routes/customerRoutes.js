@@ -2,8 +2,10 @@ import express from "express";
 import {
   createCustomer,
   deleteCustomerById,
+  getAllCustomersJoin,
   getCustomerById,
   getCustomers,
+  getCustomersJoinById,
   updateCustomerById,
 } from "../controllers/customersController.js";
 import { validateSchema } from "../middlewares/validationMiddleware.js";
@@ -12,6 +14,9 @@ import customerValidationSchema from "./../validations/customer/customerValidati
 import customerAddressRoutes from "./customerAddressRoutes.js";
 import customerLicenseRoutes from "./customerLicenseRoutes.js";
 const router = express.Router();
+
+router.get("/api/:id", getCustomersJoinById);
+router.get("/api", getAllCustomersJoin);
 
 router.use("/address", customerAddressRoutes);
 router.use("/license", customerLicenseRoutes);
