@@ -5,7 +5,6 @@ import {
 	deleteOne,
 	updateOne,
 } from "../handleFactory.js";
-
 // Create a new Brand
 export const createBrand = createOne("brands"); 
 

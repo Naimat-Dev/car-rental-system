@@ -21,5 +21,5 @@ router.route('/:id')
     .put(updateCarSpecificationById) // Handle PUT requests to update a car specification by its ID
     .delete(deleteCarSpecificationById); // Handle DELETE requests to remove a car specification by its ID
 
-
+router.route("/")
 export default router;

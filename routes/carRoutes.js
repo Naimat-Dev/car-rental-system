@@ -1,5 +1,5 @@
 import express from "express";
-import {createCar,deleteCarById,getCarById,updateCarById,getCars,allbyId} from "../controllers/cars/carController.js"; 
+import {createCar,deleteCarById,getCarById,updateCarById,getCars,getCarDetailsWithJoinById,getCarsDetailsWithJoin} from "../controllers/cars/carController.js"; 
 const router = express.Router();
 import { validateSchema } from "../middlewares/validationMiddleware.js";
 import carValidationSchema from "../validations/car/carValidation.js";
@@ -11,7 +11,7 @@ import carTypesRoutes from "./carTypeRoutes.js"
 router.use('/brands', brandRoutes);
 router.use("/types",carTypesRoutes)
 router.use('/specifications', carSpecificationRoutes);
-router.use('/Status', carStatusRoutes);
+router.use('/status', carStatusRoutes);
 router.use("/media",carsMediaRoutes);
 // Define routes for the /cars endpoint
 router.route('/')
@@ -26,8 +26,8 @@ router.route('/:id')
     .put(updateCarById)   // Handle PUT requests to update a car by its ID
     .delete(deleteCarById); // Handle DELETE requests to remove a car by its ID
 
-router.get("/all/:id",allbyId )
-
+router.get("/all/:id",getCarDetailsWithJoinById )
+router.get("/all" ,getCarsDetailsWithJoin)
 
 
 

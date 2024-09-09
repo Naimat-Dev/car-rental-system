@@ -4,7 +4,7 @@
  */
 export const up = function(knex) {
     return knex.schema.createTable("carSpecifications", (table) => {
-        table.increments('id').primary(); // Create an auto-incrementing 'id' column and set it as the primary key
+        table.increments('id').primary().unique(); // Create an auto-incrementing 'id' column and set it as the primary key
 
         table.integer('carId').unsigned().notNullable(); // Create a 'carId' column for storing integer values, which cannot be null, and is unsigned (i.e., only positive values)
         
@@ -17,13 +17,15 @@ export const up = function(knex) {
         
         table.integer('seatingCapacity').notNullable(); // Create a 'seatingCapacity' column to store the number of seats in the car; cannot be null
         
-        table.enu('mileage', ['low', 'medium', 'high']).notNullable().defaultTo("low"); // Create a 'mileage' column with enum values 'low', 'medium', or 'high'; default value is 'low'
+        table.decimal('minMileage', 5, 2).notNullable(); // Create a 'minMileage' column with decimal values 
+
+        table.decimal('maxMileage', 5, 2).notNullable(); // Create a 'maxMileage' column with decimal values 
         
         table.string('engineCapacity').notNullable(); // Create an 'engineCapacity' column to store the engine capacity of the car; cannot be null
         
         table.string('color', 10).notNullable(); // Create a 'color' column to store the color of the car, limited to 10 characters; cannot be null
         
-        table.string('enginecondition').notNullable(); // Create an 'enginecondition' column to store the condition of the engine; cannot be null
+        table.string('engineCondition').notNullable(); // Create an 'enginecondition' column to store the condition of the engine; cannot be null
         
         table.decimal('odometerReading').notNullable(); // Create an 'odometerReading' column to store the car's odometer reading; cannot be null
         

@@ -18,7 +18,6 @@ router.route('/')
 // Define routes for the /carsMedia/:id endpoint
 router.route('/:id')
     .get(getCarMediaById)      // Handle GET requests to retrieve a specific car media entry by its ID
-    .delete(deleteCarMediaById) // Handle DELETE requests to remove a car media entry by its ID
-    .put(updateCarMediaById);   // Handle PUT requests to update a car media entry by its ID
-
+    .delete(deleteCarMediaById)// Handle DELETE requests to remove a car media entry by its ID
+    .put(updateCarMediaById)  // Handle PUT requests to update a car media entry by its ID and carId
 export default router;
