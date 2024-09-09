@@ -50,6 +50,7 @@ const customerValidationSchema = Joi.object({
     "string.empty": "Image URL cannot be empty.",
     "string.uri": "Please provide a valid image URL.",
   }),
+  status: Joi.string().valid('active', 'inactive') 
 
 });
 

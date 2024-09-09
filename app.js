@@ -10,7 +10,7 @@ import db from "./config/db.js";
 
 // Routes
 import blogRoutes from "./routes/blogRoutes.js";
-import customerRoutes from "./routes/customerRoutes.js";
+import customerRoutes from "./routes/customer/customerRoutes.js";
 
 const app = express();
 

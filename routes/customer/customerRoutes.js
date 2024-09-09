@@ -7,12 +7,12 @@ import {
   getCustomers,
   getCustomersJoinById,
   updateCustomerById,
-} from "../controllers/customersController.js";
-import { validateSchema } from "../middlewares/validationMiddleware.js";
-import customerValidationSchema from "./../validations/customer/customerValidation.js";
+} from "../../controllers/customer/customersController.js";
+import { validateSchema } from "../../middlewares/validationMiddleware.js";
+import customerValidationSchema from "../../validations/customer/customerValidation.js";
 
-import customerAddressRoutes from "./customerAddressRoutes.js";
-import customerLicenseRoutes from "./customerLicenseRoutes.js";
+import customerAddressRoutes from "../customer/customerAddressRoutes.js";
+import customerLicenseRoutes from "../customer/customerLicenseRoutes.js";
 const router = express.Router();
 
 router.get("/all/:id", getCustomersJoinById);

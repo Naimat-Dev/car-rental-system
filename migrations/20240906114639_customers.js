@@ -15,7 +15,7 @@ export const up = async function (knex) {
     table
       .enu("status", ["active", "inactive"])
       .notNullable()
-      .defaultTo("inactive");
+      .defaultTo("active");
 
     table.timestamps(true, true);
   });
