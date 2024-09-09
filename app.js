@@ -8,8 +8,18 @@ import globalErrorHandler from "./controllers/errorController.js";
 
 
 // Routes
+<<<<<<< HEAD
 import blogRoutes from './routes/blogRoutes.js'
 import carRoutes from "./routes/carRoutes.js";
+=======
+import userRoutes from "./routes/userRoutes.js";
+import cardRoutes from "./routes/cardRoutes.js"
+import carRoutes from "./routes/carRoutes.js";
+import blogRoutes from './routes/blogRoutes.js'
+import customerRoutes from './routes/customerRoutes.js'
+
+
+>>>>>>> 48221eeeb649dbac32a22ee3305e423919fcc346
 const app = express()
 
 app.use(
@@ -38,7 +48,15 @@ app.get('/', (req, res, next) => {
 app.use("/api/cars" , carRoutes);
 
 // API ROUTES
+<<<<<<< HEAD
 app.use('/api/blogs', blogRoutes)
+=======
+app.use("/api/blogs", blogRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/cards", cardRoutes);
+app.use('/api/customers', customerRoutes)
+>>>>>>> 48221eeeb649dbac32a22ee3305e423919fcc346
+
 
 // Unhandled Routes Handling Middleware
 app.all('*', (req, res, next) => {

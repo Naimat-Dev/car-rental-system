@@ -2,6 +2,7 @@
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
+
 export const up = async function (knex) {
    await knex.schema.createTable('customerAddress', (table) => {
       table.increments('id').primary()

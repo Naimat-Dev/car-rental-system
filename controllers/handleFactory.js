@@ -7,11 +7,15 @@ import APIFeatures from './../utils/apiFeatures.js'
 // CREATE One Document
 export const createOne = (Table) =>
    catchAsync(async (req, res, next) => {
-      if(req.body.imageUrls || req.body.videoUrls){
+      console.log(req.body);
+
+      if(req.body.imageUrls && req.body.videoUrls){
          req.body.imageUrls= JSON.stringify(req.body.imageUrls)
          req.body.videoUrls = JSON.stringify( req.body.videoUrls)
       }
+     
       const doc = await db(Table).insert(req.body).returning('*')
+      console.log(req.body);
       if (!doc) {
          return next(new AppError(`${Table} could not be created`, 400))
       }
@@ -24,28 +28,28 @@ export const createOne = (Table) =>
 
 // // Get all records
 export const getAll = (Table) =>
-   catchAsync(async (req, res, next) => {
-      // const doc = await db.select("*").from(Table);
+  catchAsync(async (req, res, next) => {
+    // const doc = await db.select("*").from(Table);
 
-      // Start with your table query
-      const query = db(Table)
+    // Start with your table query
+    const query = db(Table);
 
-      // Now apply filter, sort, fields limit and pagination using api features class
-      const features = new APIFeatures(query, req.query)
-         .filter()
-         .sort()
-         .fieldsLimit()
-         .paginate()
+    // Now apply filter, sort, fields limit and pagination using api features class
+    const features = new APIFeatures(query, req.query)
+      .filter()
+      .sort()
+      .fieldsLimit()
+      .paginate();
 
-      // Finally the query is built and then apply them to get the actual data (Records from given tabel)
-      const doc = await features.query
+    // Finally the query is built and then apply them to get the actual data (Records from given tabel)
+    const doc = await features.query;
 
-      res.status(200).json({
-         status: 'success',
-         results: doc.length,
-         doc,
-      })
-   })
+    res.status(200).json({
+      status: "success",
+      results: doc.length,
+      doc,
+    });
+  });
 
 // Get single record
 export const getOne = (Table) =>
@@ -70,10 +74,11 @@ export const deleteOne = (Table) =>
       const { id } = req.params
 
       const doc = await db(Table).where({ id }).del()
-      if (!doc) {
-         return next(new AppError(`${Table} not found by that ID.`, 404))
-      }
-
+     
+    if (!doc) {
+      return next(new AppError(`${Table} not found by that ID.`, 404));
+    }
+     
       res.status(204).json({
          status: 'success',
          doc,
