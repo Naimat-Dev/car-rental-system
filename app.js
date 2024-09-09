@@ -7,7 +7,9 @@ import AppError from './utils/appError.js'
 import globalErrorHandler from './controllers/errorController.js'
 
 // Routes
-
+import userRoutes from './routes/userRoutes.js'
+import cardRoutes from './routes/cardRoutes.js'
+import carRoutes from './routes/carRoutes.js'
 import blogRoutes from './routes/blogRoutes.js'
 import carRoutes from './routes/carRoutes.js'
 import customerRoutes from './routes/customerRoutes.js'
@@ -39,8 +41,9 @@ app.get('/', (req, res, next) => {
 
 // API ROUTES
 app.use('/api/blogs', blogRoutes)
+app.use('/api/users', userRoutes)
+app.use('/api/cards', cardRoutes)
 app.use('/api/customers', customerRoutes)
-app.use('/api/cars', carRoutes)
 
 // Unhandled Routes Handling Middleware
 app.all('*', (req, res, next) => {
