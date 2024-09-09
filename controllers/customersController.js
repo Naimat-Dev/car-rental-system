@@ -1,3 +1,4 @@
+
 import db from "../config/db.js";
 import {
   createOne,
@@ -18,6 +19,7 @@ export const getCustomerById = getOne("customers");
 
 // UPDATE customer by id
 export const updateCustomerById = updateOne("customers");
+
 
 // Function to delete a customer by ID
 export const deleteCustomerById = deleteOne("customers");
@@ -99,4 +101,5 @@ export const getAllCustomersJoin = async (req, res) => {
         .json({ error: "Internal Server Error", details: error.message });
     }
   };
-  
+
+export const deleteCustomerById = deleteOne('customers')
