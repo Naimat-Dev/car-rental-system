@@ -14,7 +14,7 @@ const handleInvalidFieldError = (err) => {
 
 // Handle duplicate field error (unique constraint violation)
 const handleDuplicateFieldError = (err) => {
-   const message = `Duplicate field value violates unique constraint ${err.constraint}. Please use another value.`
+   const message = `Duplicate field value ${err.constraint}. Please use another value.`
    return new AppError(message, 400)
 }
 
