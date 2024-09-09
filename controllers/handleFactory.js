@@ -77,8 +77,7 @@ export const deleteOne = (Table) =>
     if (!doc) {
       return next(new AppError(`${Table} not found by that ID.`, 404));
     }
-
-
+     
       res.status(204).json({
          status: 'success',
          doc,

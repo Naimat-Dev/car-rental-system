@@ -8,8 +8,8 @@ import globalErrorHandler from "./controllers/errorController.js";
 
 
 // Routes
-
-import blogRoutes from "./routes/blogRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
+import cardRoutes from "./routes/cardRoutes.js"
 import carRoutes from "./routes/carRoutes.js";
 import blogRoutes from './routes/blogRoutes.js'
 import customerRoutes from './routes/customerRoutes.js'
@@ -43,8 +43,11 @@ app.get('/', (req, res, next) => {
 app.use("/api/cars" , carRoutes);
 
 // API ROUTES
-app.use('/api/blogs', blogRoutes)
+app.use("/api/blogs", blogRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/cards", cardRoutes);
 app.use('/api/customers', customerRoutes)
+
 
 // Unhandled Routes Handling Middleware
 app.all('*', (req, res, next) => {
