@@ -25,92 +25,66 @@ export const deleteUserAddressById = deleteOne("userAddress");
 export const updateUserAddressById = updateOne("userAddress");
 
 
-// GET all user addresses with related user data
-// Route /api/userAddress
+//Routes //api/users/addresses/all/
+
 export const getUserAddressJoin = catchAsync(async (req, res, next) => {
-    const userAddresses = await db('userAddress')
-        .leftJoin('users', 'userAddress.userId', 'users.id') // Join with users
-        .select(
-            'userAddress.id',
-            'userAddress.address',
-            'userAddress.city',
-            'userAddress.zipCode',
-            'userAddress.state',
-            'users.id as userId',
-            'users.email',
-            'users.name',
-            'users.phoneNumber'
-        );
+    const userAddresses = await db('userAddress as ua')
+        .leftJoin('users as u', 'ua.userId', 'u.id')
+        .select('*');  
+
+    const addressesWithoutSensitiveData = userAddresses.map(({ password, passwordResetToken, passwordResetExpires, ...rest }) => rest);
 
     res.status(200).json({
         status: 'success',
-        data: {
-            userAddresses
+        doc: {
+            userAddresses: addressesWithoutSensitiveData
         }
     });
 });
 
 
 
-// GET user address by ID with related user data
-// Route /api/userAddress/:id
+//Routes //api/users/addresses/all/:id
+
 export const getUserAddressByIdJoin = catchAsync(async (req, res, next) => {
     const { id } = req.params;
 
-    const userAddress = await db('userAddress')
-        .leftJoin('users', 'userAddress.userId', 'users.id') // Join with users
-        .select(
-            'userAddress.id',
-            'userAddress.address',
-            'userAddress.city',
-            'userAddress.zipCode',
-            'userAddress.state',
-            'users.id as userId',
-            'users.email',
-            'users.name',
-            'users.phoneNumber'
-        )
-        .where('userAddress.id', id)
+    const userAddress = await db('userAddress as ua')
+        .leftJoin('users as u', 'ua.userId', 'u.id')  // Join with users
+        .select('*')  // Select all fields from both tables
+        .where('ua.id', id)
         .first();
 
     if (!userAddress) {
         return next(new AppError('No user address found with that ID', 404));
     }
 
+    // Remove any sensitive or unwanted fields (e.g., password, reset token)
+    const { password, passwordResetToken, passwordResetExpires, ...userAddressWithoutSensitiveData } = userAddress;
+
     res.status(200).json({
         status: 'success',
-        data: {
-            userAddress
+        doc: {
+            userAddress: userAddressWithoutSensitiveData
         }
     });
 });
 
+//Routes //api/users/addresses/with-cards
 
-// GET all user addresses with related user data and cards
-// Route /api/userAddress/with-cards
 export const getUserAddressWithCards = catchAsync(async (req, res, next) => {
-    const userAddresses = await db('userAddress')
-        .leftJoin('users', 'userAddress.userId', 'users.id') // Join with users
-        .leftJoin('cards', 'users.id', 'cards.userId') // Join with cards
-        .select(
-            'userAddress.id',
-            'userAddress.address',
-            'userAddress.city',
-            'userAddress.zipCode',
-            'userAddress.state',
-            'users.id as userId',
-            'users.email',
-            'users.name',
-            'users.phoneNumber',
-            'cards.cardNumber',
-            'cards.cardHolderName',
-            'cards.expiryDate'
-        );
+    const userAddresses = await db('userAddress as ua')
+        .leftJoin('users as u', 'ua.userId', 'u.id')  // Join with users
+        .leftJoin('cards as c', 'u.id', 'c.userId')  // Join with cards
+        .select('*');  // Select all fields from the joined tables
+
+    // Remove any sensitive fields (e.g., password, CVV)
+    const addressesWithoutSensitiveData = userAddresses.map(({ password, passwordResetToken, passwordResetExpires, cvv, ...rest }) => rest);
 
     res.status(200).json({
         status: 'success',
-        data: {
-            userAddresses
+        doc: {
+            userAddresses: addressesWithoutSensitiveData
         }
     });
 });

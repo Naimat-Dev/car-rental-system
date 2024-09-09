@@ -25,39 +25,19 @@ export const deleteUserById = deleteOne("users");
 export const updateUserById = updateOne("users");
 
 
-// GET all users with their addresses and cards
-// Route /api/users/join
 export const getAllUsersWithDetails = catchAsync(async (req, res, next) => {
-    const users = await db('users')
-        .leftJoin('userAddress', 'users.id', 'userAddress.userId') // Left join userAddress
-        .leftJoin('cards', 'users.id', 'cards.userId') // Left join cards
-        .select(
-            'users.id',
-            'users.email',
-            'users.name',
-            'users.phoneNumber',
-            'users.status',
-            'users.registrationDate',
-            'users.image',
-            'users.cnic',
-            'users.role',
-            'users.passwordChangedAt',
-            'users.passwordResetToken',
-            'users.passwordResetExpires',
-            'userAddress.address',
-            'userAddress.city',
-            'userAddress.zipCode',
-            'userAddress.state',
-            'cards.cardNumber',
-            'cards.cardHolderName',
-            'cards.expiryDate',
-            'cards.cvv'
-        );
+    const users = await db('users as u')
+        .leftJoin('userAddress as ua', 'u.id', 'ua.userId')
+        .leftJoin('cards as c', 'u.id', 'c.userId')
+        .select('*');  
+
+    // Remove sensitive fields such as password, CVV, etc.
+    const usersWithoutSensitiveData = users.map(({ password, passwordResetToken, passwordResetExpires, cvv, ...rest }) => rest);
 
     res.status(200).json({
         status: 'success',
-        data: {
-            users
+        doc: {
+            users: usersWithoutSensitiveData
         }
     });
 });
@@ -67,44 +47,20 @@ export const getAllUsersWithDetails = catchAsync(async (req, res, next) => {
 export const getUserByIdJoin = catchAsync(async (req, res, next) => {
     const { id } = req.params;
 
-    const user = await db('users')
-        .leftJoin('userAddress', 'users.id', 'userAddress.userId') // Join with userAddress table
-        .leftJoin('cards', 'users.id', 'cards.userId') // Join with cards table
-        .select(
-            'users.id',
-            'users.email',
-            'users.name',
-            'users.phoneNumber',
-            'users.status',
-            'users.registrationDate',
-            'users.image',
-            'users.cnic',
-            'users.role',
-            'users.passwordChangedAt',
-            'users.passwordResetToken',
-            'users.passwordResetExpires',
-            'userAddress.address',
-            'userAddress.city',
-            'userAddress.zipCode',
-            'userAddress.state',
-            'cards.cardNumber',
-            'cards.cardHolderName',
-            'cards.expiryDate',
-            'cards.cvv'
-        )
-        .where('users.id', id)
+    const user = await db('users as u')
+        .leftJoin('userAddress as ua', 'u.id', 'ua.userId')
+        .leftJoin('cards as c', 'u.id', 'c.userId')
+        .select('*')  // Select all fields from the joined tables
+        .where('u.id', id)
         .first();
 
-    if (!user) {
-        return next(new AppError('No user found with that ID', 404));
-    }
+    if (!user) return next(new AppError('No user found with that ID', 404));
 
+    // Remove sensitive fields such as the password
     const { password, ...userWithoutPassword } = user;
 
     res.status(200).json({
         status: 'success',
-        data: {
-            user: userWithoutPassword
-        }
+        doc: { user: userWithoutPassword }
     });
 });
