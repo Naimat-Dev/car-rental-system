@@ -1,19 +1,16 @@
-import express from "express";
-import cors from "cors";
-import cookieParser from "cookie-parser";
-import morgan from "morgan";
+import express from 'express'
+import cors from 'cors'
+import cookieParser from 'cookie-parser'
+import morgan from 'morgan'
 
-import AppError from "./utils/appError.js";
-import globalErrorHandler from "./controllers/errorController.js";
-
+import AppError from './utils/appError.js'
+import globalErrorHandler from './controllers/errorController.js'
 
 // Routes
 
-import blogRoutes from "./routes/blogRoutes.js";
-import carRoutes from "./routes/carRoutes.js";
 import blogRoutes from './routes/blogRoutes.js'
+import carRoutes from './routes/carRoutes.js'
 import customerRoutes from './routes/customerRoutes.js'
-
 
 const app = express()
 
@@ -40,11 +37,10 @@ app.get('/', (req, res, next) => {
    next()
 })
 
-app.use("/api/cars" , carRoutes);
-
 // API ROUTES
 app.use('/api/blogs', blogRoutes)
 app.use('/api/customers', customerRoutes)
+app.use('/api/cars', carRoutes)
 
 // Unhandled Routes Handling Middleware
 app.all('*', (req, res, next) => {
@@ -54,4 +50,4 @@ app.all('*', (req, res, next) => {
 // GLOBAL ERROR HANDLING MIDDLEWARE
 app.use(globalErrorHandler)
 
-export default app;
+export default app

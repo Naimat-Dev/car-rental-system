@@ -61,7 +61,7 @@ const carSpecificationValidationSchema = Joi.object({
       'string.empty': 'Color cannot be empty.',
       'string.max': 'Color must be up to 10 characters long.',
    }),
-   enginecondition: Joi.string().required().messages({
+   engineCondition: Joi.string().required().messages({
       'any.required': 'Please provide Engine condition.',
       'string.empty': 'Engine condition cannot be empty.',
    }),
