@@ -7,8 +7,15 @@ import APIFeatures from './../utils/apiFeatures.js'
 // CREATE One Document
 export const createOne = (Table) =>
    catchAsync(async (req, res, next) => {
-      const doc = await db(Table).insert(req.body).returning('*')
+      console.log(req.body);
 
+      if(req.body.imageUrls && req.body.videoUrls){
+         console.log("data found")
+         req.body.imageUrls= JSON.stringify(req.body.imageUrls)
+         req.body.videoUrls = JSON.stringify( req.body.videoUrls)
+      }
+      const doc = await db(Table).insert(req.body).returning('*')
+      console.log(req.body);
       if (!doc) {
          return next(new AppError(`${Table} could not be created`, 400))
       }
@@ -67,14 +74,13 @@ export const deleteOne = (Table) =>
       const { id } = req.params
 
       const doc = await db(Table).where({ id }).del()
-
-      if (!doc.length) {
+      if (!doc) {
          return next(new AppError(`${Table} not found by that ID.`, 404))
       }
 
       res.status(204).json({
          status: 'success',
-         doc: null,
+         doc,
       })
    })
 
