@@ -51,10 +51,6 @@ const customerValidationSchema = Joi.object({
     "string.uri": "Please provide a valid image URL.",
   }),
 
-  status: Joi.string().valid("active", "inactive").required().messages({
-    "any.required": "Status is required.",
-    "any.only": 'Status must be either "active" or "inactive".',
-  }),
 });
 
 export default customerValidationSchema;
