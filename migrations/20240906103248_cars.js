@@ -5,32 +5,36 @@
 export const up = function(knex) {
     return knex.schema.createTable("cars", (table) => {
 
-        table.increments('id').primary().unique(); // Create an auto-incrementing 'id' column and set it as the primary key
+        table.increments('id').primary().unique(); 
 
-        table.string('name', 10).notNullable(); // Create a 'name' column with a maximum length of 10 characters, which cannot be null
+        table.string('name',100).notNullable(); 
         
-        table.integer('brandId').unsigned().notNullable(); // Create an 'brandId' column for storing integer values, cannot be null, and unsigned (i.e., only positive values)
+        table.integer("ownerId").notNullable();
+
+        table.integer('brandId').unsigned().notNullable();
         
-        table.integer('model', 20).notNullable(); // Create a 'model' column for storing integer values with a length of 20 characters (note: integer length doesn't apply, this may be a conceptual error), cannot be null
+        table.integer('model', 20).notNullable(); 
         
-        table.integer('carTypeId').unsigned().notNullable(); // Create a 'cartypeId' column for storing integer values, cannot be null, and unsigned
+        table.integer('carTypeId').unsigned().notNullable(); 
         
-        table.string('registrationCity', 30).notNullable(); // Create a 'registrationcity' column with a maximum length of 30 characters, which cannot be null
+        table.string('registrationCity', 30).notNullable(); 
         
-        table.string('registrationNumber', 20).notNullable().unique(); // Create a 'registrationNumber' column with a maximum length of 20 characters, which cannot be null and must be unique
+        table.string('registrationNumber', 20).notNullable().unique(); 
         
-        table.text('description', 255).nullable(); // Create a 'description' column that can store longer text up to 255 characters, which can be null
+        table.text('description', 255).nullable(); 
         
-        table.enu('carDocuments', ['registration', 'unRegistered']).notNullable().defaultTo("registration"); // Create an 'carDocuments' column with restricted values ('registration' or 'unregistered'), cannot be null, and defaults to 'registration'
+        table.enu('carDocuments', ['registration', 'unRegistered']).notNullable().defaultTo("registration"); 
         
-        table.enu('assembly', ['imported', 'local']).notNullable().defaultTo("local"); // Create an 'assembly' column with restricted values ('imported' or 'local'), cannot be null, and defaults to 'local'
+        table.enu('assembly', ['imported', 'local']).notNullable().defaultTo("local"); 
         
-        // Define foreign key relationships:
-        table.foreign('brandId').references('id').inTable('brands').onDelete('CASCADE'); // Reference 'id' in the 'brands' table with CASCADE delete rule
+        // If a record in the 'brands' table is deleted, the associated records in 'cars' will also be deleted (CASCADE)
+        table.foreign('brandId').references('id').inTable('brands').onDelete('CASCADE'); 
+
+        table.foreign("ownerId").references('id').inTable('users').onDelete('CASCADE');
+        // // If a record in the 'brands' table is deleted, the associated records in 'cars' will also be deleted (CASCADE)
+        table.foreign('carTypeId').references('id').inTable('carTypes').onDelete('CASCADE'); 
         
-        table.foreign('carTypeId').references('id').inTable('carTypes').onDelete('CASCADE'); // Reference 'id' in the 'carTypes' table with CASCADE delete rule
-        
-        table.timestamps(true, true); // Add 'created_at' and 'updated_at' timestamp columns, with automatic handling of their values
+        table.timestamps(true, true); 
       });
 };
 
