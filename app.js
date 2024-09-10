@@ -10,9 +10,8 @@ import globalErrorHandler from './controllers/errorController.js'
 import userRoutes from './routes/userRoutes.js'
 import cardRoutes from './routes/cardRoutes.js'
 import carRoutes from './routes/carRoutes.js'
-import blogRoutes from './routes/blogRoutes.js'
-import carRoutes from './routes/carRoutes.js'
 import customerRoutes from './routes/customerRoutes.js'
+import blogRoutes from './routes/blogRoutes.js'
 
 const app = express()
 
