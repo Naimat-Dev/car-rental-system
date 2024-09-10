@@ -10,8 +10,8 @@ export const up = async function (knex) {
       table.string('password', 128).notNullable()
       table.string('cnic', 20).unique().notNullable()
       table.string('phoneNumber', 20).notNullable().unique()
-      table.date('dateOfBirth').notNullable()
-      table.string('imageUrl', 255).notNullable()
+      table.date('dateOfBirth').nullable()
+      table.string('imageUrl', 255).nullable()
       table.enu('status', ['active', 'inactive']).defaultTo('inactive')
 
       table.timestamps(true, true)

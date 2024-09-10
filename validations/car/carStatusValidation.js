@@ -6,49 +6,51 @@ const carStatusValidationSchema = Joi.object({
     .positive()
     .required()
     .messages({
-      'any.required': 'Please provide Car ID.',
+      'any.required': 'Please provide a valid car ID.',
       'number.base': 'Car ID must be a number.',
-      'number.integer': 'Car ID must be an integer.',
-      'number.positive': 'Car ID must be a positive number.',
+      'number.positive': 'Car ID must be a positive integer.',
     }),
+
   location: Joi.string()
     .max(255)
     .required()
     .messages({
-      'any.required': 'Please provide Location.',
+      'any.required': 'Please provide the location of the car.',
+      'string.max': 'Location cannot exceed 255 characters.',
       'string.empty': 'Location cannot be empty.',
-      'string.max': 'Location must be at most 255 characters long.',
     }),
+
   availabilityStatus: Joi.string()
     .valid('available', 'unavailable', 'maintenance')
-    .required()
     .default('available')
+    .required()
     .messages({
-      'any.required': 'Availability status is required.',
-      'string.empty': 'Availability status cannot be empty.',
-      'string.valid': 'Availability status must be one of "available", "unavailable", or "maintenance".',
+      'any.only': 'Availability status must be one of "available", "unavailable", or "maintenance".',
     }),
+
   insuranceDetail: Joi.string()
     .max(255)
-    .optional()
+    .allow(null, '')
     .messages({
-      'string.max': 'Insurance detail must be at most 255 characters long.',
+      'string.max': 'Insurance details cannot exceed 255 characters.',
     }),
+
   fuelPolicy: Joi.string()
     .valid('full-to-full', 'same-to-same')
-    .required()
     .default('full-to-full')
+    .required()
     .messages({
-      'any.required': 'Please provide Fuel policy.',
-      'string.empty': 'Fuel policy cannot be empty.',
-      'string.valid': 'Fuel policy must be one of "full-to-full" or "same-to-same".',
+      'any.only': 'Fuel policy must be either "full-to-full" or "same-to-same".',
     }),
+
   lastServicedDate: Joi.string()
     .max(50)
-    .optional()
+    .required()
     .messages({
-      'string.max': 'Last serviced date must be at most 50 characters long.',
-    }),
+      'any.required': 'Please provide the last serviced date.',
+      'string.max': 'Last serviced date cannot exceed 50 characters.',
+      'string.empty': 'Last serviced date cannot be empty.',
+    })
 });
 
 export default carStatusValidationSchema;
