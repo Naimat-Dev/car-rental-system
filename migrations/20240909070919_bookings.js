@@ -7,7 +7,6 @@ export const up = async function (knex) {
     await knex.schema.createTable("bookings", (table) => {
       table.increments("id").primary();
       table.integer("customerId").unsigned().notNullable();
-      table.integer("carId").unsigned().notNullable();
       table.date("rentalStartDate").notNullable();
       table.date("rentalEndDate").notNullable();
       table.string("totalDays").notNullable();

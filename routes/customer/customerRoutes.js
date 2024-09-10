@@ -8,9 +8,9 @@ import {
   getCustomersJoinById,
   updateCustomerById,
 } from "../../controllers/customer/customersController.js";
-import { validateSchema } from "../../middlewares/validationMiddleware.js";
+// import { validateSchema } from "../../middlewares/validationMiddleware.js";
 import customerValidationSchema from "../../validations/customer/customerValidation.js";
-
+import { validateSchema } from '../../middlewares/validationMiddleware.js';
 
 import customerAddressRoutes from './customerAddressRoutes.js'
 import customerLicenseRoutes from './customerLicenseRoutes.js'

@@ -1,51 +1,66 @@
 import { createOne, getAll, getOne, updateOne, deleteOne } from "../handleFactory.js";
 import catchAsync from '../utils/catchAsync.js';
 
-// Function to create a new customer address
+// Function to create a new car booking
 export const createCarBooking = catchAsync(async (req, res) => {
-    const { customerId, carId, rentalStartDate, rentalEndDate, totalDays, initialMileage, totalPrice } = req.body;
-  
-    // Ensure required fields are provided
-    if (!customerId || !carId || !rentalStartDate || !rentalEndDate || !totalDays || !initialMileage || !totalPrice) {
-      return res.status(400).json({ error: 'All fields are required.' });
-    }
-  
-    // Check if the customerId exists
-    const customer = await knex('customers').where({ id: customerId }).first();
-    if (!customer) {
-      return res.status(404).json({ error: 'Customer not found.' });
-    }
-  
-    // Check if the carId exists
-    const car = await knex('cars').where({ id: carId }).first();
-    if (!car) {
-      return res.status(404).json({ error: 'Car not found.' });
-    }
-  
-    // Insert new booking into the database
-    const [newBookingId] = await knex('bookings').insert({
-      customerId,
-      carId,
-      rentalStartDate,
-      rentalEndDate,
-      totalDays,
-      initialMileage,
-      totalPrice,
-    }).returning('id');
-  
-    res.status(201).json({
-      message: 'Car booking created successfully.',
-      bookingId: newBookingId,
-    });
-  });
+  const { customerId, carId, rentalStartDate, rentalEndDate, initialMileage } = req.body;
 
-// // Function to get all customer addresses
+  // Ensure required fields are provided
+  if (!customerId || !carId || !rentalStartDate || !rentalEndDate || !initialMileage) {
+    return res.status(400).json({ error: 'All fields are required.' });
+  }
+
+  // Check if the customerId exists
+  const customer = await knex('customers').where({ id: customerId }).first();
+  if (!customer) {
+    return res.status(404).json({ error: 'Customer not found.' });
+  }
+
+  // Check if the carId exists
+  const car = await knex('cars').where({ id: carId }).first();
+  if (!car) {
+    return res.status(404).json({ error: 'Car not found.' });
+  }
+
+  // Calculate totalDays (difference between rentalStartDate and rentalEndDate)
+  const startDate = new Date(rentalStartDate);
+  const endDate = new Date(rentalEndDate);
+  const timeDiff = endDate - startDate;
+
+  if (timeDiff < 0) {
+    return res.status(400).json({ error: 'Invalid rental dates.' });
+  }
+
+  const totalDays = Math.ceil(timeDiff / (1000 * 60 * 60 * 24)); // Calculate total days (including partial days)
+
+  // Calculate totalPrice (car price per day * totalDays)
+  const totalPrice = car.pricePerDay * totalDays;
+
+  // Insert new booking into the database
+  const [doc] = await knex('bookings').insert({
+    customerId,
+    carId,
+    rentalStartDate,
+    rentalEndDate,
+    totalDays,
+    initialMileage,
+    totalPrice,
+  }).returning('id');
+
+  res.status(201).json({
+    message: 'Car booking created successfully.',
+   doc,
+  });
+});
+
+
+// // Function to get all booking
 export const getBooking = getAll('bookings')
 
-// Function to get a customer address by ID
+// Function to get a booking by ID
 export const getBookingById = getOne('bookings')
 
-// Function to update a customer address by ID
+// Function to update a booking by ID
 export const updateCarBooking = catchAsync(async (req, res) => {
     const { id } = req.params;
     const { rentalStartDate, rentalEndDate, totalDays, initialMileage, totalPrice } = req.body;
@@ -90,6 +105,6 @@ export const updateCarBooking = catchAsync(async (req, res) => {
   
   
 
-// Function to delete a customer address by ID
+// Function to delete a  by ID
 export const deleteBookingById = deleteOne('bookings')
 
