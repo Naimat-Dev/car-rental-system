@@ -2,6 +2,7 @@
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
+
 export const up = function(knex) {
     return knex.schema.createTable('carsMedia', (table) => {
         table.increments('id').primary() // Auto-incrementing unique ID
@@ -18,6 +19,6 @@ export const up = function(knex) {
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-export const down = function(knex) {
-    return knex.schema.dropTable('carsMedia');
-};
+export const down = function (knex) {
+   return knex.schema.dropTable('carsMedia')
+}

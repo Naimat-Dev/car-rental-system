@@ -2,6 +2,7 @@
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
+
 export const up = function(knex) {
     return knex.schema.createTable("carSpecifications", (table) => {
         table.increments('id').primary().unique(); // Create an auto-incrementing 'id' column and set it as the primary key
@@ -17,9 +18,9 @@ export const up = function(knex) {
         
         table.integer('seatingCapacity').notNullable(); // Create a 'seatingCapacity' column to store the number of seats in the car; cannot be null
         
-        table.decimal('minMileage', 5, 2).notNullable(); // Create a 'minMileage' column with decimal values 
+        table.decimal('minMileage').notNullable(); // Create a 'minMileage' column with decimal values 
 
-        table.decimal('maxMileage', 5, 2).notNullable(); // Create a 'maxMileage' column with decimal values 
+        table.decimal('maxMileage').notNullable(); // Create a 'maxMileage' column with decimal values 
         
         table.string('engineCapacity').notNullable(); // Create an 'engineCapacity' column to store the engine capacity of the car; cannot be null
         
@@ -40,6 +41,6 @@ export const up = function(knex) {
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-export const down = function(knex) {
-    return knex.schema.dropTableIfExists("carSpecification");
-};
+export const down = function (knex) {
+   return knex.schema.dropTableIfExists('carSpecification')
+}

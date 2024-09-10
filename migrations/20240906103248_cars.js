@@ -38,7 +38,6 @@ export const up = function(knex) {
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-export  const down = function(knex) {
-    return knex.schema.dropTableIfExists("cars");
-};
-  
+export const down = function (knex) {
+   return knex.schema.dropTableIfExists('cars')
+}

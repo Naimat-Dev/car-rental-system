@@ -47,25 +47,21 @@ const carSpecificationsValidationSchema = Joi.object({
     }),
 
   minMileage: Joi.number()
-    .precision(2)
     .positive()
     .required()
     .messages({
       'any.required': 'Please provide the minimum mileage.',
       'number.base': 'Minimum mileage must be a number.',
       'number.positive': 'Minimum mileage must be a positive value.',
-      'number.precision': 'Minimum mileage must have up to 2 decimal places.',
     }),
 
   maxMileage: Joi.number()
-    .precision(2)
     .positive()
     .required()
     .messages({
       'any.required': 'Please provide the maximum mileage.',
       'number.base': 'Maximum mileage must be a number.',
       'number.positive': 'Maximum mileage must be a positive value.',
-      'number.precision': 'Maximum mileage must have up to 2 decimal places.',
     }),
 
   engineCapacity: Joi.string()
