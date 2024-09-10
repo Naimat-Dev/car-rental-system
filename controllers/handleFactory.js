@@ -45,9 +45,7 @@ export const getAll = (Table) =>
       if (!doc.length) {
          return res.status(404).json({
             status: 'fail',
-            doc: {
-               message: `No ${Table} found.`,
-            },
+            message: `No ${Table} found.`,
          })
       }
 
