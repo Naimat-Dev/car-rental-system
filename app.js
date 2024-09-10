@@ -8,8 +8,11 @@ import globalErrorHandler from './controllers/errorController.js'
 
 // Routes
 import userRoutes from './routes/user/userRoutes.js'
+
 import cardRoutes from './routes/user/cardRoutes.js'
+
 import carRoutes from './routes/car/carRoutes.js'
+
 import customerRoutes from './routes/customer/customerRoutes.js'
 import bookingRoutes from './routes/booking/bookingRoutes.js'
 

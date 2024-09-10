@@ -14,15 +14,16 @@ const router = express.Router()
 // Define routes for the /brands endpoint
 router
    .route('/')
-   .post(validateSchema(brandValidationSchema), createBrand) // Handle POST requests to create a new brand
-   .get(getBrands) // Handle GET requests to retrieve all brands
+   .post(validateSchema(brandValidationSchema), createBrand) 
+   .get(getBrands) 
 
 // Define routes for the /brands/:id endpoint
 router
    .route('/:id')
-   .get(getBrandById) // Handle GET requests to retrieve a brand by its ID
-   .delete(deleteBrandById) // Handle DELETE requests to remove a brand by its ID
-   .put(updateBrandById) // Handle PUT requests to update a brand by its ID
+   .get(getBrandById) 
+   .delete(deleteBrandById) 
+   .put(updateBrandById) 
 
 router.route('/:cardId').get(getOneByCarId)
+
 export default router

@@ -4,8 +4,11 @@
  */
 export const up = function (knex) {
    return knex.schema.createTable('brands', (table) => {
+      
       table.increments('id').primary()
+
       table.string('name', 30).notNullable().unique()
+
       table.timestamps(true, true)
    })
 }
