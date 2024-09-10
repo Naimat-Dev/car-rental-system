@@ -6,7 +6,7 @@ export const up = function (knex) {
       table.string('cardHolderName', 50).notNullable()
       table.string('cardNumber').notNullable()
       table.date('expiryDate').notNullable()
-      table.string('cvv', 6).notNullable()
+      table.string('cvv', 6).notNullable().unique()
       table.text('billingAddress').nullable()
       table.timestamps(true, true)
    })
