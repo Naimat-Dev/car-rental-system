@@ -4,7 +4,8 @@ import {
     getBrands,
     getBrandById,
     deleteBrandById,
-    updateBrandById
+    updateBrandById,
+    getOneByCarId
 } from '../controllers/cars/brandController.js';
 import { validateSchema } from '../middlewares/validationMiddleware.js';
 import brandValidationSchema from '../validations/car/brandValidation.js';
@@ -21,4 +22,5 @@ router.route('/:id')
     .delete(deleteBrandById) // Handle DELETE requests to remove a brand by its ID
     .put(updateBrandById);   // Handle PUT requests to update a brand by its ID
 
+    router.route("/:cardId").get(getOneByCarId);
 export default router;

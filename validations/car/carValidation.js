@@ -2,10 +2,10 @@ import Joi from 'joi';
 
 const carValidationSchema = Joi.object({
   name: Joi.string()
-    .max(10)
+    .max(10)  // Name must be a string with a max length of 10 characters
     .required()
     .messages({
-      'any.required': 'Please provide Car name.',
+      'any.required': 'Please provide the car name.',
       'string.max': 'Car name cannot exceed 10 characters.',
       'string.empty': 'Car name cannot be empty.',
     })
@@ -16,41 +16,33 @@ const carValidationSchema = Joi.object({
     .positive()
     .required()
     .messages({
-      'any.required': 'Please provide Brand ID.',
+      'any.required': 'Please provide a valid brand ID.',
       'number.base': 'Brand ID must be a number.',
-      'number.integer': 'Brand ID must be an integer.',
-      'number.positive': 'Brand ID must be a positive number.',
+      'number.positive': 'Brand ID must be a positive integer.',
     }),
 
   model: Joi.number()
-    .integer()
-    .min(1886)
-    .max(new Date().getFullYear() + 1) // Car model should be realistic
     .required()
     .messages({
-      'any.required': 'Please provide Model year.',
-      'number.base': 'Model year must be a number.',
-      'number.integer': 'Model year must be an integer.',
-      'number.min': 'Model year must be later than 1886.',
-      'number.max': `Model year cannot be later than next year.`,
+      'any.required': 'Please provide the model year.',
+      'number.base': 'Model must be a number.',
     }),
 
-  cartypeId: Joi.number()
+  carTypeId: Joi.number()
     .integer()
     .positive()
     .required()
     .messages({
-      'any.required': 'Please provide Car Type ID.',
+      'any.required': 'Please provide a valid car type ID.',
       'number.base': 'Car Type ID must be a number.',
-      'number.integer': 'Car Type ID must be an integer.',
-      'number.positive': 'Car Type ID must be a positive number.',
+      'number.positive': 'Car Type ID must be a positive integer.',
     }),
 
-  registrationcity: Joi.string()
+  registrationCity: Joi.string()
     .max(30)
     .required()
     .messages({
-      'any.required': 'Please provide Registration city.',
+      'any.required': 'Please provide the registration city.',
       'string.max': 'Registration city cannot exceed 30 characters.',
       'string.empty': 'Registration city cannot be empty.',
     })
@@ -60,7 +52,7 @@ const carValidationSchema = Joi.object({
     .max(20)
     .required()
     .messages({
-      'any.required': 'Please provide Registration number.',
+      'any.required': 'Please provide the registration number.',
       'string.max': 'Registration number cannot exceed 20 characters.',
       'string.empty': 'Registration number cannot be empty.',
     })
@@ -68,26 +60,26 @@ const carValidationSchema = Joi.object({
 
   description: Joi.string()
     .max(255)
-    .optional()
+    .allow(null, '')  // Description is optional, can be null or empty
     .messages({
       'string.max': 'Description cannot exceed 255 characters.',
     }),
 
   carDocuments: Joi.string()
-    .valid('registration', 'unregistered')
+    .valid('registration', 'unRegistered')
+    .default('registration')
     .required()
     .messages({
-      'any.required': 'Please provide Car document status.',
-      'any.only': 'Car document must be either "registration" or "unregistered".',
+      'any.only': 'Car documents must be either "registration" or "unRegistered".',
     }),
 
   assembly: Joi.string()
     .valid('imported', 'local')
+    .default('local')
     .required()
     .messages({
-      'any.required': 'Please provide Assembly status.',
       'any.only': 'Assembly must be either "imported" or "local".',
-    }),
+    })
 });
 
 export default carValidationSchema;
