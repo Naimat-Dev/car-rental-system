@@ -1,7 +1,7 @@
 import Joi from 'joi';
 
 const cardValidationSchema = Joi.object({
-    userId: Joi.number()
+    ownerId: Joi.number()
         .integer()
         .required()
         .messages({

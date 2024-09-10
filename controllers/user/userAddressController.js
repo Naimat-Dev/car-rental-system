@@ -47,36 +47,44 @@ export const getUserAddressJoin = catchAsync(async (req, res, next) => {
    })
 })
 
-//Routes //api/users/addresses/all/:id
-
+// GET user address by id with associated user details
+// Route /api/users/addresses/all/:id
 export const getUserAddressByIdJoin = catchAsync(async (req, res, next) => {
-   const { id } = req.params
+   const { id } = req.params;
 
    const userAddress = await db('userAddress as ua')
-      .leftJoin('users as u', 'ua.userId', 'u.id') // Join with users
-      .select('*') // Select all fields from both tables
-      .where('ua.id', id)
-      .first()
+      .leftJoin('users as u', 'ua.userId', 'u.id') // Join with users table
+      .select(
+         'ua.id', // Assuming 'id' is the primary key in userAddress
+         'ua.address',
+         'ua.city',
+         'ua.zipCode',
+         'ua.state',
+         'u.id as userId',
+         'u.email',
+         'u.name',
+         'u.phoneNumber',
+         'u.status',
+         'u.registrationDate',
+         'u.image',
+         'u.cnic',
+         'u.role',
+         'u.passwordChangedAt'
+      )
+      .where('ua.id', id) // Assuming 'id' is the primary key in userAddress
+      .first();
 
    if (!userAddress) {
-      return next(new AppError('No user address found with that ID', 404))
+      return next(new AppError('No user address found with that ID', 404));
    }
-
-   // Remove any sensitive or unwanted fields (e.g., password, reset token)
-   const {
-      password,
-      passwordResetToken,
-      passwordResetExpires,
-      ...userAddressWithoutSensitiveData
-   } = userAddress
 
    res.status(200).json({
       status: 'success',
       doc: {
-         userAddress: userAddressWithoutSensitiveData,
+         userAddress,
       },
-   })
-})
+   });
+});
 
 //Routes //api/users/addresses/with-cards
 

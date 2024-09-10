@@ -16,6 +16,7 @@ export const up = function (knex) {
       table.timestamps(true, true)
    })
 }
+
 //changes successfully updated
 export const down = function (knex) {
    return knex.schema.dropTableIfExists('userAddress')
