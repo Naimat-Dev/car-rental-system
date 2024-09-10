@@ -5,8 +5,8 @@ import {
    getBrandById,
    deleteBrandById,
    updateBrandById,
-   getOneByCarId,
 } from '../../controllers/car/brandController.js'
+import { getOneByCarId } from '../../controllers/car/carController.js'
 import { validateSchema } from '../../middlewares/validationMiddleware.js'
 import brandValidationSchema from '../../validations/car/brandValidation.js'
 const router = express.Router()

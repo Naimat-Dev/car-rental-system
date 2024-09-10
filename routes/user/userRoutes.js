@@ -8,7 +8,7 @@ import {
    deleteUserById,
    getAllUsersWithDetails,
    getUserByIdJoin,
-} from '../controllers/userController.js'
+} from '../../controllers/user/userController.js'
 import {
    createUserAddress,
    getUserAddress,
@@ -18,7 +18,8 @@ import {
    getUserAddressJoin,
    getUserAddressByIdJoin,
    getUserAddressWithCards,
-} from '../controllers/userAddressController.js'
+} from '../../controllers/user/userAddressController.js'
+
 import { validateSchema } from '../../middlewares/validationMiddleware.js'
 import userValidationSchema from '../../validations/user/userValidation.js'
 import userAddressValidationSchema from '../../validations/user/userAddressValidation.js'

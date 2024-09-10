@@ -8,7 +8,7 @@ import {
    deleteCardById,
    getCardsJoin,
    getCardByIdJoin,
-} from '../controllers/cardController.js'
+} from '../../controllers/user/cardController.js'
 import cardValidationSchema from '../../validations/card/cardValidation.js'
 
 const router = express.Router()

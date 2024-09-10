@@ -12,10 +12,10 @@ import { validateSchema } from '../../middlewares/validationMiddleware.js'
 import carValidationSchema from '../../validations/car/carValidation.js'
 
 import brandRoutes from './brandRoutes.js'
-import carSpecificationRoutes from '../carSpecificationRoutes.js'
-import carStatusRoutes from '../carStatusRoutes.js'
-import carsMediaRoutes from '../carsMediaRoutes.js'
-import carTypesRoutes from '../carTypeRoutes.js'
+import carSpecificationRoutes from './carSpecificationRoutes.js'
+import carStatusRoutes from './carStatusRoutes.js'
+import carsMediaRoutes from './carsMediaRoutes.js'
+import carTypesRoutes from './carTypeRoutes.js'
 
 const router = express.Router()
 

@@ -4,7 +4,7 @@ import {
    getOne,
    updateOne,
    deleteOne,
-} from './handleFactory.js'
+} from '../handleFactory.js'
 
 // Function to create a new customer address
 export const createCustomerAddress = createOne('customerAddress')
