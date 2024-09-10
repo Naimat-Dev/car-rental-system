@@ -14,10 +14,10 @@ const router = express.Router()
 // Define routes for the /carTypes endpoint
 router
    .route('/')
-   .post(validateSchema(carTypeValidationSchema), createCarType) // Handle POST requests to create a new car type
-   .get(getCarTypes) // Handle GET requests to retrieve all car types
+   .post(validateSchema(carTypeValidationSchema), createCarType) 
+   .get(getCarTypes) 
 
-// Define routes for the /carTypes/:id endpoint
+// Define routes for the /types/:id endpoint
 router
    .route('/:id')
    .get(getCarTypeById) // Handle GET requests to retrieve a specific car type by its ID
