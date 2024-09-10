@@ -6,9 +6,9 @@ import {
    updateOne,
 } from '../handleFactory.js'
 
-import catchAsync from '../../utils/catchAsync.js';
-import AppError from '../../utils/appError.js';
-import db from "../../config/db.js";
+import catchAsync from '../../utils/catchAsync.js'
+import AppError from '../../utils/appError.js'
+import db from '../../config/db.js'
 
 // Create a new Car
 export const createCar = createOne('cars')
@@ -26,27 +26,30 @@ export const updateCarById = updateOne('cars')
 export const deleteCarById = deleteOne('cars')
 
 export const getCarDetailsWithJoinById = catchAsync(async (req, res, next) => {
-		const {id} = req.params;
-      const allData = await db('cars')
-         .join('brands', 'brands.id', 'cars.brandId')
-         .join('carTypes', 'carTypes.id', 'cars.carTypeId')
-         .join('carSpecifications', 'carSpecifications.carId', 'cars.id')
-         .join('carStatus', 'carStatus.carId', 'cars.id')
-         .join('carsMedia', 'carsMedia.carId', 'cars.id')
-         .select('*')
-         .where('cars.id', id ).first()
-         if(allData){
-            res.status(200).json({
-               status: 'success',
-               doc :allData,
-            })
-           }
-           else{
-            return next(new AppError(` cars  not found by that ID.`, 404))
-           }
+   const { id } = req.params
+   const allData = await db('cars')
+      .join('brands', 'brands.id', 'cars.brandId')
+      .join('carTypes', 'carTypes.id', 'cars.carTypeId')
+      .join('carSpecifications', 'carSpecifications.carId', 'cars.id')
+      .join('carStatus', 'carStatus.carId', 'cars.id')
+      .join('carsMedia', 'carsMedia.carId', 'cars.id')
+      .select('*')
+      .where('cars.id', id)
+      .first()
+
+   if (allData) {
+      res.status(200).json({
+         status: 'success',
+         doc: allData,
+      })
+   } else {
+      return next(new AppError(` cars  not found by that ID.`, 404))
+   }
 })
 
 export const getCarsDetailsWithJoin = catchAsync(async (req, res, next) => {
+   console.log('lskdjflksdj')
+
    const alldata = await db('cars')
       .join('brands', 'brands.id', 'cars.brandId')
       .join('carTypes', 'carTypes.id', 'cars.carTypeId')
@@ -54,26 +57,27 @@ export const getCarsDetailsWithJoin = catchAsync(async (req, res, next) => {
       .join('carStatus', 'carStatus.carId', 'cars.id')
       .join('carsMedia', 'carsMedia.carId', 'cars.id')
       .select('*')
-   
-  if(alldata){
-   res.status(200).json({
-      status: 'success',
-      doc :alldata,
-   })
-  }
-  else{
-   return next(new AppError(` cars  not found by that ID.`, 404))
-  }
-})
 
+   console.log(allData)
+
+   if (alldata) {
+      res.status(200).json({
+         status: 'success',
+         doc: alldata,
+      })
+   } else {
+      return next(new AppError(`cars not found by that ID.`, 404))
+   }
+})
 
 export const updateOneByCarId = (Table) =>
    catchAsync(async (req, res, next) => {
       const { carId } = req.params
       const updateData = req.body
-      if(req.body.imageUrls && req.body.videoUrls){
-         req.body.imageUrls= JSON.stringify(req.body.imageUrls)
-         req.body.videoUrls = JSON.stringify( req.body.videoUrls)}
+      if (req.body.imageUrls && req.body.videoUrls) {
+         req.body.imageUrls = JSON.stringify(req.body.imageUrls)
+         req.body.videoUrls = JSON.stringify(req.body.videoUrls)
+      }
       // Add the updated_at field to the update data
       updateData.updated_at = new Date()
 
@@ -92,7 +96,7 @@ export const updateOneByCarId = (Table) =>
       })
    })
 
-export const deleteOneByCarId =(Table) =>
+export const deleteOneByCarId = (Table) =>
    catchAsync(async (req, res, next) => {
       const { carId } = req.params
 
@@ -107,18 +111,18 @@ export const deleteOneByCarId =(Table) =>
       })
    })
 
-   export const getOneByCarId =(Table) =>
-      catchAsync(async (req, res, next) => {
-         const { carId } = req.params
-   
-         const doc = await db(Table).where({ carId })
-   
-         if (!doc.length) {
-            return next(new AppError(`${Table} not found by that ID.`, 404))
-         }
-   
-         res.status(200).json({
-            status: 'success',
-            doc,
-         })
+export const getOneByCarId = (Table) =>
+   catchAsync(async (req, res, next) => {
+      const { carId } = req.params
+
+      const doc = await db(Table).where({ carId })
+
+      if (!doc.length) {
+         return next(new AppError(`${Table} not found by that ID.`, 404))
+      }
+
+      res.status(200).json({
+         status: 'success',
+         doc,
       })
+   })
