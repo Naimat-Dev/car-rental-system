@@ -20,36 +20,46 @@ import carTypesRoutes from './carTypeRoutes.js'
 const router = express.Router()
 
 router.use('/brands', brandRoutes)
+
 router.use('/types', carTypesRoutes)
+
 router.use('/specifications', carSpecificationRoutes)
+
 router.use('/status', carStatusRoutes)
+
 router.use('/media', carsMediaRoutes)
+
 // Define routes for the /cars endpoint
 router
    .route('/')
-   .post(validateSchema(carValidationSchema), createCar) // Handle POST requests to create a new car
-   .get(getCars) // Handle GET requests to retrieve all cars
+   .post(validateSchema(carValidationSchema), createCar) 
+   .get(getCars) 
 
 router.get('/all/:id', getCarDetailsWithJoinById)
+
 router.get('/all', getCarsDetailsWithJoin)
 
 router.use('/brands', brandRoutes)
+
 router.use('/types', carTypesRoutes)
+
 router.use('/specifications', carSpecificationRoutes)
+
 router.use('/Status', carStatusRoutes)
+
 router.use('/media', carsMediaRoutes)
 
 // Define routes for the /cars endpoint
 router
    .route('/')
-   .post(validateSchema(carValidationSchema), createCar) // Handle POST requests to create a new car
-   .get(getCars) // Handle GET requests to retrieve all cars
+   .post(validateSchema(carValidationSchema), createCar) 
+   .get(getCars)
 
 // Define routes for the /cars/:id endpoint
 router
    .route('/:id')
-   .get(getCarById) // Handle GET requests to retrieve a specific car by its ID
-   .put(updateCarById) // Handle PUT requests to update a car by its ID
-   .delete(deleteCarById) // Handle DELETE requests to remove a car by its ID
+   .get(getCarById) 
+   .put(updateCarById) 
+   .delete(deleteCarById) 
 
 export default router

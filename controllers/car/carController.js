@@ -10,19 +10,14 @@ import catchAsync from '../../utils/catchAsync.js';
 import AppError from '../../utils/appError.js';
 import db from "../../config/db.js";
 
-// Create a new Car
 export const createCar = createOne('cars')
 
-// Retrieve all Cars
 export const getCars = getAll('cars')
 
-// Retrieve a Car by ID
 export const getCarById = getOne('cars')
 
-// Update a Car by ID
 export const updateCarById = updateOne('cars')
 
-// Delete a Car by ID
 export const deleteCarById = deleteOne('cars')
 
 export const getCarDetailsWithJoinById = catchAsync(async (req, res, next) => {

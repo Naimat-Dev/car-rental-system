@@ -1,8 +1,9 @@
 import Joi from 'joi';
 
 const carValidationSchema = Joi.object({
+  
   name: Joi.string()
-    .max(10)  // Name must be a string with a max length of 10 characters
+    .max(10) 
     .required()
     .messages({
       'any.required': 'Please provide the car name.',
@@ -60,7 +61,8 @@ const carValidationSchema = Joi.object({
 
   description: Joi.string()
     .max(255)
-    .allow(null, '')  // Description is optional, can be null or empty
+    // Description is optional, can be null or empty
+    .allow(null, '') 
     .messages({
       'string.max': 'Description cannot exceed 255 characters.',
     }),

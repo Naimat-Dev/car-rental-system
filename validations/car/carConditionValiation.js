@@ -1,6 +1,7 @@
 import Joi from 'joi';
 
 const carConditionValidationSchema = Joi.object({
+  
   carId: Joi.number()
     .integer()
     .required()
