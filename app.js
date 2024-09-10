@@ -6,13 +6,14 @@ import morgan from "morgan";
 import AppError from "./utils/appError.js";
 import globalErrorHandler from "./controllers/errorController.js";
 
-import db from "./config/db.js";
-
 // Routes
 import blogRoutes from "./routes/blogRoutes.js";
-import customerRoutes from "./routes/customer/customerRoutes.js";
+import carRoutes from "./routes/carRoutes.js";
+import blogRoutes from './routes/blogRoutes.js'
+import customerRoutes from './routes/customerRoutes.js'
 
-const app = express();
+
+const app = express()
 
 app.use(
   cors({
@@ -36,6 +37,8 @@ app.get("/", (req, res, next) => {
   res.send("Car rental API is Running...");
   next();
 });
+
+app.use("/api/cars" , carRoutes);
 
 // API ROUTES
 app.use("/api/blogs", blogRoutes);
