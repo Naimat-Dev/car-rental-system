@@ -5,6 +5,7 @@ import {
 	deleteOne,
 	updateOne,
 } from "../handleFactory.js";
+import { deleteOneByCarId, getOneByCarId, updateOneByCarId } from "./carController.js";
 
 // Create a new Car Specification
 export const createCarSpecification = createOne('carSpecifications'); 
@@ -25,3 +26,7 @@ export const updateCarSpecificationById = updateOne('carSpecifications');
 // Delete a Car Specification by ID
 export const deleteCarSpecificationById = deleteOne('carSpecifications'); 
 // Function to handle deleting a specific car specification entry by its ID from the 'carSpecifications' table
+
+export const   getCarSpecificationByCarId =  getOneByCarId('carSpecifications');
+export const updateCarSpecificationByCarId = updateOneByCarId('carSpecifications');
+export const deleteCarSpecificationByCarId = deleteOneByCarId('carSpecifications');

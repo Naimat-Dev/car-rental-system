@@ -13,6 +13,7 @@ import carRoutes from './routes/carRoutes.js'
 import customerRoutes from './routes/customerRoutes.js'
 import blogRoutes from './routes/blogRoutes.js'
 
+
 const app = express()
 
 app.use(
@@ -39,10 +40,11 @@ app.get('/', (req, res, next) => {
 })
 
 // API ROUTES
-app.use('/api/blogs', blogRoutes)
-app.use('/api/users', userRoutes)
-app.use('/api/cards', cardRoutes)
+app.use("/api/blogs", blogRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/cards", cardRoutes);
 app.use('/api/customers', customerRoutes)
+
 
 // Unhandled Routes Handling Middleware
 app.all('*', (req, res, next) => {
