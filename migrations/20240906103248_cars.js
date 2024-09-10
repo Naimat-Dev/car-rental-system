@@ -12,7 +12,7 @@ export const up = function (knex) {
 
       table.integer('model', 20).notNullable() // Create a 'model' column for storing integer values with a length of 20 characters (note: integer length doesn't apply, this may be a conceptual error), cannot be null
 
-      table.integer('cartypeId').unsigned().notNullable() // Create a 'cartypeId' column for storing integer values, cannot be null, and unsigned
+      table.integer('carTypeId').unsigned().notNullable() // Create a 'cartypeId' column for storing integer values, cannot be null, and unsigned
 
       table.string('registrationCity', 30).notNullable() // Create a 'registrationcity' column with a maximum length of 30 characters, which cannot be null
 

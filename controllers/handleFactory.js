@@ -98,8 +98,6 @@ export const updateOne = (Table) =>
       const { id } = req.params
       const updateData = req.body
 
-      console.log({ id, updateData })
-
       // Add the updated_at field to the update data
       updateData.updated_at = new Date()
 
@@ -107,8 +105,6 @@ export const updateOne = (Table) =>
          .where({ id })
          .update(updateData)
          .returning('*')
-
-      console.log(doc)
 
       if (!doc.length) {
          return next(new AppError(`${Table} not found by that ID.`, 404))

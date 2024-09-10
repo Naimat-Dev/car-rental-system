@@ -10,13 +10,17 @@ export const up = function (knex) {
          .defaultTo('inactive')
       table.date('registrationDate').notNullable()
       table.string('image').nullable()
-      table.string('cnic', 20).notnullable().unique()
+      table.string('cnic', 20).notNullable().unique()
       table.enu('role', ['admin', 'user']).defaultTo('user')
       table.string('password', 100).notNullable()
+
+      table.date('passwordChangedAt').nullable()
+      table.string('passwordResetToken').nullable()
+      table.date('passwordResetExpires').nullable()
+
       table.timestamps(true, true)
    })
 }
-//changes successfully updated
 
 export const down = function (knex) {
    return knex.schema.dropTableIfExists('users')
