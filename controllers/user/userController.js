@@ -1,13 +1,13 @@
-import db from '../config/db.js'
-import AppError from '../utils/appError.js'
-import catchAsync from '../utils/catchAsync.js'
+import db from '../../config/db.js'
+import AppError from '../../utils/appError.js'
+import catchAsync from '../../utils/catchAsync.js'
 import {
    createOne,
    getAll,
    getOne,
    updateOne,
    deleteOne,
-} from './handleFactory.js'
+} from '../handleFactory.js'
 
 // POST create new user
 // Route  /users
