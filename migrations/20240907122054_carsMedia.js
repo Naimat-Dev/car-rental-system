@@ -12,8 +12,8 @@ export const up = function (knex) {
          .foreign('carId')
          .references('id')
          .inTable('cars')
-         .onDelete('CASCADE') // Foreign key constraint
-      table.timestamps(true, true) // Adds created_at and updated_at with automatic updates
+         .onDelete('CASCADE')
+      table.timestamps(true, true) 
    })
 }
 

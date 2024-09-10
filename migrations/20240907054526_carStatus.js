@@ -26,7 +26,6 @@ export const up = function (knex) {
 
       table.string('lastServicedDate', 50) // Create a 'lastServicedDate' column to store the date of the last service; cannot be null, with a maximum length of 50 characters
 
-      // Define a foreign key constraint linking 'carId' to the 'id' column in the 'cars' table
       table
          .foreign('carId')
          .references('id')
