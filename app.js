@@ -14,6 +14,9 @@ import cardRoutes from './routes/user/cardRoutes.js'
 import carRoutes from './routes/car/carRoutes.js'
 
 import customerRoutes from './routes/customer/customerRoutes.js'
+import bookingRoutes from './routes/booking/bookingRoutes.js'
+
+
 
 const app = express()
 
@@ -43,6 +46,8 @@ app.get('/', (req, res, next) => {
 // API ROUTES
 app.use('/api/users', userRoutes)
 app.use('/api/cars', carRoutes)
+app.use('/api/booking', bookingRoutes)
+
 app.use('/api/cards', cardRoutes)
 app.use('/api/customers', customerRoutes)
 

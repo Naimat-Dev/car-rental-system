@@ -7,9 +7,10 @@ import APIFeatures from './../utils/apiFeatures.js'
 // CREATE One Document
 export const createOne = (Table) =>
    catchAsync(async (req, res, next) => {
-      if (req.body.imageUrls || req.body.videoUrls) {
-         req.body.imageUrls = JSON.stringify(req.body.imageUrls)
-         req.body.videoUrls = JSON.stringify(req.body.videoUrls)
+
+      if(req.body.imageUrls || req.body.videoUrls){
+         req.body.imageUrls= JSON.stringify(req.body.imageUrls)
+         req.body.videoUrls = JSON.stringify( req.body.videoUrls)
       }
 
       const doc = await db(Table).insert(req.body).returning('*')

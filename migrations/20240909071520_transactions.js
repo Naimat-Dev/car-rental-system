@@ -11,8 +11,8 @@ export const up = async function (knex) {
     table.integer("ownerId").unsigned().notNullable();
     table.decimal("additionalCharges").unsigned().defaultTo(0);
     table.decimal("rentalCharges").unsigned().defaultTo(0);
-    table.enu("status", ["paid", "pending", "prepared"]).notNullable().defaultTo("pending");
-    table.enu("paymentMethod", ["cridetCard", "debitCard"]).notNullable();
+    table.enu("status", ["paid", "pending"]).notNullable().defaultTo("pending");
+    table.enu("paymentMethod", ["creditCard", "debitCard"]).notNullable();
     table.date("paymentDate").notNullable();
     table
       .foreign("customerId")
@@ -26,12 +26,12 @@ export const up = async function (knex) {
       .inTable("bookings")
       .onDelete("CASCADE");
 
-      table
+    table
       .foreign("ownerId")
       .references("id")
       .inTable("users")
-      .onDelete("CASCADE"); 
-    
+      .onDelete("CASCADE");
+
     table.timestamps(true, true);
   });
 };
