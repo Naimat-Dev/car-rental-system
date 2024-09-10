@@ -28,6 +28,7 @@ export const getCarDetailsWithJoinById = catchAsync(async (req, res, next) => {
          .join('carSpecifications', 'carSpecifications.carId', 'cars.id')
          .join('carStatus', 'carStatus.carId', 'cars.id')
          .join('carsMedia', 'carsMedia.carId', 'cars.id')
+         .join('users', 'users.id','cars.ownerId' )
          .select('*')
          .where('cars.id', id ).first()
          if(allData){
@@ -48,6 +49,7 @@ export const getCarsDetailsWithJoin = catchAsync(async (req, res, next) => {
       .join('carSpecifications', 'carSpecifications.carId', 'cars.id')
       .join('carStatus', 'carStatus.carId', 'cars.id')
       .join('carsMedia', 'carsMedia.carId', 'cars.id')
+      .join('users', 'users.id','cars.ownerId' )
       .select('*')
    
   if(alldata){

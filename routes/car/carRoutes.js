@@ -39,16 +39,6 @@ router.get('/all/:id', getCarDetailsWithJoinById)
 
 router.get('/all', getCarsDetailsWithJoin)
 
-router.use('/brands', brandRoutes)
-
-router.use('/types', carTypesRoutes)
-
-router.use('/specifications', carSpecificationRoutes)
-
-router.use('/Status', carStatusRoutes)
-
-router.use('/media', carsMediaRoutes)
-
 // Define routes for the /cars endpoint
 router
    .route('/')

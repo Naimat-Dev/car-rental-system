@@ -6,6 +6,7 @@ import {
   } from "../handleFactory.js";
 
   import catchAsync from "../../utils/catchAsync.js";
+  import AppError from "../../utils/appError.js";
   import db from "../../config/db.js";
 import { deleteOneByCarId, getOneByCarId, updateOneByCarId } from "./carController.js";
 
@@ -21,7 +22,7 @@ import { deleteOneByCarId, getOneByCarId, updateOneByCarId } from "./carControll
           // Fetch current media data for the car
           const carMedia = await db('carsMedia').where({carId}).first();
           if (!carMedia) {
-              return res.status(404).json({ status: 'fail', message: 'Car media not found' });
+              return  next(new AppError('Car media not found' , 404)) 
           }
   
           // Parse the current image and video URLs (they're stored as JSONB)
@@ -59,24 +60,20 @@ import { deleteOneByCarId, getOneByCarId, updateOneByCarId } from "./carControll
           if (addVideoUrls.length > 0 || removeVideoUrls.length > 0) {
               updateData.videoUrls = JSON.stringify(currentVideoUrls);
           }
-  
+          let doc ;
           // Only update the database if there are changes
           if (Object.keys(updateData).length > 0) {
               updateData.updated_at = db.fn.now();
   
               // Update the media record with the new arrays
-              await db('carsMedia')
+              doc =await db('carsMedia')
                   .where({ carId })
                   .update(updateData);
           }
   
           return res.status(200).json({
               status: 'success',
-              data: {
-                  carId,
-                  imageUrls: currentImageUrls,
-                  videoUrls: currentVideoUrls
-              }
+              doc
           });
   });
 

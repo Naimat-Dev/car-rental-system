@@ -7,8 +7,10 @@ export const up = function(knex) {
 
         table.increments('id').primary().unique(); 
 
-        table.string('name', 10).notNullable(); 
+        table.string('name',100).notNullable(); 
         
+        table.integer("ownerId").notNullable();
+
         table.integer('brandId').unsigned().notNullable();
         
         table.integer('model', 20).notNullable(); 
@@ -25,10 +27,11 @@ export const up = function(knex) {
         
         table.enu('assembly', ['imported', 'local']).notNullable().defaultTo("local"); 
         
-        // Reference 'id' in the 'brands' table with CASCADE delete rule
+        // If a record in the 'brands' table is deleted, the associated records in 'cars' will also be deleted (CASCADE)
         table.foreign('brandId').references('id').inTable('brands').onDelete('CASCADE'); 
 
-        // Reference 'id' in the 'carTypes' table with CASCADE delete rule
+        table.foreign("ownerId").references('id').inTable('users').onDelete('CASCADE');
+        // // If a record in the 'brands' table is deleted, the associated records in 'cars' will also be deleted (CASCADE)
         table.foreign('carTypeId').references('id').inTable('carTypes').onDelete('CASCADE'); 
         
         table.timestamps(true, true); 
