@@ -26,12 +26,12 @@ export const up = async function (knex) {
       .inTable("bookings")
       .onDelete("CASCADE");
 
-      table
+    table
       .foreign("ownerId")
       .references("id")
       .inTable("users")
-      .onDelete("CASCADE"); 
-    
+      .onDelete("CASCADE");
+
     table.timestamps(true, true);
   });
 };

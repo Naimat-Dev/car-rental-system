@@ -53,9 +53,6 @@ export const createCustomer = catchAsync(async (req, res, next) => {
    })
 })
 
-// POST create new customer
-// export const createCustomer = createOne("customers");
-
 //get all customers
 export const getCustomers = getAll('customers')
 

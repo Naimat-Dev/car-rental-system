@@ -27,14 +27,14 @@ export const createCarCondition = catchAsync(async (req, res) => {
   });
 });
 
-// Function to get all customer addresses
-export const getCarCondition = getAll("carConditions");
+// Function to get all car
+export const getCarConditions = getAll("carConditions");
 
-// Function to get a customer address by ID
+// Function to get a car 
 export const getCarConditionById = getOne("carConditions");
 
 // Update an existing car condition
-export const updateCarCondition = catchAsync(async (req, res) => {
+export const updateCarConditionById = catchAsync(async (req, res) => {
   const { id } = req.params;
   const { conditionType, imageUrls, videoUrls } = req.body;
 

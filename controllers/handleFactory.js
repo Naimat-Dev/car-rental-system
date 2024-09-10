@@ -8,7 +8,7 @@ import APIFeatures from './../utils/apiFeatures.js'
 export const createOne = (Table) =>
    catchAsync(async (req, res, next) => {
 
-      if(req.body.imageUrls && req.body.videoUrls){
+      if(req.body.imageUrls || req.body.videoUrls){
          req.body.imageUrls= JSON.stringify(req.body.imageUrls)
          req.body.videoUrls = JSON.stringify( req.body.videoUrls)
       }
