@@ -90,6 +90,26 @@ export const deleteOne = (Table) =>
       })
    })
 
+// Delete single record
+export const inActiveOne = (Table) =>
+   catchAsync(async (req, res, next) => {
+      const { id } = req.params
+
+      const doc = await db(Table)
+         .where({ id })
+         .update({ status: 'inactive' })
+         .returning('*')
+
+      if (!doc) {
+         return next(new AppError(`${Table} not found by that ID.`, 404))
+      }
+
+      res.status(201).json({
+         status: 'success',
+         doc,
+      })
+   })
+
 // Update single record
 export const updateOne = (Table) =>
    catchAsync(async (req, res, next) => {
