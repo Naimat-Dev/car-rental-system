@@ -66,7 +66,7 @@ export const updateCustomerById = updateOne('customers')
 export const deleteCustomerById = deleteOne('customers')
 
 //Get customer details by ID (joins)
-export const getCustomersJoinById = catchAsync(async (req, res, next) => {
+export const joinCustomerDetailsById = catchAsync(async (req, res, next) => {
    const { id } = req.params
 
    const doc = await db('customers')
@@ -102,7 +102,7 @@ export const getCustomersJoinById = catchAsync(async (req, res, next) => {
 })
 
 //Get all customer details (joins)
-export const getAllCustomersJoin = catchAsync(async (req, res, next) => {
+export const joinAllCustomersDetails = catchAsync(async (req, res, next) => {
    const doc = await db('customers')
       .join('customer_address', 'customers.id', 'customer_address.customerId')
       .join('customer_license', 'customers.id', 'customer_license.customerId')

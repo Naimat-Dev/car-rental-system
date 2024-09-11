@@ -2,23 +2,12 @@ import catchAsync from '../../utils/catchAsync.js'
 import AppError from '../../utils/appError.js'
 import db from '../../config/db.js'
 
-import {
-   createOne,
-   getAll,
-   getOne,
-   updateOne,
-   deleteOne,
-} from '../handleFactory.js'
+import { getAll, getOne, updateOne, deleteOne } from '../handleFactory.js'
 
 // Function to create a new car booking
-export const createCarBooking = catchAsync(async (req, res) => {
-   const {
-      customerId,
-      carId,
-      rentalStartDate,
-      rentalEndDate,
-      initialMilesage,
-   } = req.body
+export const createCarBooking = catchAsync(async (req, res, next) => {
+   const { customerId, carId, rentalStartDate, rentalEndDate, initialMileage } =
+      req.body
 
    // Check if the customerId exists
    const customer = await db('customers').where({ id: customerId }).first()
@@ -33,7 +22,12 @@ export const createCarBooking = catchAsync(async (req, res) => {
    }
 
    // Check if the car is available
+<<<<<<< HEAD
    const carStatus = await db('car_status').where({ carId }).first()
+=======
+   const carStatus = await db('carStatus').where({ carId }).first()
+
+>>>>>>> test
    if (carStatus.availabilityStatus !== 'available') {
       return next(new AppError('Car is not available for booking.', 400))
    }
@@ -60,16 +54,22 @@ export const createCarBooking = catchAsync(async (req, res) => {
          rentalStartDate,
          rentalEndDate,
          totalDays,
-         initialMilesage,
+         initialMileage,
          totalPrice,
       })
       .returning('*')
 
    // Update the car's availability status to 'unavailable'
+<<<<<<< HEAD
    await db('car_status')
+=======
+   const carStatusUpdate = await db('carStatus')
+>>>>>>> test
       .where({ carId })
       .update({ availabilityStatus: 'unavailable' })
+      .returning('*')
 
+<<<<<<< HEAD
    const transaction = await db('car_transactions').insert({
       customerId,
       bookingId: booking.id,
@@ -79,27 +79,35 @@ export const createCarBooking = catchAsync(async (req, res) => {
       paymentDate,
       status: 'pending',
    })
+=======
+   if (!carStatusUpdate.length) {
+      await db('bookings').where({ id: booking.id }).del()
+>>>>>>> test
 
-   if (!transaction || !booking) {
-      return next(new AppError('Booking and transaction are added.', 400))
+      return next(new AppError(`Booking is not create successfully.`, 400))
    }
 
    res.status(201).json({
       status: 'success',
       doc: {
          booking,
-         transaction,
+         carStatusUpdate,
       },
    })
 })
 
 // // Function to get all booking
+<<<<<<< HEAD
 export const getBooking = getAll('car_bookings')
+=======
+export const getBookings = getAll('bookings')
+>>>>>>> test
 
 // Function to get a booking by ID
 export const getBookingById = getOne('car_bookings')
 
 // Function to update a booking by ID
+<<<<<<< HEAD
 export const updateCarBooking = catchAsync(async (req, res) => {
    const { id } = req.params
    const {
@@ -152,5 +160,8 @@ export const updateCarBooking = catchAsync(async (req, res) => {
    res.status(200).json({ message: 'Car booking updated successfully.' })
 })
 
+=======
+export const updateCarBooking = updateOne('bookings')
+>>>>>>> test
 // Function to delete a  by ID
 export const deleteBookingById = deleteOne('car_bookings')

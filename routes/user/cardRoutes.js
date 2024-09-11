@@ -1,34 +1,28 @@
 import express from 'express'
-import { validateSchema } from '../../middlewares/validationMiddleware.js'
 import {
    createCard,
    getCards,
    getCardById,
    updateCardById,
    deleteCardById,
-   getCardsJoin,
-   getCardByIdJoin,
+   joinCardsWithUsers,
+   joinCardsWithUsersById,
 } from '../../controllers/user/cardController.js'
+
 import cardValidationSchema from '../../validations/card/cardValidation.js'
+import { validateSchema } from '../../middlewares/validationMiddleware.js'
 
 const router = express.Router()
 
-// Route to get all cards with related user data
-router.get('/all', getCardsJoin)
+router.get('/all', joinCardsWithUsers)
 
-// Route to get a specific card by ID with related user data
-router.get('/all/:id', getCardByIdJoin)
+router.get('/all/:id', joinCardsWithUsersById)
 
-// Routes for card management
 router
    .route('/')
-   .post(createCard) // Create a new card
-   .get(getCards) // Get all cards
+   .post(validateSchema(cardValidationSchema), createCard)
+   .get(getCards)
 
-router
-   .route('/:id')
-   .get(getCardById) // Get card by ID
-   .delete(deleteCardById) // Delete card by ID
-   .put(updateCardById) // Update card by ID
+router.route('/:id').get(getCardById).delete(deleteCardById).put(updateCardById)
 
 export default router
