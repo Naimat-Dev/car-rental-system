@@ -5,6 +5,9 @@ import {
    getCarSpecificationById,
    updateCarSpecificationById,
    deleteCarSpecificationById,
+   getCarSpecificationByCarId,
+   updateCarSpecificationByCarId,
+   deleteCarSpecificationByCarId,
 } from './../../controllers/car/carSpecificationController.js'
 
 import { validateSchema } from './../../middlewares/validationMiddleware.js'
@@ -12,20 +15,27 @@ import carSpecificationValidationSchema from './../../validations/car/carSpecifi
 
 const router = express.Router()
 
-// Define routes for the /cars/specifications endpoint
+// Define routes for the /specifications endpoint
 router
    .route('/')
    .post(
       validateSchema(carSpecificationValidationSchema),
       createCarSpecification
    )
-   .get(getCarSpecifications) // Handle GET requests to retrieve all car specifications
+   .get(getCarSpecifications)
 
-// Define routes for the /carSpecifications/:id endpoint
+// Define routes for the /specifications/car/:carId endpoint
+router
+   .route('/car/:carId')
+   .get(getCarSpecificationByCarId)
+   .put(updateCarSpecificationByCarId)
+   .delete(deleteCarSpecificationByCarId)
+   
+// Define routes for the /specifications/:id endpoint
 router
    .route('/:id')
-   .get(getCarSpecificationById) // Handle GET requests to retrieve a specific car specification by its ID
-   .put(updateCarSpecificationById) // Handle PUT requests to update a car specification by its ID
-   .delete(deleteCarSpecificationById) // Handle DELETE requests to remove a car specification by its ID
+   .get(getCarSpecificationById) 
+   .put(updateCarSpecificationById) 
+   .delete(deleteCarSpecificationById) 
 
 export default router
