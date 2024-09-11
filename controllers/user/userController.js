@@ -119,7 +119,7 @@ export const getAllUsersWithDetails = catchAsync(async (req, res, next) => {
 
    // Adjust the column name in the join statement if needed
    const users = await db('users as u')
-       .leftJoin('userAddress as ua', 'u.id', 'ua.userId') // Join with userAddress table
+       .leftJoin('user_address as ua', 'u.id', 'ua.userId') // Join with userAddress table
        .leftJoin('cards as c', 'u.id', 'c.ownerId') // Adjust this line based on actual column name
        .select(allFields);
 
@@ -140,7 +140,7 @@ export const getUserByIdJoin = catchAsync(async (req, res, next) => {
    const { id } = req.params;
 
    const user = await db('users as u')
-       .leftJoin('userAddress as ua', 'u.id', 'ua.userId') // Adjust if necessary
+       .leftJoin('user_address as ua', 'u.id', 'ua.userId') // Adjust if necessary
        .leftJoin('cards as c', 'u.id', 'c.ownerId') // Adjust to correct column name
        .select(
            'u.id',

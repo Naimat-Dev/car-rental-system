@@ -70,8 +70,8 @@ export const getCustomersJoinById = catchAsync(async (req, res, next) => {
    const { id } = req.params
 
    const doc = await db('customers')
-      .join('customerAddress', 'customers.id', 'customerAddress.customerId')
-      .join('customerLicense', 'customers.id', 'customerLicense.customerId')
+      .join('customer_address', 'customers.id', 'customer_address.customerId')
+      .join('customer_license', 'customers.id', 'customer_license.customerId')
       .select(
          'customers.id',
          'customers.firstName',
@@ -81,13 +81,13 @@ export const getCustomersJoinById = catchAsync(async (req, res, next) => {
          'customers.dateOfBirth',
          'customers.imageUrl',
          'customers.status',
-         'customerAddress.address',
-         'customerAddress.city',
-         'customerAddress.state',
-         'customerAddress.zipCode',
-         'customerAddress.country',
-         'customerLicense.drivingLicenseNumber',
-         'customerLicense.licenseExpiryDate'
+         'customer_address.address',
+         'customer_address.city',
+         'customer_address.state',
+         'customer_address.zipCode',
+         'customer_address.country',
+         'customer_license.drivingLicenseNumber',
+         'customer_license.licenseExpiryDate'
       )
       .where('customers.id', id)
 
@@ -104,8 +104,8 @@ export const getCustomersJoinById = catchAsync(async (req, res, next) => {
 //Get all customer details (joins)
 export const getAllCustomersJoin = catchAsync(async (req, res, next) => {
    const doc = await db('customers')
-      .join('customerAddress', 'customers.id', 'customerAddress.customerId')
-      .join('customerLicense', 'customers.id', 'customerLicense.customerId')
+      .join('customer_address', 'customers.id', 'customer_address.customerId')
+      .join('customer_license', 'customers.id', 'customer_license.customerId')
       .select(
          'customers.id',
          'customers.firstName',
@@ -115,13 +115,13 @@ export const getAllCustomersJoin = catchAsync(async (req, res, next) => {
          'customers.dateOfBirth',
          'customers.imageUrl',
          'customers.status',
-         'customerAddress.address',
-         'customerAddress.city',
-         'customerAddress.state',
-         'customerAddress.zipCode',
-         'customerAddress.country',
-         'customerLicense.drivingLicenseNumber',
-         'customerLicense.licenseExpiryDate'
+         'customer_address.address',
+         'customer_address.city',
+         'customer_address.state',
+         'customer_address.zipCode',
+         'customer_address.country',
+         'customer_license.drivingLicenseNumber',
+         'customer_license.licenseExpiryDate'
       )
 
    if (doc.length === 0) {

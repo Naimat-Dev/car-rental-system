@@ -10,28 +10,28 @@ import catchAsync from '../../utils/catchAsync.js'
 
 // POST create new User Address
 // Route  /userAddress
-export const createUserAddress = createOne('userAddress')
+export const createUserAddress = createOne('user_address')
 
 // GET all users
 // Route /api/users
-export const getUserAddress = getAll('userAddress')
+export const getUserAddress = getAll('user_address')
 
 // GET user by id
 // Route /api/user/:id
-export const getUserAddressById = getOne('userAddress')
+export const getUserAddressById = getOne('user_address')
 
 // DELETE user by id
 // Route /api/user/:id
-export const deleteUserAddressById = deleteOne('userAddress')
+export const deleteUserAddressById = deleteOne('user_address')
 
 // UPDATE user by id
 // Route /api/user/:id
-export const updateUserAddressById = updateOne('userAddress')
+export const updateUserAddressById = updateOne('user_address')
 
 //Routes //api/users/addresses/all/
 
 export const getUserAddressJoin = catchAsync(async (req, res, next) => {
-   const userAddresses = await db('userAddress as ua')
+   const userAddresses = await db('user_address as ua')
       .leftJoin('users as u', 'ua.userId', 'u.id')
       .select('*')
 
@@ -52,7 +52,7 @@ export const getUserAddressJoin = catchAsync(async (req, res, next) => {
 export const getUserAddressByIdJoin = catchAsync(async (req, res, next) => {
    const { id } = req.params;
 
-   const userAddress = await db('userAddress as ua')
+   const userAddress = await db('user_address as ua')
       .leftJoin('users as u', 'ua.userId', 'u.id') // Join with users table
       .select(
          'ua.id', // Assuming 'id' is the primary key in userAddress
@@ -89,7 +89,7 @@ export const getUserAddressByIdJoin = catchAsync(async (req, res, next) => {
 //Routes //api/users/addresses/with-cards
 
 export const getUserAddressWithCards = catchAsync(async (req, res, next) => {
-   const userAddresses = await db('userAddress as ua')
+   const userAddresses = await db('user_address as ua')
       .leftJoin('users as u', 'ua.userId', 'u.id') // Join with users
       .leftJoin('cards as c', 'u.id', 'c.userId') // Join with cards
       .select('*') // Select all fields from the joined tables

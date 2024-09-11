@@ -26,16 +26,14 @@ export const createCarBooking = catchAsync(async (req, res) => {
       return next(new AppError(`Customer not found by that ID.`, 404))
    }
 
-   console.log(customer)
-
    // Check if the carId exists
-   const car = await db('carSpecifications').where({ carId }).first()
+   const car = await db('car_specifications').where({ carId }).first()
    if (!car) {
       return next(new AppError(`Car not found by that ID.`, 404))
    }
 
    // Check if the car is available
-   const carStatus = await db('carStatus').where({ carId }).first()
+   const carStatus = await db('car_status').where({ carId }).first()
    if (carStatus.availabilityStatus !== 'available') {
       return next(new AppError('Car is not available for booking.', 400))
    }
@@ -50,17 +48,12 @@ export const createCarBooking = catchAsync(async (req, res) => {
    }
    // Calculate total days (including partial days)
    const totalDays = Math.ceil(timeDiff / (1000 * 60 * 60 * 24))
-   console.log(totalDays)
-
-   console.log(car)
 
    // Calculate totalPrice (car price per day * totalDays)
    const totalPrice = car.pricePerDay * totalDays
 
-   console.log(totalPrice)
-
    // Insert new booking into the database
-   const booking = await db('bookings')
+   const booking = await db('car_bookings')
       .insert({
          customerId,
          carId,
@@ -73,11 +66,11 @@ export const createCarBooking = catchAsync(async (req, res) => {
       .returning('*')
 
    // Update the car's availability status to 'unavailable'
-   await db('carStatus')
+   await db('car_status')
       .where({ carId })
       .update({ availabilityStatus: 'unavailable' })
 
-   const transaction = await db('transactions').insert({
+   const transaction = await db('car_transactions').insert({
       customerId,
       bookingId: booking.id,
       ownerId: car.ownerId,
@@ -101,10 +94,10 @@ export const createCarBooking = catchAsync(async (req, res) => {
 })
 
 // // Function to get all booking
-export const getBooking = getAll('bookings')
+export const getBooking = getAll('car_bookings')
 
 // Function to get a booking by ID
-export const getBookingById = getOne('bookings')
+export const getBookingById = getOne('car_bookings')
 
 // Function to update a booking by ID
 export const updateCarBooking = catchAsync(async (req, res) => {
@@ -118,7 +111,7 @@ export const updateCarBooking = catchAsync(async (req, res) => {
    } = req.body
 
    // Check if the booking exists
-   const existingBooking = await db('bookings').where({ id }).first()
+   const existingBooking = await db('car_bookings').where({ id }).first()
 
    if (!existingBooking) {
       return next(new AppError(`Booking not found by that ID.`, 404))
@@ -141,7 +134,7 @@ export const updateCarBooking = catchAsync(async (req, res) => {
    }
 
    // Update the booking details
-   await db('bookings')
+   await db('car_bookings')
       .where({ id })
       .update({
          rentalStartDate: rentalStartDate || existingBooking.rentalStartDate,
@@ -160,4 +153,4 @@ export const updateCarBooking = catchAsync(async (req, res) => {
 })
 
 // Function to delete a  by ID
-export const deleteBookingById = deleteOne('bookings')
+export const deleteBookingById = deleteOne('car_bookings')

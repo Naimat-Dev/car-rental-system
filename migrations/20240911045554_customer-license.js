@@ -3,7 +3,7 @@
  * @returns { Promise<void> }
  */ 
 export const up = async function (knex) {
-    await knex.schema.createTable("customerLicense", (table) => {
+    await knex.schema.createTable("customer_license", (table) => {
       table.increments("id").primary();
       table.integer("customerId").unsigned().notNullable();
       table.string("drivingLicenseNumber", 30).notNullable().unique(); 
@@ -24,7 +24,7 @@ export const up = async function (knex) {
    * @returns { Promise<void> }
    */
   export const down = async function (knex) {
-    await knex.schema.dropTableIfExists("customerLicense");
+    await knex.schema.dropTableIfExists("customer_license");
   };
   
   
