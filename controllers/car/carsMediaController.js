@@ -10,17 +10,17 @@ import {
   import db from "../../config/db.js";
 import { deleteOneByCarId, getOneByCarId, updateOneByCarId } from "./carController.js";
 
-  export const createCarMedia = createOne('carsMedia'); 
+  export const createCarMedia = createOne('cars_media'); 
 
-  export const getCarMedia = getAll('carsMedia'); 
+  export const getCarMedia = getAll('cars_media'); 
 
-  export const getCarMediaById = getOne('carsMedia'); 
+  export const getCarMediaById = getOne('cars_media'); 
 
   export const updateCarMediaByCarId =catchAsync(async (req, res, next) => {
       const { carId } = req.params; 
       const { addImageUrls = [], removeImageUrls = [], addVideoUrls = [], removeVideoUrls = [] } = req.body;
           // Fetch current media data for the car
-          const carMedia = await db('carsMedia').where({carId}).first();
+          const carMedia = await db('cars_media').where({carId}).first();
           if (!carMedia) {
               return  next(new AppError('Car media not found' , 404)) 
           }
@@ -66,7 +66,7 @@ import { deleteOneByCarId, getOneByCarId, updateOneByCarId } from "./carControll
               updateData.updated_at = db.fn.now();
   
               // Update the media record with the new arrays
-              doc =await db('carsMedia')
+              doc =await db('cars_media')
                   .where({ carId })
                   .update(updateData);
           }
@@ -77,8 +77,8 @@ import { deleteOneByCarId, getOneByCarId, updateOneByCarId } from "./carControll
           });
   });
 
-export const deleteCarMediaById = deleteOne('carsMedia'); 
+export const deleteCarMediaById = deleteOne('cars_media'); 
 
-export const getCarMediaByCarId =getOneByCarId('carsMedia') ;
+export const getCarMediaByCarId =getOneByCarId('cars_media') ;
 
-export const deleteCarMediaByCarId = deleteOneByCarId('carsMedia')
+export const deleteCarMediaByCarId = deleteOneByCarId('cars_media')

@@ -3,24 +3,29 @@ import db from '../../config/db.js'
 import catchAsync from '../../utils/catchAsync.js'
 
 // Route  /userAddress
-export const createUserAddress = createOne('userAddress')
+export const createUserAddress = createOne('user_address')
 
 // Route /api/users
-export const getUserAddress = getAll('userAddress')
+export const getUserAddress = getAll('user_address')
 
 // Route /api/user/:id
-export const getUserAddressById = getOne('userAddress')
+export const getUserAddressById = getOne('user_address')
 
 // Route /api/user/:id
-export const deleteUserAddressById = deleteOne('userAddress')
+export const deleteUserAddressById = deleteOne('user_address')
 
 // Route /api/user/:id
-export const updateUserAddressById = updateOne('userAddress')
+export const updateUserAddressById = updateOne('user_address')
 
 //Routes //api/users/addresses/all/
 
+<<<<<<< HEAD
+export const getUserAddressJoin = catchAsync(async (req, res, next) => {
+   const userAddresses = await db('user_address as ua')
+=======
 export const joinUserAddressWithUsers = catchAsync(async (req, res, next) => {
    const userAddresses = await db('userAddress as ua')
+>>>>>>> test
       .leftJoin('users as u', 'ua.userId', 'u.id')
       .select('*')
 
@@ -40,8 +45,13 @@ export const joinUserAddressWithUsers = catchAsync(async (req, res, next) => {
 export const joinUserAddressWithUsersById = catchAsync(async (req, res, next) => {
    const { id } = req.params;
 
+<<<<<<< HEAD
+   const userAddress = await db('user_address as ua')
+      .leftJoin('users as u', 'ua.userId', 'u.id') // Join with users table
+=======
    const userAddress = await db('userAddress as ua')
       .leftJoin('users as u', 'ua.userId', 'u.id')
+>>>>>>> test
       .select(
          'ua.id',
          'ua.address',
@@ -74,3 +84,25 @@ export const joinUserAddressWithUsersById = catchAsync(async (req, res, next) =>
 });
 
 
+<<<<<<< HEAD
+export const getUserAddressWithCards = catchAsync(async (req, res, next) => {
+   const userAddresses = await db('user_address as ua')
+      .leftJoin('users as u', 'ua.userId', 'u.id') // Join with users
+      .leftJoin('cards as c', 'u.id', 'c.userId') // Join with cards
+      .select('*') // Select all fields from the joined tables
+
+   // Remove any sensitive fields (e.g., password, CVV)
+   const addressesWithoutSensitiveData = userAddresses.map(
+      ({ password, passwordResetToken, passwordResetExpires, cvv, ...rest }) =>
+         rest
+   )
+
+   res.status(200).json({
+      status: 'success',
+      doc: {
+         userAddresses: addressesWithoutSensitiveData,
+      },
+   })
+})
+=======
+>>>>>>> test
