@@ -18,19 +18,19 @@ export const up = async function (knex) {
       .foreign("customerId")
       .references("id")
       .inTable("customers")
-      .onDelete("CASCADE");
+      .onDelete("");
 
     table
       .foreign("bookingId")
       .references("id")
       .inTable("bookings")
-      .onDelete("CASCADE");
+      .onDelete("");
 
     table
       .foreign("ownerId")
       .references("id")
       .inTable("users")
-      .onDelete("CASCADE");
+      .onDelete("");
 
     table.timestamps(true, true);
   });
