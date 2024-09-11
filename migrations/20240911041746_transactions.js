@@ -18,11 +18,6 @@ export const up = async function (knex) {
          .defaultTo('pending')
       table.enu('paymentMethod', ['creditCard', 'debitCard']).notNullable()
       table.date('paymentDate').notNullable()
-      table
-         .foreign('customerId')
-         .references('id')
-         .inTable('customers')
-         .onDelete('CASCADE')
 
       table
          .foreign('bookingId')
@@ -30,11 +25,9 @@ export const up = async function (knex) {
          .inTable('bookings')
          .onDelete('CASCADE')
 
-      table
-         .foreign('ownerId')
-         .references('id')
-         .inTable('users')
-         .onDelete('CASCADE')
+      table.foreign('customerId').references('id').inTable('customers')
+
+      table.foreign('ownerId').references('id').inTable('users')
 
       table.timestamps(true, true)
    })
