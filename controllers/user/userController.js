@@ -1,32 +1,14 @@
+import bcrypt from 'bcrypt'
+
 import db from '../../config/db.js'
 import AppError from '../../utils/appError.js'
 import catchAsync from '../../utils/catchAsync.js'
-import {
-   createOne,
-   getAll,
-   getOne,
-   updateOne,
-   deleteOne,
-} from '../handleFactory.js'
-import bcrypt from 'bcrypt'
+import { getAll, getOne, updateOne, deleteOne } from '../handleFactory.js'
 
-// POST create new user
-// Route  /users
-// Create user
-// Create user
 export const createUser = catchAsync(async (req, res, next) => {
-   const {
-      email,
-      name,
-      phoneNumber,
-      cnic,
-      dateOfBirth,
-      imageUrl,
-      status,
-      password,
-   } = req.body
+   const { email, name, phoneNumber, cnic, imageUrl, status, password } =
+      req.body
 
-   // Check if a user with the given email, cnic, or phoneNumber already exists
    const existingUser = await db('users')
       .where({ email })
       .orWhere({ cnic })
@@ -42,39 +24,33 @@ export const createUser = catchAsync(async (req, res, next) => {
       )
    }
 
-   // Hash the password before saving
    const hashedPassword = await bcrypt.hash(password, 12)
 
-   // Insert the new user
    const doc = await db('users')
       .insert({
          email,
          name,
          phoneNumber,
          cnic,
-         status: status || 'inactive', // Default status is 'inactive'
-         registrationDate: new Date(), // Assuming you're using the current date
-         image: imageUrl, // Save the provided image URL
-         password: hashedPassword, // Save the hashed password
+         status: status || 'inactive',
+         registrationDate: new Date(),
+         image: imageUrl,
+         password: hashedPassword,
       })
       .returning('*')
 
-   // Respond with success status and the newly created user
    res.status(201).json({
       status: 'success',
       doc,
    })
 })
 
-// GET all users
 // Route /api/users
 export const getUsers = getAll('users')
 
-// GET user by id
 // Route /api/user/:id
 export const getUserById = getOne('users')
 
-// DELETE user by id
 // Route /api/user/:id
 export const deleteUserById = deleteOne('users')
 
@@ -83,8 +59,7 @@ export const updateUserById = updateOne('users')
 
 // GET all users with their addresses and cards
 // Route /api/users/join
-export const getAllUsersWithDetails = catchAsync(async (req, res, next) => {
-   // Define the fields to select from users, userAddress, and cards
+export const joinAllUsersWithDetails = catchAsync(async (req, res, next) => {
    const userFields = [
       'u.id',
       'u.email',
@@ -95,7 +70,6 @@ export const getAllUsersWithDetails = catchAsync(async (req, res, next) => {
       'u.image',
       'u.cnic',
       'u.role',
-      'u.passwordChangedAt',
    ]
 
    const addressFields = ['ua.address', 'ua.city', 'ua.zipCode', 'ua.state']
@@ -104,35 +78,30 @@ export const getAllUsersWithDetails = catchAsync(async (req, res, next) => {
       'c.cardNumber',
       'c.cardHolderName',
       'c.expiryDate',
-      // Excluding 'cvv' from selection
+      'c.billingAddress',
    ]
 
-   // Combine all fields
    const allFields = [...userFields, ...addressFields, ...cardFields]
 
-   // Adjust the column name in the join statement if needed
    const users = await db('users as u')
-      .leftJoin('userAddress as ua', 'u.id', 'ua.userId') // Join with userAddress table
-      .leftJoin('cards as c', 'u.id', 'c.ownerId') // Adjust this line based on actual column name
+      .leftJoin('userAddress as ua', 'u.id', 'ua.userId')
+      .leftJoin('cards as c', 'u.id', 'c.ownerId')
       .select(allFields)
 
-   // Send response with sanitized data
    res.status(200).json({
       status: 'success',
-      doc: {
-         users,
-      },
+      doc: users,
    })
 })
 
 // GET user by id with address and cards
 // Route /api/users/:id
-export const getUserByIdJoin = catchAsync(async (req, res, next) => {
+export const joinUserDetailsById = catchAsync(async (req, res, next) => {
    const { id } = req.params
 
    const user = await db('users as u')
-      .leftJoin('userAddress as ua', 'u.id', 'ua.userId') // Adjust if necessary
-      .leftJoin('cards as c', 'u.id', 'c.ownerId') // Adjust to correct column name
+      .leftJoin('userAddress as ua', 'u.id', 'ua.userId')
+      .leftJoin('cards as c', 'u.id', 'c.ownerId')
       .select(
          'u.id',
          'u.email',
@@ -143,33 +112,31 @@ export const getUserByIdJoin = catchAsync(async (req, res, next) => {
          'u.image',
          'u.cnic',
          'u.role',
-         'u.passwordChangedAt',
          'ua.address',
          'ua.city',
          'ua.zipCode',
          'ua.state',
          'c.cardNumber',
          'c.cardHolderName',
-         'c.expiryDate'
+         'c.expiryDate',
+         'c.billingAddress'
       )
       .where('u.id', id)
       .first()
 
    if (!user) return next(new AppError('No user found with that ID', 404))
 
-   // Remove sensitive fields such as the password
    const {
       password,
       passwordResetToken,
       passwordResetExpires,
+      passwordChangedAt,
       cvv,
-      ...userWithoutSensitiveData
+      ...filterData
    } = user
 
    res.status(200).json({
       status: 'success',
-      data: {
-         user: userWithoutSensitiveData,
-      },
+      doc: filterData,
    })
 })
