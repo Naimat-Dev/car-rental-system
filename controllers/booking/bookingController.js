@@ -2,13 +2,7 @@ import catchAsync from '../../utils/catchAsync.js'
 import AppError from '../../utils/appError.js'
 import db from '../../config/db.js'
 
-import {
-   createOne,
-   getAll,
-   getOne,
-   updateOne,
-   deleteOne,
-} from '../handleFactory.js'
+import { getAll, getOne, updateOne, deleteOne } from '../handleFactory.js'
 
 // Function to create a new car booking
 export const createCarBooking = catchAsync(async (req, res, next) => {
