@@ -22,7 +22,7 @@ export const up = async function (knex) {
       table
          .foreign('bookingId')
          .references('id')
-         .inTable('car_bookings')
+         .inTable('bookings')
          .onDelete('CASCADE')
 
       table.foreign('customerId').references('id').inTable('customers')
