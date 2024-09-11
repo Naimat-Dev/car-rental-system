@@ -7,18 +7,18 @@ import {
 } from "../handleFactory.js";
 import { deleteOneByCarId, getOneByCarId, updateOneByCarId } from "./carController.js";
 
-export const createCarSpecification = createOne('carSpecifications'); 
+export const createCarSpecification = createOne('car_specifications'); 
 
-export const getCarSpecifications = getAll('carSpecifications'); 
+export const getCarSpecifications = getAll('car_specifications'); 
 
-export const getCarSpecificationById = getOne('carSpecifications'); 
+export const getCarSpecificationById = getOne('car_specifications'); 
 
-export const updateCarSpecificationById = updateOne('carSpecifications'); 
+export const updateCarSpecificationById = updateOne('car_specifications'); 
 
-export const deleteCarSpecificationById = deleteOne('carSpecifications'); 
+export const deleteCarSpecificationById = deleteOne('car_specifications'); 
 
-export const  getCarSpecificationByCarId =  getOneByCarId('carSpecifications');
+export const  getCarSpecificationByCarId =  getOneByCarId('car_specifications');
 
-export const updateCarSpecificationByCarId = updateOneByCarId('carSpecifications');
+export const updateCarSpecificationByCarId = updateOneByCarId('car_specifications');
 
-export const deleteCarSpecificationByCarId = deleteOneByCarId('carSpecifications');
+export const deleteCarSpecificationByCarId = deleteOneByCarId('car_specifications');

@@ -3,7 +3,7 @@
  * @returns { Promise<void> }
  */
 export const up = function(knex) {
-    return knex.schema.createTable('carTypes', (table) => {
+    return knex.schema.createTable('car_types', (table) => {
         
         table.increments('id').primary().unique(); 
 
@@ -18,5 +18,5 @@ export const up = function(knex) {
  * @returns { Promise<void> }
  */
 export const down = function(knex) {
-    return knex.schema.dropTableIfExists("carTypes");
+    return knex.schema.dropTableIfExists("car_types");
 };

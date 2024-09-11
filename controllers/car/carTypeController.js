@@ -6,13 +6,13 @@ import {
 	updateOne,
 } from "../handleFactory.js";
 
-export const createCarType = createOne('carTypes'); 
+export const createCarType = createOne('car_types'); 
 
-export const getCarTypes = getAll('carTypes'); 
+export const getCarTypes = getAll('car_types'); 
 
-export const getCarTypeById = getOne('carTypes'); 
+export const getCarTypeById = getOne('car_types'); 
 
-export const updateCarTypeById = updateOne('carTypes'); 
+export const updateCarTypeById = updateOne('car_types'); 
 
-export const deleteCarTypeById = deleteOne('carTypes'); 
+export const deleteCarTypeById = deleteOne('car_types'); 
 

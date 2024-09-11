@@ -84,8 +84,8 @@ export const joinAllUsersWithDetails = catchAsync(async (req, res, next) => {
    const allFields = [...userFields, ...addressFields, ...cardFields]
 
    const users = await db('users as u')
-      .leftJoin('userAddress as ua', 'u.id', 'ua.userId')
-      .leftJoin('cards as c', 'u.id', 'c.ownerId')
+      .leftJoin('user_address as ua', 'u.id', 'ua.userId') // Join with userAddress table
+      .leftJoin('cards as c', 'u.id', 'c.ownerId') // Adjust this line based on actual column name
       .select(allFields)
 
    res.status(200).json({
@@ -100,7 +100,7 @@ export const joinUserDetailsById = catchAsync(async (req, res, next) => {
    const { id } = req.params
 
    const user = await db('users as u')
-      .leftJoin('userAddress as ua', 'u.id', 'ua.userId')
+      .leftJoin('user_address as ua', 'u.id', 'ua.userId')
       .leftJoin('cards as c', 'u.id', 'c.ownerId')
       .select(
          'u.id',

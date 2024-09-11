@@ -4,7 +4,7 @@
  */
 
 export const up = async function (knex) {
-   await knex.schema.createTable('transactions', (table) => {
+   await knex.schema.createTable('car_transactions', (table) => {
       table.increments('id').primary()
       table.integer('customerId').unsigned().notNullable()
       table.integer('bookingId').unsigned().notNullable().unique()
@@ -27,7 +27,7 @@ export const up = async function (knex) {
       table
          .foreign('bookingId')
          .references('id')
-         .inTable('bookings')
+         .inTable('car_bookings')
          .onDelete('CASCADE')
 
       table
@@ -45,5 +45,5 @@ export const up = async function (knex) {
  * @returns { Promise<void> }
  */
 export const down = async function (knex) {
-   await knex.schema.dropTableIfExists('transactions')
+   await knex.schema.dropTableIfExists('car_transactions')
 }
