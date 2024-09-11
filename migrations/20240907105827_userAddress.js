@@ -1,10 +1,10 @@
 export const up = function (knex) {
     return knex.schema.createTable("userAddress", (table) => {
-        table.increments("id").primary(); // Primary key
+        table.increments("id").primary(); 
         table.integer("userId").unique().unsigned().notNullable(); 
         table.string("address", 255).notNullable(); 
         table.string("city", 50).notNullable(); 
-        table.string("zipCode", 10).notNullable(); 
+        table.string("zipCode", 5).notNullable(); 
         table.string("state", 50).notNullable(); 
 
         // Foreign key constraint
