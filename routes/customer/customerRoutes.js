@@ -2,13 +2,12 @@ import express from "express";
 import {
   createCustomer,
   deleteCustomerById,
-  getAllCustomersJoin,
   getCustomerById,
   getCustomers,
-  getCustomersJoinById,
+  joinCustomerDetailsById,
   updateCustomerById,
+  joinCustomersDetails
 } from "../../controllers/customer/customersController.js";
-// import { validateSchema } from "../../middlewares/validationMiddleware.js";
 import customerValidationSchema from "../../validations/customer/customerValidation.js";
 import { validateSchema } from "../../middlewares/validationMiddleware.js";
 
@@ -20,8 +19,8 @@ const router = express.Router();
 router.use("/address", customerAddressRoutes);
 router.use("/license", customerLicenseRoutes);
 
-router.get("/all/:id", getCustomersJoinById);
-router.get("/all", getAllCustomersJoin);
+router.get("/all/:id", joinCustomerDetailsById);
+router.get("/all", joinCustomersDetails);
 
 router
   .route("/")

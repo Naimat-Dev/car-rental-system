@@ -27,13 +27,13 @@ export const createCarCondition = catchAsync(async (req, res) => {
   });
 });
 
-// Function to get all car
+// Function to get all car condition
 export const getCarConditions = getAll("carConditions");
 
-// Function to get a car 
+// Function to get a car condition
 export const getCarConditionById = getOne("carConditions");
 
-// Update an existing car condition
+// Update an existing car condition condition
 export const updateCarConditionById = catchAsync(async (req, res) => {
   const { id } = req.params;
   const { conditionType, imageUrls, videoUrls } = req.body;
@@ -61,5 +61,5 @@ export const updateCarConditionById = catchAsync(async (req, res) => {
   res.status(200).json({ message: "Car condition updated successfully." });
 });
 
-// Function to delete a customer address by ID
+// Function to delete a car by ID
 export const deleteCarConditionById = deleteOne("carConditions");
