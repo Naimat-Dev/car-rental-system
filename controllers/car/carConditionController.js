@@ -12,7 +12,7 @@ export const createCarCondition = catchAsync(async (req, res) => {
       .json({ error: "carId and conditionType are required." });
   }
 
-  const [newCarConditionId] = await knex("carConditions")
+  const [newCarConditionId] = await knex("car_conditions")
     .insert({
       carId,
       conditionType,
@@ -28,17 +28,17 @@ export const createCarCondition = catchAsync(async (req, res) => {
 });
 
 // Function to get all car
-export const getCarConditions = getAll("carConditions");
+export const getCarConditions = getAll("car_conditions");
 
 // Function to get a car 
-export const getCarConditionById = getOne("carConditions");
+export const getCarConditionById = getOne("car_conditions");
 
 // Update an existing car condition
 export const updateCarConditionById = catchAsync(async (req, res) => {
   const { id } = req.params;
   const { conditionType, imageUrls, videoUrls } = req.body;
 
-  const existingCarCondition = await knex("carConditions")
+  const existingCarCondition = await knex("car_conditions")
     .where({ id })
     .first();
   if (!existingCarCondition) {
@@ -46,7 +46,7 @@ export const updateCarConditionById = catchAsync(async (req, res) => {
   }
 
   // Update the car condition
-  await knex("carConditions")
+  await knex("car_conditions")
     .where({ id })
     .update({
       conditionType: conditionType || existingCarCondition.conditionType,
@@ -62,4 +62,4 @@ export const updateCarConditionById = catchAsync(async (req, res) => {
 });
 
 // Function to delete a customer address by ID
-export const deleteCarConditionById = deleteOne("carConditions");
+export const deleteCarConditionById = deleteOne("car_conditions");

@@ -14,11 +14,7 @@ export const up = async function (knex) {
       table.decimal('initialMileage').notNullable()
       table.decimal('totalPrice').notNullable()
 
-      table
-         .foreign('customerId')
-         .references('id')
-         .inTable('customers')
-         .onDelete('CASCADE')
+      table.foreign('customerId').references('id').inTable('customers')
 
       table
          .foreign('carId')

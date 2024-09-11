@@ -4,7 +4,7 @@
  */
 
 export const up = async function (knex) {
-    await knex.schema.createTable("carConditions", (table) => {
+    await knex.schema.createTable("car_conditions", (table) => {
       table.increments("id").primary();
       table.integer("carId").unsigned().notNullable();
       table
@@ -25,6 +25,6 @@ export const up = async function (knex) {
    * @returns { Promise<void> }
    */
   export const down = async function (knex) {
-    await knex.schema.dropTableIfExists("carConditions");
+    await knex.schema.dropTableIfExists("car_conditions");
   };
   

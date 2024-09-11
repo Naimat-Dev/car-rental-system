@@ -2,13 +2,7 @@ import catchAsync from '../../utils/catchAsync.js'
 import AppError from '../../utils/appError.js'
 import db from '../../config/db.js'
 
-import {
-   createOne,
-   getAll,
-   getOne,
-   updateOne,
-   deleteOne,
-} from '../handleFactory.js'
+import { getAll, getOne, updateOne, deleteOne } from '../handleFactory.js'
 
 // Function to create a new car booking
 export const createCarBooking = catchAsync(async (req, res, next) => {
@@ -22,13 +16,13 @@ export const createCarBooking = catchAsync(async (req, res, next) => {
    }
 
    // Check if the carId exists
-   const car = await db('carSpecifications').where({ carId }).first()
+   const car = await db('car_specifications').where({ carId }).first()
    if (!car) {
       return next(new AppError(`Car not found by that ID.`, 404))
    }
 
    // Check if the car is available
-   const carStatus = await db('carStatus').where({ carId }).first()
+   const carStatus = await db('car_status').where({ carId }).first()
 
    if (carStatus.availabilityStatus !== 'available') {
       return next(new AppError('Car is not available for booking.', 400))
@@ -49,7 +43,7 @@ export const createCarBooking = catchAsync(async (req, res, next) => {
    const totalPrice = car.pricePerDay * totalDays
 
    // Insert new booking into the database
-   const booking = await db('bookings')
+   const booking = await db('car_bookings')
       .insert({
          customerId,
          carId,
@@ -62,7 +56,7 @@ export const createCarBooking = catchAsync(async (req, res, next) => {
       .returning('*')
 
    // Update the car's availability status to 'unavailable'
-   const carStatusUpdate = await db('carStatus')
+   const carStatusUpdate = await db('car_status')
       .where({ carId })
       .update({ availabilityStatus: 'unavailable' })
       .returning('*')
@@ -83,12 +77,13 @@ export const createCarBooking = catchAsync(async (req, res, next) => {
 })
 
 // // Function to get all booking
+
 export const getBookings = getAll('bookings')
 
 // Function to get a booking by ID
-export const getBookingById = getOne('bookings')
+export const getBookingById = getOne('car_bookings')
 
 // Function to update a booking by ID
 export const updateCarBooking = updateOne('bookings')
 // Function to delete a  by ID
-export const deleteBookingById = deleteOne('bookings')
+export const deleteBookingById = deleteOne('car_bookings')
