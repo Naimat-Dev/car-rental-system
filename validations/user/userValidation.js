@@ -34,7 +34,7 @@ const userValidationSchema = Joi.object({
       'date.base': 'Registration date must be a valid date.',
    }),
 
-   image: Joi.string().optional().allow('', null), // Allow empty string and null
+   image: Joi.string().optional().allow('', null),
 
    cnic: Joi.string()
       .max(20)

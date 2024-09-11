@@ -43,3 +43,4 @@ export const up = async function (knex) {
 export const down = async function (knex) {
   await knex.schema.dropTableIfExists("transactions");
 };
+

@@ -1,36 +1,37 @@
-import express from "express";
+import express from 'express'
 import {
-  createCustomer,
-  deleteCustomerById,
-  getCustomerById,
-  getCustomers,
-  joinCustomerDetailsById,
-  updateCustomerById,
-  joinCustomersDetails
-} from "../../controllers/customer/customersController.js";
-import customerValidationSchema from "../../validations/customer/customerValidation.js";
-import { validateSchema } from "../../middlewares/validationMiddleware.js";
+   createCustomer,
+   deleteCustomerById,
+   getCustomerById,
+   getCustomers,
+   joinAllCustomersDetails,
+   joinCustomerDetailsById,
+   updateCustomerById,
+} from '../../controllers/customer/customersController.js'
 
-import customerAddressRoutes from "./customerAddressRoutes.js";
-import customerLicenseRoutes from "./customerLicenseRoutes.js";
+import customerValidationSchema from '../../validations/customer/customerValidation.js'
+import { validateSchema } from '../../middlewares/validationMiddleware.js'
 
-const router = express.Router();
+import customerAddressRoutes from './customerAddressRoutes.js'
+import customerLicenseRoutes from './customerLicenseRoutes.js'
 
-router.use("/address", customerAddressRoutes);
-router.use("/license", customerLicenseRoutes);
+const router = express.Router()
 
-router.get("/all/:id", joinCustomerDetailsById);
-router.get("/all", joinCustomersDetails);
+router.use('/address', customerAddressRoutes)
+router.use('/license', customerLicenseRoutes)
 
-router
-  .route("/")
-  .post(validateSchema(customerValidationSchema), createCustomer)
-  .get(getCustomers);
+router.get('/all/:id', joinCustomerDetailsById)
+router.get('/all', joinAllCustomersDetails)
 
 router
-  .route("/:id")
-  .get(getCustomerById)
-  .delete(deleteCustomerById)
-  .put(updateCustomerById);
+   .route('/')
+   .post(validateSchema(customerValidationSchema), createCustomer)
+   .get(getCustomers)
 
-export default router;
+router
+   .route('/:id')
+   .get(getCustomerById)
+   .delete(deleteCustomerById)
+   .put(updateCustomerById)
+
+export default router

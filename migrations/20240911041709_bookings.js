@@ -11,7 +11,7 @@ export const up = async function (knex) {
       table.date('rentalStartDate').notNullable()
       table.date('rentalEndDate').notNullable()
       table.string('totalDays').notNullable()
-      table.decimal('initialMilesage').notNullable()
+      table.decimal('initialMileage').notNullable()
       table.decimal('totalPrice').notNullable()
 
       table

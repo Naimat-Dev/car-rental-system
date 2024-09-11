@@ -102,7 +102,7 @@ export const joinCustomerDetailsById = catchAsync(async (req, res, next) => {
 })
 
 //Get all customer details (joins)
-export const joinCustomersDetails = catchAsync(async (req, res, next) => {
+export const joinAllCustomersDetails = catchAsync(async (req, res, next) => {
    const doc = await db('customers')
       .join('customerAddress', 'customers.id', 'customerAddress.customerId')
       .join('customerLicense', 'customers.id', 'customerLicense.customerId')
