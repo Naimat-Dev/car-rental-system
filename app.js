@@ -1,55 +1,56 @@
-import express from "express";
-import cors from "cors";
-import cookieParser from "cookie-parser";
-import morgan from "morgan";
+import express from 'express'
+import cors from 'cors'
+import cookieParser from 'cookie-parser'
+import morgan from 'morgan'
 
-import AppError from "./utils/appError.js";
-import globalErrorHandler from "./controllers/errorController.js";
+import AppError from './utils/appError.js'
+import globalErrorHandler from './controllers/errorController.js'
 
 // Routes
-import blogRoutes from "./routes/blogRoutes.js";
-import carRoutes from "./routes/carRoutes.js";
-import blogRoutes from './routes/blogRoutes.js'
-import customerRoutes from './routes/customerRoutes.js'
-
+import userRoutes from './routes/user/userRoutes.js'
+import cardRoutes from './routes/user/cardRoutes.js'
+import carRoutes from './routes/car/carRoutes.js'
+import customerRoutes from './routes/customer/customerRoutes.js'
+import bookingRoutes from './routes/booking/bookingRoutes.js'
 
 const app = express()
 
 app.use(
-  cors({
-    origin: "*",
-    credentials: true,
-  })
-);
+   cors({
+      origin: '*',
+      credentials: true,
+   })
+)
 
 // Global input sanitization middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
-app.use(cookieParser());
+app.use(cookieParser())
 
 // Developing logging
-if (process.env.NODE_ENV === "development") {
-  app.use(morgan("dev"));
+if (process.env.NODE_ENV === 'development') {
+   app.use(morgan('dev'))
 }
 
-app.get("/", (req, res, next) => {
-  res.send("Car rental API is Running...");
-  next();
-});
-
-app.use("/api/cars" , carRoutes);
+app.get('/', (req, res, next) => {
+   res.send('Car rental API is Running...')
+   next()
+})
 
 // API ROUTES
-app.use("/api/blogs", blogRoutes);
-app.use("/api/customers", customerRoutes);
+app.use('/api/users', userRoutes)
+app.use('/api/cars', carRoutes)
+app.use('/api/cards', cardRoutes)
+app.use('/api/booking', bookingRoutes)
+app.use('/api/customers', customerRoutes)
 
 // Unhandled Routes Handling Middleware
-app.all("*", (req, res, next) => {
-  next(new AppError(`Can't find this ${req.originalUrl} on this server.`, 404));
-});
+app.all('*', (req, res, next) => {
+   next(new AppError(`Can't find this ${req.originalUrl} on this server.`, 404))
+})
 
 // GLOBAL ERROR HANDLING MIDDLEWARE
-app.use(globalErrorHandler);
+app.use(globalErrorHandler)
 
-export default app;
+export default app
