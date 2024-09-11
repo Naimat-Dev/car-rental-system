@@ -84,9 +84,15 @@ export const joinAllUsersWithDetails = catchAsync(async (req, res, next) => {
    const allFields = [...userFields, ...addressFields, ...cardFields]
 
    const users = await db('users as u')
+<<<<<<< HEAD
+       .leftJoin('user_address as ua', 'u.id', 'ua.userId') // Join with userAddress table
+       .leftJoin('cards as c', 'u.id', 'c.ownerId') // Adjust this line based on actual column name
+       .select(allFields);
+=======
       .leftJoin('userAddress as ua', 'u.id', 'ua.userId')
       .leftJoin('cards as c', 'u.id', 'c.ownerId')
       .select(allFields)
+>>>>>>> test
 
    res.status(200).json({
       status: 'success',
@@ -100,6 +106,31 @@ export const joinUserDetailsById = catchAsync(async (req, res, next) => {
    const { id } = req.params
 
    const user = await db('users as u')
+<<<<<<< HEAD
+       .leftJoin('user_address as ua', 'u.id', 'ua.userId') // Adjust if necessary
+       .leftJoin('cards as c', 'u.id', 'c.ownerId') // Adjust to correct column name
+       .select(
+           'u.id',
+           'u.email',
+           'u.name',
+           'u.phoneNumber',
+           'u.status',
+           'u.registrationDate',
+           'u.image',
+           'u.cnic',
+           'u.role',
+           'u.passwordChangedAt',
+           'ua.address',
+           'ua.city',
+           'ua.zipCode',
+           'ua.state',
+           'c.cardNumber',
+           'c.cardHolderName',
+           'c.expiryDate'
+       )
+       .where('u.id', id)
+       .first();
+=======
       .leftJoin('userAddress as ua', 'u.id', 'ua.userId')
       .leftJoin('cards as c', 'u.id', 'c.ownerId')
       .select(
@@ -123,6 +154,7 @@ export const joinUserDetailsById = catchAsync(async (req, res, next) => {
       )
       .where('u.id', id)
       .first()
+>>>>>>> test
 
    if (!user) return next(new AppError('No user found with that ID', 404))
 

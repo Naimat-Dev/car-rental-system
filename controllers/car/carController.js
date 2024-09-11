@@ -24,10 +24,10 @@ export const getCarDetailsWithJoinById = catchAsync(async (req, res, next) => {
    const { id } = req.params
    const allData = await db('cars')
       .join('brands', 'brands.id', 'cars.brandId')
-      .join('carTypes', 'carTypes.id', 'cars.carTypeId')
-      .join('carSpecifications', 'carSpecifications.carId', 'cars.id')
-      .join('carStatus', 'carStatus.carId', 'cars.id')
-      .join('carsMedia', 'carsMedia.carId', 'cars.id')
+      .join('car_types', 'car_types.id', 'cars.carTypeId')
+      .join('car_specifications', 'car_specifications.carId', 'cars.id')
+      .join('car_status', 'car_status.carId', 'cars.id')
+      .join('cars_media', 'cars_media.carId', 'cars.id')
       .join('users', 'users.id', 'cars.ownerId')
       .select('*')
       .where('cars.id', id)
@@ -44,21 +44,21 @@ export const getCarDetailsWithJoinById = catchAsync(async (req, res, next) => {
 })
 
 export const getCarsDetailsWithJoin = catchAsync(async (req, res, next) => {
-   const alldata = await db('cars')
-      .join('brands', 'brands.id', 'cars.brandId')
-      .join('carTypes', 'carTypes.id', 'cars.carTypeId')
-      .join('carSpecifications', 'carSpecifications.carId', 'cars.id')
-      .join('carStatus', 'carStatus.carId', 'cars.id')
-      .join('carsMedia', 'carsMedia.carId', 'cars.id')
-      .join('users', 'users.id', 'cars.ownerId')
-      .select('*')
+   const allData = await db('cars')
+   .join('brands', 'brands.id', 'cars.brandId')
+   .join('car_types', 'car_types.id', 'cars.carTypeId')
+   .join('car_specifications', 'car_specifications.carId', 'cars.id')
+   .join('car_status', 'car_status.carId', 'cars.id')
+   .join('cars_media', 'cars_media.carId', 'cars.id')
+   .join('users', 'users.id', 'cars.ownerId')
+   .select('*')
+   .first()
 
-   console.log(allData)
 
-   if (alldata) {
+   if (allData) {
       res.status(200).json({
          status: 'success',
-         doc: alldata,
+         doc: allData,
       })
    } else {
       return next(new AppError(`cars not found by that ID.`, 404))
@@ -69,7 +69,7 @@ export const updateOneByCarId = (Table) =>
    catchAsync(async (req, res, next) => {
       const { carId } = req.params
       const updateData = req.body
-      if (req.body.imageUrls && req.body.videoUrls) {
+      if (req.body.imageUrls || req.body.videoUrls) {
          req.body.imageUrls = JSON.stringify(req.body.imageUrls)
          req.body.videoUrls = JSON.stringify(req.body.videoUrls)
       }

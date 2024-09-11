@@ -4,7 +4,7 @@
  */
 
 export const up = function(knex) {
-    return knex.schema.createTable('carsMedia', (table) => {
+    return knex.schema.createTable('cars_media', (table) => {
 
         table.increments('id').primary() 
 
@@ -29,5 +29,5 @@ export const up = function(knex) {
  * @returns { Promise<void> }
  */
 export const down = function (knex) {
-   return knex.schema.dropTable('carsMedia')
+   return knex.schema.dropTable('cars_media')
 }
