@@ -43,7 +43,7 @@ export const createCarBooking = catchAsync(async (req, res, next) => {
    const totalPrice = car.pricePerDay * totalDays
 
    // Insert new booking into the database
-   const booking = await db('car_bookings')
+   const booking = await db('bookings')
       .insert({
          customerId,
          carId,
@@ -81,9 +81,9 @@ export const createCarBooking = catchAsync(async (req, res, next) => {
 export const getBookings = getAll('bookings')
 
 // Function to get a booking by ID
-export const getBookingById = getOne('car_bookings')
+export const getBookingById = getOne('bookings')
 
 // Function to update a booking by ID
 export const updateCarBooking = updateOne('bookings')
 // Function to delete a  by ID
-export const deleteBookingById = deleteOne('car_bookings')
+export const deleteBookingById = deleteOne('bookings')
