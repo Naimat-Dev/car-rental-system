@@ -11,6 +11,7 @@ export const up = async function (knex) {
       table.integer('ownerId').unsigned().notNullable()
       table.decimal('additionalCharges').unsigned().defaultTo(0)
       table.decimal('rentalCharges').unsigned().defaultTo(0)
+      table.decimal('totalAmount').unsigned().defaultTo(0)
       table
          .enu('status', ['paid', 'pending'])
          .notNullable()
