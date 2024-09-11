@@ -22,7 +22,7 @@ router.get('/all/:id', getCardByIdJoin)
 // Routes for card management
 router
    .route('/')
-   .post(validateSchema(cardValidationSchema), createCard) // Create a new card
+   .post(createCard) // Create a new card
    .get(getCards) // Get all cards
 
 router

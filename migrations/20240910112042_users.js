@@ -1,6 +1,5 @@
 export const up = function (knex) {
    return knex.schema.createTable('users', (table) => {
-
       table.increments('id').primary()
 
       table.string('email', 50).notNullable().unique()
@@ -27,7 +26,7 @@ export const up = function (knex) {
       table.date('passwordChangedAt').nullable()
 
       table.string('passwordResetToken').nullable()
-      
+
       table.date('passwordResetExpires').nullable()
 
       table.timestamps(true, true)

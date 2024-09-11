@@ -32,6 +32,7 @@ export const getCarDetailsWithJoinById = catchAsync(async (req, res, next) => {
       .select('*')
       .where('cars.id', id)
       .first()
+
    if (allData) {
       res.status(200).json({
          status: 'success',
@@ -43,8 +44,6 @@ export const getCarDetailsWithJoinById = catchAsync(async (req, res, next) => {
 })
 
 export const getCarsDetailsWithJoin = catchAsync(async (req, res, next) => {
-   console.log('lskdjflksdj')
-
    const alldata = await db('cars')
       .join('brands', 'brands.id', 'cars.brandId')
       .join('carTypes', 'carTypes.id', 'cars.carTypeId')

@@ -14,46 +14,44 @@ import {
 // CREATE One Document
 export const createCard = catchAsync(async (req, res, next) => {
    const {
-     ownerId,
-     ownerType,
-     cardHolderName,
-     cardNumber,
-     expiryDate,
-     cvv,
-     billingAddress,
-   } = req.body;
- 
+      ownerId,
+      ownerType,
+      cardHolderName,
+      cardNumber,
+      expiryDate,
+      cvv,
+      billingAddress,
+   } = req.body
+
    if (!ownerId || !cardHolderName || !cardNumber || !expiryDate || !cvv) {
-     return next(new AppError('Required fields are missing', 400));
+      return next(new AppError('Required fields are missing', 400))
    }
- 
-   const existingCard = await db("cards")
-     .where({ cardNumber })
-     .first();
- 
+
+   const existingCard = await db('cards').where({ cardNumber }).first()
+
    if (existingCard) {
-     return next(
-       new AppError("Card with this card number already exists", 400)
-     );
+      return next(
+         new AppError('Card with this card number already exists', 400)
+      )
    }
-    const [doc] = await db("cards")
-     .insert({
-       ownerId,
-       ownerType: ownerType || 'customer', 
-       cardHolderName,
-       cardNumber,
-       expiryDate,
-       cvv,
-       billingAddress,
-     })
-     .returning("*");
- 
+   const [doc] = await db('cards')
+      .insert({
+         ownerId,
+         ownerType: ownerType || 'customer',
+         cardHolderName,
+         cardNumber,
+         expiryDate,
+         cvv,
+         billingAddress,
+      })
+      .returning('*')
+
    res.status(201).json({
-     status: "success",
-     doc,
-   });
- });
- 
+      status: 'success',
+      doc,
+   })
+})
+
 // GET all cards
 // Route /api/cards
 export const getCards = getAll('cards')
