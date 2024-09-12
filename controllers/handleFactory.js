@@ -42,12 +42,12 @@ export const getAll = (Table) =>
       // Finally the query is built and then apply them to get the actual data (Records from given tabel)
       const doc = await features.query
 
-      if (!doc.length) {
-         return res.status(404).json({
-            status: 'fail',
-            message: `No ${Table} found.`,
-         })
-      }
+      // if (!doc.length) {
+      //    return res.status(404).json({
+      //       status: 'fail',
+      //       message: `No ${Table} found.`,
+      //    })
+      // }
 
       res.status(200).json({
          status: 'success',
