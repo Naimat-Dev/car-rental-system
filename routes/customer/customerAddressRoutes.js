@@ -6,7 +6,7 @@ import {
    getCustomerAddress,
    getCustomerAddressById,
    updateCustomerAddressById,
-} from '../../controllers/customer/customerAddressCcontroller.js'
+} from '../../controllers/customer/customerAddressController.js'
 import { validateSchema } from '../../middlewares/validationMiddleware.js'
 import customerAddressValidationSchema from '../../validations/customer/customerAddressValidation.js'
 
