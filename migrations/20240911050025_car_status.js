@@ -41,6 +41,6 @@ export const up = function (knex) {
   * @returns { Promise<void> }
   */
  export const down = function (knex) {
-    return knex.schema.dropTableIfExists('car-status')
+    return knex.schema.dropTableIfExists('car_status')
  }
  

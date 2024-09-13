@@ -18,7 +18,7 @@ router.get('/all', joinAllUsersWithDetails)
 
 router.get('/all/:id', joinUserDetailsById)
 
-router.route('/').post(validateSchema(userValidationSchema), createUser).get(getUsers)
+router.route('/').post( createUser).get(getUsers)
 
 router.route('/:id').get(getUserById).put(updateUserById).delete(deleteUserById)
 
