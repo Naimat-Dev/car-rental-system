@@ -1,5 +1,5 @@
-import db from "../config/database"; 
 import catchAsync from "../utils/catchAsync"; 
+import db from "../../config/db";
 
 // Function to create a new transaction
 export const createTransaction = catchAsync(async (req, res) => {
