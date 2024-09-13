@@ -25,12 +25,6 @@ const carConditionValidationSchema = Joi.object({
       'array.base': 'Video URLs must be an array.',
       'string.uri': 'Each video URL must be a valid URI.',
    }),
-
-   timestamps: Joi.date()
-      .default(() => new Date(), 'current date')
-      .messages({
-         'date.base': 'Timestamps must be a valid date.',
-      }),
 })
 
 export default carConditionValidationSchema

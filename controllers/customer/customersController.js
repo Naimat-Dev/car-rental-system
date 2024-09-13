@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt'
 import catchAsync from '../../utils/catchAsync.js'
 
 import { getAll, getOne, updateOne, deleteOne } from '../handleFactory.js'
+import AppError from '../../utils/appError.js'
 
 // Create customer
 export const createCustomer = catchAsync(async (req, res, next) => {

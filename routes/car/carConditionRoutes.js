@@ -15,7 +15,7 @@ router
 router
   .route("/:id")
   .get(getCarConditionById)
-  .delete(updateCarConditionById)
-  .put(deleteCarConditionById);
+  .put(updateCarConditionById)
+  .delete(deleteCarConditionById);
 
 export default router;

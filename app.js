@@ -12,6 +12,7 @@ import cardRoutes from './routes/user/cardRoutes.js'
 import carRoutes from './routes/car/carRoutes.js'
 import customerRoutes from './routes/customer/customerRoutes.js'
 import bookingRoutes from './routes/booking/bookingRoutes.js'
+import transactionRoutes from './routes/transaction/transactionRoutes.js'
 
 const app = express()
 
@@ -42,8 +43,9 @@ app.get('/', (req, res, next) => {
 app.use('/api/users', userRoutes)
 app.use('/api/cars', carRoutes)
 app.use('/api/cards', cardRoutes)
-app.use('/api/booking', bookingRoutes)
+app.use('/api/bookings', bookingRoutes)
 app.use('/api/customers', customerRoutes)
+app.use('/api/transactions', transactionRoutes)
 
 // Unhandled Routes Handling Middleware
 app.all('*', (req, res, next) => {
