@@ -29,12 +29,6 @@ export const transactionValidationSchema = Joi.object({
       'number.min': 'Rental charges cannot be less than 0.',
    }),
 
-   status: Joi.string().valid('paid', 'pending').required().messages({
-      'any.required': 'Status is required.',
-      'string.base': 'Status must be a string.',
-      'string.valid': 'Status must be either "paid" or "pending".',
-   }),
-
    paymentMethod: Joi.string()
       .valid('creditCard', 'debitCard')
       .required()
