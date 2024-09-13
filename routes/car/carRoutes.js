@@ -16,6 +16,7 @@ import carSpecificationRoutes from './carSpecificationRoutes.js'
 import carStatusRoutes from './carStatusRoutes.js'
 import carsMediaRoutes from './carsMediaRoutes.js'
 import carTypesRoutes from './carTypeRoutes.js'
+import carConditionRoutes from './carConditionRoutes.js'
 
 const router = express.Router()
 
@@ -29,11 +30,13 @@ router.use('/status', carStatusRoutes)
 
 router.use('/media', carsMediaRoutes)
 
+router.use('/conditions', carConditionRoutes)
+
 // Define routes for the /cars endpoint
 router
    .route('/')
-   .post(validateSchema(carValidationSchema), createCar) 
-   .get(getCars) 
+   .post(validateSchema(carValidationSchema), createCar)
+   .get(getCars)
 
 router.get('/all/:id', getCarDetailsWithJoinById)
 
@@ -42,14 +45,10 @@ router.get('/all', getCarsDetailsWithJoin)
 // Define routes for the /cars endpoint
 router
    .route('/')
-   .post(validateSchema(carValidationSchema), createCar) 
+   .post(validateSchema(carValidationSchema), createCar)
    .get(getCars)
 
 // Define routes for the /cars/:id endpoint
-router
-   .route('/:id')
-   .get(getCarById) 
-   .put(updateCarById) 
-   .delete(deleteCarById) 
+router.route('/:id').get(getCarById).put(updateCarById).delete(deleteCarById)
 
 export default router
