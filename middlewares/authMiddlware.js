@@ -2,10 +2,13 @@ import jwt from 'jsonwebtoken'
 import { promisify } from 'util'
 import AppError from './../utils/appError.js'
 import catchAsync from './../utils/catchAsync.js'
+import db from './../config/db.js'
 
 export const protect = catchAsync(async (req, res, next) => {
    // 1) Getting token and check of it's there
    let token
+
+   console.log(req.headers.authorization)
 
    if (
       req.headers.authorization &&
@@ -32,7 +35,9 @@ export const protect = catchAsync(async (req, res, next) => {
    const userRole = decoded.role // Assume role is included in the token payload
 
    // 4) Check if user still exists
-   const currentUser = await Model.findById(userId)
+   const currentUser = await db('users').where({ id: userId }).first()
+
+   console.log(currentUser)
 
    if (!currentUser) {
       return next(
@@ -44,14 +49,14 @@ export const protect = catchAsync(async (req, res, next) => {
    }
 
    // 5) Check if user changed password after the token was issued (iat: issued at)
-   if (currentUser.changePasswordAfter(decoded.iat)) {
-      return next(
-         new AppError(
-            'User recently changed password! Please log in again.',
-            401
-         )
-      )
-   }
+   // if (currentUser.changePasswordAfter(decoded.iat)) {
+   //    return next(
+   //       new AppError(
+   //          'User recently changed password! Please log in again.',
+   //          401
+   //       )
+   //    )
+   // }
 
    // 6) GRANT ACCESS TO PROTECTED ROUTE
    req.user = currentUser

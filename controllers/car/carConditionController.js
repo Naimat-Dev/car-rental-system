@@ -33,7 +33,7 @@ export const getCarConditions = getAll("car_conditions");
 // Function to get a car 
 export const getCarConditionById = getOne("car_conditions");
 
-// Update an existing car condition
+// Update an existing car condition condition
 export const updateCarConditionById = catchAsync(async (req, res) => {
   const { id } = req.params;
   const { conditionType, imageUrls, videoUrls } = req.body;
