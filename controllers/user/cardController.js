@@ -2,6 +2,7 @@ import db from '../../config/db.js'
 import AppError from '../../utils/appError.js'
 import catchAsync from '../../utils/catchAsync.js'
 import { getAll, getOne, updateOne, deleteOne } from '../handleFactory.js'
+import { updateOneByUserId } from './userController.js'
 
 // Route  /cards
 export const createCard = catchAsync(async (req, res, next) => {
@@ -50,7 +51,7 @@ export const getCardById = getOne('cards')
 export const deleteCardById = deleteOne('cards')
 
 // Route /api/card/:id
-export const updateCardById = updateOne('cards')
+export const updateCardById =updateOneByUserId('cards')
 
 export const joinCardsWithUsers = catchAsync(async (req, res, next) => {
    const cards = await db('cards as c')

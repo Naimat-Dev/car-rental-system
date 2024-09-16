@@ -54,8 +54,33 @@ export const getUserById = getOne('users')
 // Route /api/user/:id
 export const deleteUserById = deleteOne('users')
 
-// Route /api/user/:id
-export const updateUserById = updateOne('users')
+// Route /api/user/:idU
+export const updateOneByUserId = (Table) =>
+   catchAsync(async (req, res, next) => {
+      const { id } = req.params
+
+      const updateData = req.body
+
+      console.log("data", updateData)
+      
+      // Add the updated_at field to the update data
+      updateData.updated_at = new Date()
+
+      const doc = await db(Table)
+         .where({ userId:id })
+         .update(updateData)
+         .returning('*')
+
+         
+      if (!doc.length) {
+         return next(new AppError(`${Table} not found by that ID.`, 404))
+      }
+
+      res.status(200).json({
+         status: 'success',
+         doc,
+      })
+   })
 
 // GET all users with their addresses and cards
 // Route /api/users/join
