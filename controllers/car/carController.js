@@ -61,7 +61,7 @@ export const getCarsDetailsWithJoin = catchAsync(async (req, res, next) => {
          doc: allData,
       })
    } else {
-      return next(new AppError(`cars not found by that ID.`, 404))
+      return next(new AppError(`cars data not found in reference table.`, 404))
    }
 })
 

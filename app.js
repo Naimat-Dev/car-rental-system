@@ -45,7 +45,7 @@ app.use("/api/cars", carRoutes);
 app.use("/api/cards", cardRoutes);
 app.use("/api/booking", bookingRoutes);
 app.use("/api/customers", customerRoutes);
-app.use("./api/transaction", transactionRoutes);
+app.use("/api/transaction", transactionRoutes);
 
 // Unhandled Routes Handling Middleware
 app.all("*", (req, res, next) => {

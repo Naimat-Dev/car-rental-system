@@ -9,7 +9,7 @@ import {
   deleteTransactionById,
   getTransactionById,
   getTransactions,
-  updateTransactionById,
+  updateTransaction,
 } from "../../controllers/transaction/transactionController.js";
 
 const router = express.Router();
@@ -23,6 +23,6 @@ router
   .route("/:id")
   .get(getTransactionById)
   .delete(deleteTransactionById)
-  .put(updateTransactionById);
+  .put(updateTransaction);
 
 export default router;

@@ -1,3 +1,4 @@
+import cloudinary from '../../config/cloudinary.js'
 import db from '../../config/db.js'
 import bcrypt from 'bcrypt'
 
@@ -52,7 +53,6 @@ export const createCustomer = catchAsync(async (req, res, next) => {
       doc,
    })
 })
-
 //get all customers
 export const getCustomers = getAll('customers')
 
