@@ -51,7 +51,7 @@ export const getCardById = getOne('cards')
 export const deleteCardById = deleteOne('cards')
 
 // Route /api/card/:id
-export const updateCardById =updateOneByUserId('cards')
+export const updateCardById = updateOneByUserId('cards')
 
 export const joinCardsWithUsers = catchAsync(async (req, res, next) => {
    const cards = await db('cards as c')

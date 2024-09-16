@@ -21,6 +21,9 @@ export const getUserAddressById = getOne('user_address')
 // Route /api/user/:id
 export const deleteUserAddressById = deleteOne('user_address')
 
+// Route /api/user/:id
+export const updateUserAddressById = updateOneByUserId('user_address')
+
 //Routes //api/users/addresses/all/
 export const updateUserAddressById = updateOneByUserId('user_address')
 
