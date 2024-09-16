@@ -48,18 +48,18 @@ export const createCarBooking = catchAsync(async (req, res, next) => {
   // Calculate totalPrice (car price per day * totalDays)
   const totalPrice = car.pricePerDay * totalDays;
 
-  // Insert new booking into the database
-  const booking = await db("bookings")
-    .insert({
-      customerId,
-      carId,
-      rentalStartDate,
-      rentalEndDate,
-      totalDays,
-      initialMileage,
-      totalPrice,
-    })
-    .returning("*");
+   // Insert new booking into the database
+   const booking = await db('bookings')
+      .insert({
+         customerId,
+         carId,
+         rentalStartDate,
+         rentalEndDate,
+         totalDays,
+         initialMileage,
+         totalPrice,
+      })
+      .returning('*')
 
   // Update the car's availability status to 'unavailable'
   const carStatusUpdate = await db("car_status")
@@ -88,9 +88,9 @@ export const createCarBooking = catchAsync(async (req, res, next) => {
 export const getBookings = getAll("bookings");
 
 // Function to get a booking by ID
-export const getBookingById = getOne("bookings");
+export const getBookingById = getOne('bookings')
 
 // Function to update a booking by ID
 export const updateCarBooking = updateOne("bookings");
 // Function to delete a  by ID
-export const deleteBookingById = deleteOne("bookings");
+export const deleteBookingById = deleteOne('bookings')

@@ -21,10 +21,10 @@ const carConditionValidationSchema = Joi.object({
     "string.uri": "Each image URL must be a valid URI.",
   }),
 
-  videoUrls: Joi.array().items(Joi.string().uri()).default([]).messages({
-    "array.base": "Video URLs must be an array.",
-    "string.uri": "Each video URL must be a valid URI.",
-  }),
-});
+   videoUrls: Joi.array().items(Joi.string().uri()).default([]).messages({
+      'array.base': 'Video URLs must be an array.',
+      'string.uri': 'Each video URL must be a valid URI.',
+   }),
+})
 
 export default carConditionValidationSchema;

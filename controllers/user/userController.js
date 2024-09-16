@@ -6,8 +6,7 @@ import catchAsync from '../../utils/catchAsync.js'
 import { getAll, getOne, updateOne, deleteOne } from '../handleFactory.js'
 
 export const createUser = catchAsync(async (req, res, next) => {
-   const { email, name, phoneNumber, cnic, imageUrl, status, password } =
-      req.body
+   const { email, name, phoneNumber, cnic, image, status, password } = req.body
 
    const existingUser = await db('users')
       .where({ email })
@@ -32,9 +31,9 @@ export const createUser = catchAsync(async (req, res, next) => {
          name,
          phoneNumber,
          cnic,
-         status: status || 'inactive',
+         status: status,
          registrationDate: new Date(),
-         image: imageUrl,
+         image,
          password: hashedPassword,
       })
       .returning('*')
@@ -56,6 +55,29 @@ export const deleteUserById = deleteOne('users')
 
 // Route /api/user/:id
 export const updateUserById = updateOne('users')
+
+export const updateOneByUserId = (Table) =>
+   catchAsync(async (req, res, next) => {
+      const { id } = req.params
+      const updateData = req.body
+
+      // Add the updated_at field to the update data
+      updateData.updated_at = new Date()
+
+      const doc = await db(Table)
+         .where({ userId: id })
+         .update(updateData)
+         .returning('*')
+
+      if (!doc.length) {
+         return next(new AppError(`${Table} not found by that ID.`, 404))
+      }
+
+      res.status(200).json({
+         status: 'success',
+         doc,
+      })
+   })
 
 // GET all users with their addresses and cards
 // Route /api/users/join

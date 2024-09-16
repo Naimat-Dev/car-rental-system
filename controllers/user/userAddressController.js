@@ -7,6 +7,7 @@ import {
 } from '../handleFactory.js'
 import db from '../../config/db.js'
 import catchAsync from '../../utils/catchAsync.js'
+import { updateOneByUserId } from './userController.js'
 
 // Route  /userAddress
 export const createUserAddress = createOne('user_address')
@@ -21,7 +22,7 @@ export const getUserAddressById = getOne('user_address')
 export const deleteUserAddressById = deleteOne('user_address')
 
 // Route /api/user/:id
-export const updateUserAddressById = updateOne('user_address')
+export const updateUserAddressById = updateOneByUserId('user_address')
 
 //Routes //api/users/addresses/all/
 
