@@ -9,20 +9,29 @@ import {
   deleteTransactionById,
   getTransactionById,
   getTransactions,
-  updateTransaction,
+  joinAllTransactionsDetails,
+  joinTransactionDetailsById,
+  updateTransactionById,
 } from "../../controllers/transaction/transactionController.js";
+import { joinAllCustomersDetails } from "../../controllers/customer/customersController.js";
 
 const router = express.Router();
+
+
+router.get('/all', joinAllTransactionsDetails)
+router.get('/all/:id', joinTransactionDetailsById)
+
 
 router
   .route("/")
   .post(validateSchema(transactionValidationSchema), createTransaction)
   .get(getTransactions);
 
+
 router
   .route("/:id")
   .get(getTransactionById)
   .delete(deleteTransactionById)
-  .put(updateTransaction);
+  .put(updateTransactionById);
 
 export default router;
