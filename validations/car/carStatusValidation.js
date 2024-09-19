@@ -16,7 +16,6 @@ const carStatusValidationSchema = Joi.object({
    availabilityStatus: Joi.string()
      .valid('available', 'unavailable', 'maintenance')
      .default('available')
-     .required()
      .messages({
        'any.only': 'Availability status must be one of "available", "unavailable", or "maintenance".',
      }),

@@ -31,6 +31,16 @@ export const getCarDetailsWithJoinById = catchAsync(async (req, res, next) => {
       .join('users as u ', 'u.id', 'c.ownerId')
       .select([
          'b.name as brandName ',
+         'c.name as carName',
+         'ct.id as carTypeId',
+         'b.id as brandId',
+         'u.id as userId',
+         'c.model',
+         'c.registrationCity',
+         'c.registrationNumber',
+         'c.description',
+         'c.carDocuments',
+         'c.assembly',
          'ct.carType',
          'u.name as OwnerName',
          'cm.imageUrls ',
@@ -45,11 +55,11 @@ export const getCarDetailsWithJoinById = catchAsync(async (req, res, next) => {
          'cs.fuelType',
          'cs.seatingCapacity',
          'cs.minMileage',
-          'cs.maxMileage',
-          'cs.engineCapacity',
-          'cs.color',
-          'cs.engineCondition',
-          'cs.odometerReading'
+         'cs.maxMileage',
+         'cs.engineCapacity',
+         'cs.color',
+         'cs.engineCondition',
+         'cs.odometerReading',
       ])
       .where('c.id', id)
       .first()
@@ -66,36 +76,46 @@ export const getCarDetailsWithJoinById = catchAsync(async (req, res, next) => {
 
 export const getCarsDetailsWithJoin = catchAsync(async (req, res, next) => {
    const allData = await db('cars as c')
-   .join('brands as b', 'b.id', 'c.brandId')
-   .join('car_types as ct', 'ct.id', 'c.carTypeId')
-   .join('car_specifications as cs', 'cs.carId', 'c.id')
-   .join('car_status as css', 'css.carId', 'c.id')
-   .join('cars_media as cm', 'cm.carId', 'c.id')
-   .join('users as u ', 'u.id', 'c.ownerId')
-   .select([
-      'b.name as brandName ',
-      'ct.carType',
-      'u.name as OwnerName',
-      'cm.imageUrls ',
-      'cm.videoUrls',
-      'css.location',
-      'css.availabilityStatus',
-      'css.insuranceDetail',
-      'css.fuelPolicy',
-      'css.lastServicedDate',
-      'cs.pricePerDay',
-      'cs.transmission',
-      'cs.fuelType',
-      'cs.seatingCapacity',
-      'cs.minMileage',
-       'cs.maxMileage',
-       'cs.engineCapacity',
-       'cs.color',
-       'cs.engineCondition',
-       'cs.odometerReading'
-   ])
-   .where('c.id', id)
-   .first()
+      .join('brands as b', 'b.id', 'c.brandId')
+      .join('car_types as ct', 'ct.id', 'c.carTypeId')
+      .join('car_specifications as cs', 'cs.carId', 'c.id')
+      .join('car_status as css', 'css.carId', 'c.id')
+      .join('cars_media as cm', 'cm.carId', 'c.id')
+      .join('users as u ', 'u.id', 'c.ownerId')
+      .select([
+         'b.name as brandName ',
+         'c.name as carName',
+         'ct.id as carTypeId',
+         'b.id as brandId',
+         'u.id as userId',
+         'c.model',
+         'c.registrationCity',
+         'c.registrationNumber',
+         'c.description',
+         'c.carDocuments',
+         'c.assembly',
+         'ct.carType',
+         'u.name as OwnerName',
+         'cm.imageUrls ',
+         'cm.videoUrls',
+         'css.location',
+         'css.availabilityStatus',
+         'css.insuranceDetail',
+         'css.fuelPolicy',
+         'css.lastServicedDate',
+         'cs.pricePerDay',
+         'cs.transmission',
+         'cs.fuelType',
+         'cs.seatingCapacity',
+         'cs.minMileage',
+         'cs.maxMileage',
+         'cs.engineCapacity',
+         'cs.color',
+         'cs.engineCondition',
+         'cs.odometerReading',
+      ])
+      .where('c.id', id)
+      .first()
 
    if (allData) {
       res.status(200).json({
