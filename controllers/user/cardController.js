@@ -51,7 +51,34 @@ export const getCardById = getOne('cards')
 export const deleteCardById = deleteOne('cards')
 
 // Route /api/card/:id
-export const updateCardById = updateOneByUserId('cards')
+export const updateCardByOwnerId = catchAsync(async (req, res, next) => {
+   const { ownerId } = req.params;  // Extract ownerId from params
+   const updateData = req.body;     // The updated data from request body
+
+   // Log update data to check if it's correct
+   console.log('Update Data:', updateData);
+
+   // Update the card based on ownerId
+   const updatedCard = await db('cards')
+      .where({ ownerId })           // Ensure this is using ownerId, not userId
+      .update(updateData)           // Apply the update data
+      .returning(['id', 'ownerId', 'cardHolderName', 'cardNumber', 'expiryDate', 'billingAddress']);  // Return non-sensitive fields
+
+   // If no card was updated, return an error
+   if (updatedCard.length === 0) {
+      return next(new AppError('No card found with that owner ID', 404));
+   }
+
+   // Respond with the updated card data
+   res.status(200).json({
+      status: 'success',
+      doc: updatedCard[0],  // Return the first item from updated data
+   });
+});
+
+
+
+
 
 export const joinCardsWithUsers = catchAsync(async (req, res, next) => {
    const cards = await db('cards as c')
@@ -71,11 +98,11 @@ export const joinCardsWithUsers = catchAsync(async (req, res, next) => {
    })
 })
 
-export const joinCardsWithUsersById = catchAsync(async (req, res, next) => {
-   const { id } = req.params
+export const joinCardsWithUsersByOwnerId = catchAsync(async (req, res, next) => {
+   const { id } = req.params  // This should now refer to the ownerId, not the card id
 
-   const card = await db('cards as c')
-      .leftJoin('users as u', 'c.ownerId', 'u.id')
+   const cards = await db('cards as c')
+      .leftJoin('users as u', 'c.ownerId', 'u.id')  // Join based on the ownerId
       .select(
          'c.id',
          'c.cardNumber',
@@ -84,15 +111,17 @@ export const joinCardsWithUsersById = catchAsync(async (req, res, next) => {
          'u.name',
          'u.email'
       )
-      .where('c.id', id)
-      .first()
+      .where('c.ownerId', id)  // Fetch based on the ownerId
+      .first();  // Assuming you only need one result. Remove `.first()` if expecting multiple cards.
 
-   if (!card) {
-      return next(new AppError('No card found with that ID', 404))
+   if (!cards) {
+      return next(new AppError('No card found with that owner ID', 404));
    }
 
    res.status(200).json({
       status: 'success',
-      doc: card,
-   })
-})
+      doc: cards,
+   });
+});
+
+

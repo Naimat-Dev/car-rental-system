@@ -1,27 +1,16 @@
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
 
-dotenv.config()
-
-// const connection = {
-//    host: process.env.DATABASE_HOST,
-//    user: process.env.DATABASE_USERNAME,
-//    password: process.env.DATABASE_PASSWORD,
-//    database: process.env.DATABASE_NAME,
-//    port: process.env.DATABASE_PORT,
-//    ssl: {
-//       rejectUnauthorized: false, // Use only if DigitalOcean database requires this
-//    },
-// }
+dotenv.config();
 
 const connection = {
-   host: process.env.DB_HOST,
-   user: process.env.DB_USERNAME,
-   password: process.env.DB_PASSWORD,
-   database: process.env.DB_NAME,
-   port: process.env.DB_PORT,
-}
+   host: process.env.DB_HOST,        // Correct
+   user: process.env.DB_USER,        // Use DB_USER instead of DB_USERNAME
+   password: process.env.DB_PASSWORD, // Correct
+   database: process.env.DB_NAME,     // Correct
+   port: process.env.DB_PORT,         // Correct
+};
 
-console.log(connection)
+console.log(connection);
 
 const commonConfig = {
    client: 'pg',
@@ -33,9 +22,9 @@ const commonConfig = {
    seeds: {
       directory: './seeds',
    },
-}
+};
 
 export default {
    development: commonConfig,
    production: commonConfig,
-}
+};

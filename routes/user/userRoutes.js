@@ -5,10 +5,10 @@ import {
    createUser,
    getUsers,
    getUserById,
-   updateUserById,
    deleteUserById,
    joinAllUsersWithDetails,
    joinUserDetailsById,
+   updateOneByUserId
 } from '../../controllers/user/userController.js'
 import userAddressRoutes from './userAddressRoutes.js'
 import { login, logout } from './../../controllers/authController.js'
@@ -30,6 +30,6 @@ router
    .post(validateSchema(userValidationSchema), createUser)
    .get(getUsers)
 
-router.route('/:id').get(getUserById).put(updateUserById).delete(deleteUserById)
+router.route('/:id').get(getUserById).put(updateOneByUserId).delete(deleteUserById)
 
 export default router
