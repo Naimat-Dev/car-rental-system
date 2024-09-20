@@ -23,12 +23,10 @@ const customerLicenseValidationSchema = Joi.object({
     .trim(),
 
   licenseExpiryDate: Joi.date()
-    .greater('now')
     .required()
     .messages({
       'any.required': 'License expiry date is required.',
-      'date.base': 'License expiry date must be a valid date.',
-      'date.greater': 'License expiry date must be a future date.',
+      'date.base': 'License expiry date must be a valid date.'
     }),
 });
 

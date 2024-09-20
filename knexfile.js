@@ -1,16 +1,14 @@
 import dotenv from 'dotenv';
 
-dotenv.config();
+dotenv.config()
 
 const connection = {
-   host: process.env.DB_HOST,        // Correct
-   user: process.env.DB_USER,        // Use DB_USER instead of DB_USERNAME
-   password: process.env.DB_PASSWORD, // Correct
-   database: process.env.DB_NAME,     // Correct
-   port: process.env.DB_PORT,         // Correct
-};
-
-console.log(connection);
+   host: process.env.DB_HOST,
+   user: process.env.DB_USER,
+   password: process.env.DB_PASSWORD,
+   database: process.env.DB_NAME,
+   port: process.env.DB_PORT,
+}
 
 const commonConfig = {
    client: 'pg',
@@ -28,3 +26,4 @@ export default {
    development: commonConfig,
    production: commonConfig,
 };
+
