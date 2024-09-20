@@ -14,11 +14,13 @@ const carStatusValidationSchema = Joi.object({
    }),
 
    availabilityStatus: Joi.string()
-     .valid('available', 'unavailable', 'maintenance')
-     .default('available')
-     .messages({
-       'any.only': 'Availability status must be one of "available", "unavailable", or "maintenance".',
-     }),
+      .valid('available', 'unavailable', 'maintenance')
+      .default('available')
+      .messages({
+         'any.only':
+            'Availability status must be one of "available", "unavailable", or "maintenance".',
+      }),
+
 
    insuranceDetail: Joi.string().max(255).allow(null, '').messages({
       'string.max': 'Insurance details cannot exceed 255 characters.',
@@ -27,7 +29,6 @@ const carStatusValidationSchema = Joi.object({
    fuelPolicy: Joi.string()
       .valid('full-to-full', 'same-to-same')
       .default('full-to-full')
-      .required()
       .messages({
          'any.only':
             'Fuel policy must be either "full-to-full" or "same-to-same".',
