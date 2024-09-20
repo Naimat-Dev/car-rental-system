@@ -21,6 +21,7 @@ const carStatusValidationSchema = Joi.object({
             'Availability status must be one of "available", "unavailable", or "maintenance".',
       }),
 
+
    insuranceDetail: Joi.string().max(255).allow(null, '').messages({
       'string.max': 'Insurance details cannot exceed 255 characters.',
    }),
