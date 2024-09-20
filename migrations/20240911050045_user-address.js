@@ -1,11 +1,11 @@
 export const up = function (knex) {
     return knex.schema.createTable('user_address', (table) => {
-       table.increments('id').primary() // Primary key
-       table.integer('userId').unique().unsigned().notNullable() // Foreign key to `user` table
-       table.string('address', 255).notNullable() // Address field with max length of 255
-       table.string('city', 50).notNullable() // City field with max length of 50
-       table.string('zipCode', 5).notNullable() // Zip code field with max length of 10
-       table.string('state', 50).notNullable() // State field with max length of 50
+       table.increments('id').primary() 
+       table.integer('userId').unique().unsigned().notNullable() 
+       table.string('address', 255).notNullable() 
+       table.string('city', 50).notNullable() 
+       table.string('zipCode', 5).notNullable() 
+       table.string('state', 50).notNullable() 
  
        table
           .foreign('userId')
@@ -17,7 +17,6 @@ export const up = function (knex) {
     })
  }
  
- //changes successfully updated
  export const down = function (knex) {
     return knex.schema.dropTableIfExists('user_address')
  }

@@ -27,7 +27,6 @@ const carStatusValidationSchema = Joi.object({
    fuelPolicy: Joi.string()
       .valid('full-to-full', 'same-to-same')
       .default('full-to-full')
-      .required()
       .messages({
          'any.only':
             'Fuel policy must be either "full-to-full" or "same-to-same".',

@@ -1,4 +1,4 @@
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
 
 dotenv.config()
 
@@ -20,9 +20,10 @@ const commonConfig = {
    seeds: {
       directory: './seeds',
    },
-}
+};
 
 export default {
    development: commonConfig,
    production: commonConfig,
-}
+};
+

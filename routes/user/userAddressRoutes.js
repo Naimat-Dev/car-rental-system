@@ -6,10 +6,10 @@ import {
    createUserAddress,
    getUserAddress,
    getUserAddressById,
-   updateUserAddressById,
+   updateUserAddressByUserId,
    deleteUserAddressById,
    joinUserAddressWithUsers,
-   joinUserAddressWithUsersById,
+   joinUserAddressWithUsersByUserId,
 } from '../../controllers/user/userAddressController.js'
 
 const router = express.Router()
@@ -20,12 +20,12 @@ router
 
 router.get('/all', joinUserAddressWithUsers)
 
-router.get('/all/:id', joinUserAddressWithUsersById)
+router.get('/all/:id', joinUserAddressWithUsersByUserId)
 
 router
    .route('/:id')
    .get(getUserAddressById)
-   .put(updateUserAddressById)
+   .put(updateUserAddressByUserId)
    .delete(deleteUserAddressById)
 
 export default router

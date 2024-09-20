@@ -3,10 +3,12 @@ import bcrypt from 'bcrypt'
 import db from '../../config/db.js'
 import AppError from '../../utils/appError.js'
 import catchAsync from '../../utils/catchAsync.js'
-import { getAll, getOne, updateOne, deleteOne } from '../handleFactory.js'
+import { getAll, getOne, deleteOne } from '../handleFactory.js'
 
 export const createUser = catchAsync(async (req, res, next) => {
    const { email, name, phoneNumber, cnic, image, status, password } = req.body
+
+   console.log("email", email)
 
    const existingUser = await db('users')
       .where({ email })
@@ -53,31 +55,10 @@ export const getUserById = getOne('users')
 // Route /api/user/:id
 export const deleteUserById = deleteOne('users')
 
-// Route /api/user/:id
+
 export const updateUserById = updateOne('users')
 
-export const updateOneByUserId = (Table) =>
-   catchAsync(async (req, res, next) => {
-      const { id } = req.params
-      const updateData = req.body
 
-      // Add the updated_at field to the update data
-      updateData.updated_at = new Date()
-
-      const doc = await db(Table)
-         .where({ userId: id })
-         .update(updateData)
-         .returning('*')
-
-      if (!doc.length) {
-         return next(new AppError(`${Table} not found by that ID.`, 404))
-      }
-
-      res.status(200).json({
-         status: 'success',
-         doc,
-      })
-   })
 
 // GET all users with their addresses and cards
 // Route /api/users/join
@@ -106,8 +87,8 @@ export const joinAllUsersWithDetails = catchAsync(async (req, res, next) => {
    const allFields = [...userFields, ...addressFields, ...cardFields]
 
    const users = await db('users as u')
-      .leftJoin('user_address as ua', 'u.id', 'ua.userId') // Join with userAddress table
-      .leftJoin('cards as c', 'u.id', 'c.ownerId') // Adjust this line based on actual column name
+      .leftJoin('user_address as ua', 'u.id', 'ua.userId') 
+      .leftJoin('cards as c', 'u.id', 'c.ownerId') 
       .select(allFields)
 
    res.status(200).json({

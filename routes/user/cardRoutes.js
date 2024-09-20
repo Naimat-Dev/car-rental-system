@@ -3,10 +3,10 @@ import {
    createCard,
    getCards,
    getCardById,
-   updateCardById,
+   updateCardByOwnerId,
    deleteCardById,
    joinCardsWithUsers,
-   joinCardsWithUsersById,
+   joinCardsWithUsersByOwnerId
 } from '../../controllers/user/cardController.js'
 
 import cardValidationSchema from '../../validations/card/cardValidation.js'
@@ -16,13 +16,13 @@ const router = express.Router()
 
 router.get('/all', joinCardsWithUsers)
 
-router.get('/all/:id', joinCardsWithUsersById)
+router.get('/all/:id', joinCardsWithUsersByOwnerId);
 
 router
    .route('/')
    .post(validateSchema(cardValidationSchema), createCard)
    .get(getCards)
 
-router.route('/:id').get(getCardById).delete(deleteCardById).put(updateCardById)
+router.route('/:id').get(getCardById).delete(deleteCardById).put(updateCardByOwnerId)
 
 export default router
